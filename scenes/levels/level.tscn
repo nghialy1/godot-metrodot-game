@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://coa78sxepphhw"]
+
+[ext_resource type="TileSet" uid="uid://c1s3xfgccd2py" path="res://scenes/levels/level.tres" id="2_drlu5"]
+
+[node name="Level" type="Node2D"]
+
+[node name="BG" type="Node2D" parent="."]
+
+[node name="BG" type="TileMap" parent="BG"]
+tile_set = ExtResource("2_drlu5")
+format = 2
+
+[node name="BGDeco" type="TileMap" parent="BG"]
+tile_set = ExtResource("2_drlu5")
+format = 2
+
+[node name="Main" type="Node2D" parent="."]
+
+[node name="Main" type="TileMap" parent="Main"]
+tile_set = ExtResource("2_drlu5")
+format = 2
+
+[node name="Entities" type="Node2D" parent="Main"]
+
+[node name="FG" type="Node2D" parent="."]
+
+[node name="FG" type="TileMap" parent="FG"]
+tile_set = ExtResource("2_drlu5")
+format = 2
