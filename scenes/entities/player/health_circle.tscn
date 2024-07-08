@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://b3762f3qefiyv"]
+
+[ext_resource type="Shader" path="res://scenes/entities/player/health_circle.gdshader" id="1_hnksl"]
+[ext_resource type="Texture2D" uid="uid://korhbgw06ji0" path="res://icon.svg" id="2_bi7uh"]
+[ext_resource type="Texture2D" uid="uid://vowyrahv2yif" path="res://graphics/objects/lights/main.png" id="3_2pwte"]
+[ext_resource type="Script" path="res://scenes/entities/player/health_circle.gd" id="3_m6wbg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g55wo"]
+shader = ExtResource("1_hnksl")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/radius = 0.3
+shader_parameter/width = 0.03
+shader_parameter/color = Color(0.739789, 1.93726e-06, 9.62615e-07, 1)
+shader_parameter/alpha = 1.0
+shader_parameter/progress = 1.0
+
+[node name="HealthCircle" type="Sprite2D" groups=["HealthCircle"]]
+light_mask = 2
+material = SubResource("ShaderMaterial_g55wo")
+texture = ExtResource("2_bi7uh")
+script = ExtResource("3_m6wbg")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+range_item_cull_mask = 2
+texture = ExtResource("3_2pwte")

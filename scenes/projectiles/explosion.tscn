@@ -1,0 +1,77 @@
+[gd_scene load_steps=12 format=3 uid="uid://rfcwp3khoahc"]
+
+[ext_resource type="Texture2D" uid="uid://1ggfv63s4dgp" path="res://graphics/guns/projectiles/bomb.png" id="1_e4fm2"]
+[ext_resource type="Script" path="res://scenes/projectiles/explosion.gd" id="2_j1jmp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iikmu"]
+atlas = ExtResource("1_e4fm2")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w6dha"]
+atlas = ExtResource("1_e4fm2")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rfvy7"]
+atlas = ExtResource("1_e4fm2")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oluce"]
+atlas = ExtResource("1_e4fm2")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3q310"]
+atlas = ExtResource("1_e4fm2")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vg2le"]
+atlas = ExtResource("1_e4fm2")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h1le4"]
+atlas = ExtResource("1_e4fm2")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gnnf2"]
+atlas = ExtResource("1_e4fm2")
+region = Rect2(336, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dddt8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iikmu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w6dha")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rfvy7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oluce")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3q310")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vg2le")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h1le4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gnnf2")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Explosion" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_dddt8")
+autoplay = "default"
+frame = 7
+frame_progress = 1.0
+script = ExtResource("2_j1jmp")
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]

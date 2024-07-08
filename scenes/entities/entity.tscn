@@ -1,7 +1,13 @@
-[gd_scene format=3 uid="uid://b68vs0af4e7hi"]
+[gd_scene load_steps=2 format=3 uid="uid://b68vs0af4e7hi"]
+
+[ext_resource type="Script" path="res://scenes/entities/entity.gd" id="1_cgnda"]
 
 [node name="Entity" type="CharacterBody2D"]
+script = ExtResource("1_cgnda")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
 [node name="Timers" type="Node" parent="."]
+
+[node name="InvulTimer" type="Timer" parent="Timers"]
+one_shot = true

@@ -10,7 +10,6 @@
 [node name="Light" type="Node2D"]
 script = ExtResource("1_5noir")
 type = "4"
-flicker = null
 
 [node name="MainLight" type="PointLight2D" parent="."]
 texture = ExtResource("2_f7wc0")
@@ -18,15 +17,17 @@ texture = ExtResource("2_f7wc0")
 [node name="Options" type="Node2D" parent="."]
 
 [node name="0" type="Node2D" parent="Options"]
+visible = false
 
 [node name="Sprite2D" type="Sprite2D" parent="Options/0"]
 texture = ExtResource("2_oo3cw")
 hframes = 6
 
 [node name="PointLight2D" type="PointLight2D" parent="Options/0"]
-position = Vector2(0, 45)
+position = Vector2(0, 73)
+scale = Vector2(1, 2.12)
 color = Color(0.69206, 0.40045, 0.0718454, 1)
-energy = 0.700698
+energy = 1.74195
 texture = ExtResource("3_ylhid")
 
 [node name="1" type="Node2D" parent="Options"]
@@ -38,8 +39,8 @@ hframes = 6
 frame = 1
 
 [node name="PointLight2D" type="PointLight2D" parent="Options/1"]
-position = Vector2(0, 29)
-scale = Vector2(0.25, 1)
+position = Vector2(0, 49)
+scale = Vector2(0.25, 1.8)
 texture = ExtResource("3_ylhid")
 
 [node name="2" type="Node2D" parent="Options"]

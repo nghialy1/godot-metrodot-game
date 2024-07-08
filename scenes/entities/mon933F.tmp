@@ -1,0 +1,88 @@
+[gd_scene load_steps=9 format=3 uid="uid://d02kx3shyyb4e"]
+
+[ext_resource type="PackedScene" uid="uid://b68vs0af4e7hi" path="res://scenes/entities/entity.tscn" id="1_4gsus"]
+[ext_resource type="Texture2D" uid="uid://qu4x05j28eh7" path="res://graphics/entities/attack.png" id="2_mbecx"]
+[ext_resource type="Script" path="res://scenes/entities/monster.gd" id="2_t8r2c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bcrv7"]
+size = Vector2(42, 94)
+
+[sub_resource type="Animation" id="Animation_7grxr"]
+resource_name = "attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 3, 0]
+}
+
+[sub_resource type="Animation" id="Animation_bj2gj"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_es7kp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7sakl"]
+_data = {
+"RESET": SubResource("Animation_es7kp"),
+"attack": SubResource("Animation_7grxr"),
+"idle": SubResource("Animation_bj2gj")
+}
+
+[node name="Monster" instance=ExtResource("1_4gsus")]
+collision_layer = 4
+collision_mask = 16
+script = ExtResource("2_t8r2c")
+
+[node name="CollisionShape2D" parent="." index="0"]
+shape = SubResource("RectangleShape2D_bcrv7")
+
+[node name="AttackTimer" type="Timer" parent="Timers" index="0"]
+one_shot = true
+
+[node name="MoveTimer" type="Timer" parent="Timers" index="1"]
+one_shot = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="2"]
+position = Vector2(-10, -1)
+texture = ExtResource("2_mbecx")
+hframes = 5
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
+libraries = {
+"": SubResource("AnimationLibrary_7sakl")
+}
+
+[connection signal="timeout" from="Timers/AttackTimer" to="." method="_on_attack_timer_timeout"]
+[connection signal="timeout" from="Timers/MoveTimer" to="." method="_on_move_timer_timeout"]

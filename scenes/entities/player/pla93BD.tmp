@@ -1,30 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://cl74b3n23jnjt"]
+[gd_scene load_steps=7 format=3 uid="uid://cl74b3n23jnjt"]
 
 [ext_resource type="PackedScene" uid="uid://b68vs0af4e7hi" path="res://scenes/entities/entity.tscn" id="1_3xfb3"]
 [ext_resource type="Script" path="res://scenes/entities/player/player.gd" id="2_yrl14"]
 [ext_resource type="Texture2D" uid="uid://clgaqns85oxlp" path="res://graphics/guns/crosshair.png" id="4_74l2k"]
 [ext_resource type="Script" path="res://scenes/entities/player/Crosshair.gd" id="5_qqb83"]
 [ext_resource type="PackedScene" uid="uid://ca4nser64t3oa" path="res://scenes/entities/player/player_graphics.tscn" id="5_rn2wi"]
-[ext_resource type="Texture2D" uid="uid://djbe8xgpgw7dj" path="res://graphics/guns/projectiles/explosion2.png" id="6_uy6oe"]
-[ext_resource type="PackedScene" uid="uid://b3762f3qefiyv" path="res://scenes/entities/player/health_circle.tscn" id="7_epg57"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ol06y"]
 radius = 4.0
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_yutfn"]
-particles_animation = true
-particles_anim_h_frames = 7
-particles_anim_v_frames = 1
-particles_anim_loop = false
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wty1r"]
-particle_flag_disable_z = true
-spread = 40.0
-initial_velocity_min = 200.0
-initial_velocity_max = 280.0
-gravity = Vector3(0, 0, 0)
-anim_speed_min = 0.4
-anim_speed_max = 1.99
 
 [node name="Player" groups=["Player"] instance=ExtResource("1_3xfb3")]
 collision_layer = 2
@@ -35,10 +18,9 @@ acceleration = 700
 friction = 900
 dash_cooldown = 0.5
 jump_strength = 300
-gun_jump_strength = 180
 gravity = 600
 terminal_velocity = 500
-crosshair_distance = 25
+crosshair_distance = 30
 ak_cooldown = 0.5
 shotgun_cooldown = 1.2
 rocket_cooldown = 1.5
@@ -77,14 +59,3 @@ script = ExtResource("5_qqb83")
 
 [node name="PlayerGraphics" parent="." index="4" instance=ExtResource("5_rn2wi")]
 position = Vector2(0, -7.5)
-
-[node name="GPUParticles2D" type="GPUParticles2D" parent="." index="5"]
-material = SubResource("CanvasItemMaterial_yutfn")
-emitting = false
-process_material = SubResource("ParticleProcessMaterial_wty1r")
-texture = ExtResource("6_uy6oe")
-lifetime = 0.3
-one_shot = true
-explosiveness = 0.5
-
-[node name="HealthCircle" parent="." index="6" instance=ExtResource("7_epg57")]

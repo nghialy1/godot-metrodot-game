@@ -1,8 +1,14 @@
-[gd_scene load_steps=74 format=3 uid="uid://ca4nser64t3oa"]
+[gd_scene load_steps=77 format=3 uid="uid://ca4nser64t3oa"]
 
 [ext_resource type="Texture2D" uid="uid://dh4cvrwqfclfg" path="res://graphics/entities/player.png" id="1_c7k64"]
 [ext_resource type="Script" path="res://scenes/entities/player/player_graphics.gd" id="1_f3r34"]
+[ext_resource type="Shader" uid="uid://cnay8p26e0eqq" path="res://shaders/flash.tres" id="2_aj121"]
 [ext_resource type="Script" path="res://scenes/entities/player/AnimationTree.gd" id="3_spcel"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4h7xd"]
+shader = ExtResource("2_aj121")
+shader_parameter/ColorParameter = Color(1, 1, 1, 1)
+shader_parameter/Progress = null
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dkxfd"]
 atlas = ExtResource("1_c7k64")
@@ -103,6 +109,11 @@ animations = [{
 "name": &"run",
 "speed": 10.0
 }]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6f5q6"]
+shader = ExtResource("2_aj121")
+shader_parameter/ColorParameter = Color(1, 1, 1, 1)
+shader_parameter/Progress = null
 
 [sub_resource type="Animation" id="Animation_mbmsh"]
 length = 0.001
@@ -668,12 +679,14 @@ transitions = ["Start", "AK", SubResource("AnimationNodeStateMachineTransition_2
 script = ExtResource("1_f3r34")
 
 [node name="Legs" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_4h7xd")
 sprite_frames = SubResource("SpriteFrames_ccam4")
 animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.496792
 
 [node name="Torso" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_6f5q6")
 texture = ExtResource("1_c7k64")
 hframes = 8
 vframes = 10

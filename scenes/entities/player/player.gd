@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends Entity
 
 @export_group('move')
 @export var speed := 200
@@ -13,20 +13,28 @@ var gamepad_active := true
 
 @export_group('jump')
 @export var jump_strength := 300
+@export var gun_jump_strength := 180
 @export var gravity := 600
 @export var terminal_velocity := 500
 var jump := false
 var faster_fall := false
 var gravity_multiplier := 1
+var gun_jump := false
 
 @export_group("gun")
 var current_gun := Global.guns.AK
 var aim_direction := Vector2.RIGHT
-@export var crosshair_distance := 20
+@export var crosshair_distance := 25
 const y_offset := 7
+@export_range(0.2, 2.0) var ak_cooldown := 0.5
+@export_range(0.2, 2.0) var shotgun_cooldown := 1.2
+@export_range(0.2, 2.0) var rocket_cooldown := 1.5
 
 func _ready():
 	$Timers/DashCooldown.wait_time = dash_cooldown
+	$Timers/AKReload.wait_time = ak_cooldown
+	$Timers/ShotgunReload.wait_time = shotgun_cooldown
+	$Timers/RocketReload.wait_time = rocket_cooldown
 
 func _process(delta):
 	apply_gravity(delta)
@@ -75,7 +83,9 @@ func get_input():
 	# switch
 	if Input.is_action_just_pressed("switch"):
 		current_gun = Global.guns[Global.guns.keys()[(current_gun + 1) % len(Global.guns)]]
-		print(current_gun)
+		
+	if Input.is_action_just_pressed("shoot"):
+		shoot_gun()
 		
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -99,6 +109,12 @@ func apply_movement(delta):
 		jump = false
 		faster_fall = false
 	
+	# gun jump
+	if gun_jump:
+		velocity.y = -gun_jump_strength
+		gun_jump = false
+		faster_fall = false
+	
 	var on_floor = is_on_floor()
 	move_and_slide()
 	if on_floor and not is_on_floor() and velocity.y >= 0:
@@ -111,7 +127,6 @@ func apply_movement(delta):
 		dash_tween.tween_property(self, 'velocity:x',velocity.x + direction.x * 600, 0.3)
 		dash_tween.connect("finished", on_dash_finish)
 		gravity_multiplier = 0
-
 	
 func apply_gravity(delta):
 	velocity.y += gravity * delta
@@ -119,7 +134,39 @@ func apply_gravity(delta):
 	velocity.y = velocity.y * gravity_multiplier
 	velocity.y = min(velocity.y, terminal_velocity)
 
-
 func on_dash_finish():
 	velocity.x = move_toward(velocity.x, 0, 500)
 	gravity_multiplier = 1
+
+func block_movement():
+	can_move = false
+	velocity = Vector2.ZERO
+	$PlayerGraphics/Legs.stop()
+	
+func shoot_gun():
+	var pos = position + aim_direction * crosshair_distance
+	pos = pos if not ducking else pos + Vector2(0, y_offset)
+	if current_gun == Global.guns.AK and not $Timers/AKReload.time_left:
+		shoot.emit(pos, aim_direction, current_gun)
+		$Timers/AKReload.start()
+	if current_gun == Global.guns.SHOTGUN and not $Timers/ShotgunReload.time_left:
+		shoot.emit(pos, aim_direction, current_gun)
+		$Timers/ShotgunReload.start()
+		$GPUParticles2D.position = $Crosshair.position
+		$GPUParticles2D.process_material.set('direction', aim_direction)
+		$GPUParticles2D.emitting = true
+		
+		if aim_direction.y == 1 and velocity.y >= 0:
+			gun_jump = true
+	if current_gun == Global.guns.ROCKET and not $Timers/RocketReload.time_left:
+		shoot.emit(pos, aim_direction, current_gun)
+		$Timers/RocketReload.start()
+		
+func get_cam():
+	return $Camera2D
+	
+func get_sprites():
+	return [$PlayerGraphics/Legs, $PlayerGraphics/Torso]
+
+#func trigger_death():
+	#get_tree().quit()
