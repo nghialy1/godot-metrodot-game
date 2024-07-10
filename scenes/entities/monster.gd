@@ -1,5 +1,7 @@
 extends Entity
 
+signal died()
+
 @onready var player = get_tree().get_first_node_in_group('Player')
 @onready var player_camera = player.get_cam()
 @onready var cam_size = player_camera.get_viewport_rect().size.x / player_camera.zoom.x
@@ -54,6 +56,14 @@ func trigger_death():
 	$Timers/AttackTimer.stop()
 	$AnimationPlayer.current_animation = 'death'
 	call_deferred("disable_collisions")
+	died.emit()
 	
 func disable_collisions():
 	$CollisionShape2D.disabled = true
+
+func setup(data):
+	super.setup(data)
+	
+	# specific entity setup
+	$AnimationPlayer.stop()
+	$Sprite2D.visible = false

@@ -19,6 +19,8 @@ config/icon="res://icon.svg"
 
 Global="*res://global/global.gd"
 TransitionLayer="*res://global/transition_layer.tscn"
+BgMusic="*res://global/bg_music.tscn"
+DeathScreen="*res://global/death_screen.tscn"
 
 [display]
 

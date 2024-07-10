@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://8rpws3tl4cl5"]
+
+[ext_resource type="Script" path="res://global/death_screen.gd" id="1_145ml"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_an1qq"]
+font_size = 70
+
+[node name="DeathScreen" type="CanvasLayer"]
+script = ExtResource("1_145ml")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.589096, 0.589096, 0.589096, 0.301961)
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -164.0
+offset_top = -48.0
+offset_right = 164.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "YOU DIED"
+label_settings = SubResource("LabelSettings_an1qq")
+
+[node name="Button" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -46.0
+offset_top = 44.5
+offset_right = 46.0
+offset_bottom = 75.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "TRY AGAIN"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

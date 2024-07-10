@@ -9,8 +9,8 @@ var attack := false
 func _ready():
 	health = Global.enemy_parameters['soldier']['health']
 	
-func _process(_delta):
-	
+func _process(delta):
+	apply_gravity(delta)
 	if health > 0:
 		velocity.x = x_direction * speed * speed_modifier
 		check_cliff()
@@ -65,3 +65,10 @@ func trigger_death():
 func disable_collisions():
 	$CollisionShape2D.disabled = true
 	
+func setup(data):
+	super.setup(data)
+	
+	# specific entity setup
+	speed_modifier = 0
+	$AnimationPlayer.stop()
+	$Sprite2D.frame = 22

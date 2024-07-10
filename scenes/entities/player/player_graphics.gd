@@ -21,3 +21,7 @@ func update_torso(direction, ducking, current_gun):
 	$AnimationTree['parameters/AK/blend_position'] = direction
 	$AnimationTree["parameters/SHOTGUN/blend_position"] = direction
 	$AnimationTree["parameters/ROCKET/blend_position"] = direction
+
+func dash_particles(direction):
+	$DashParticles.process_material.set('direction', direction)
+	$DashParticles.restart()

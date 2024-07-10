@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b68vs0af4e7hi"]
+[gd_scene load_steps=3 format=3 uid="uid://b68vs0af4e7hi"]
 
 [ext_resource type="Script" path="res://scenes/entities/entity.gd" id="1_cgnda"]
+[ext_resource type="AudioStream" uid="uid://caod1xps35iqf" path="res://audio/hit.ogg" id="2_mubdv"]
 
 [node name="Entity" type="CharacterBody2D"]
 script = ExtResource("1_cgnda")
@@ -11,3 +12,6 @@ script = ExtResource("1_cgnda")
 
 [node name="InvulTimer" type="Timer" parent="Timers"]
 one_shot = true
+
+[node name="Hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_mubdv")

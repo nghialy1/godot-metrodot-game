@@ -14,3 +14,16 @@ const gun_data = {
 }
 
 var enemy_data: Dictionary
+
+const bullet_sounds = {
+	guns.AK: preload("res://audio/ak_shoot.wav"),
+	guns.SHOTGUN: preload("res://audio/shotgun_shoot.wav"),
+	guns.ROCKET: preload("res://audio/rocket_shoot.wav")
+}
+
+const level_sounds = {
+	'dash': preload("res://audio/dash.wav"),
+	'music': preload("res://audio/music.mp3"),
+	'explosion': preload("res://audio/explosion_medium.wav"),
+	'hit': preload("res://audio/hit.ogg")
+}

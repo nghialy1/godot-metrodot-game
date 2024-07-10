@@ -1,9 +1,10 @@
-[gd_scene load_steps=77 format=3 uid="uid://ca4nser64t3oa"]
+[gd_scene load_steps=80 format=3 uid="uid://ca4nser64t3oa"]
 
 [ext_resource type="Texture2D" uid="uid://dh4cvrwqfclfg" path="res://graphics/entities/player.png" id="1_c7k64"]
 [ext_resource type="Script" path="res://scenes/entities/player/player_graphics.gd" id="1_f3r34"]
 [ext_resource type="Shader" uid="uid://cnay8p26e0eqq" path="res://shaders/flash.tres" id="2_aj121"]
 [ext_resource type="Script" path="res://scenes/entities/player/AnimationTree.gd" id="3_spcel"]
+[ext_resource type="Texture2D" uid="uid://dl1yluwgikdh7" path="res://graphics/guns/projectiles/explosion.png" id="5_yl5tn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4h7xd"]
 shader = ExtResource("2_aj121")
@@ -675,6 +676,24 @@ states/SHOTGUN/node = SubResource("AnimationNodeBlendSpace2D_m4plx")
 states/SHOTGUN/position = Vector2(640, 100)
 transitions = ["Start", "AK", SubResource("AnimationNodeStateMachineTransition_20t6q"), "AK", "SHOTGUN", SubResource("AnimationNodeStateMachineTransition_uajnq"), "SHOTGUN", "ROCKET", SubResource("AnimationNodeStateMachineTransition_fji6v"), "ROCKET", "AK", SubResource("AnimationNodeStateMachineTransition_p5gp7")]
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_nbvmg"]
+blend_mode = 1
+particles_animation = true
+particles_anim_h_frames = 9
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hoyi1"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 16, 1)
+spread = 10.0
+initial_velocity_min = 110.0
+initial_velocity_max = 160.0
+gravity = Vector3(0, 98, 0)
+scale_min = 0.05
+scale_max = 0.3
+
 [node name="PlayerGraphics" type="Node2D"]
 script = ExtResource("1_f3r34")
 
@@ -683,7 +702,6 @@ material = SubResource("ShaderMaterial_4h7xd")
 sprite_frames = SubResource("SpriteFrames_ccam4")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.496792
 
 [node name="Torso" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_6f5q6")
@@ -703,3 +721,12 @@ parameters/AK/blend_position = Vector2(0.450853, -0.577093)
 parameters/ROCKET/blend_position = Vector2(0, 0)
 parameters/SHOTGUN/blend_position = Vector2(0, 0)
 script = ExtResource("3_spcel")
+
+[node name="DashParticles" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_nbvmg")
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_hoyi1")
+texture = ExtResource("5_yl5tn")
+lifetime = 0.6
+one_shot = true
+explosiveness = 0.6

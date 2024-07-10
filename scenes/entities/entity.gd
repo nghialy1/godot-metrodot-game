@@ -11,9 +11,9 @@ var health := 100:
 			trigger_death()
 
 func hit(damage, nodes):
-	if not $Timers/InvulTimer.time_left:
+	if health > 0:
 		health -= damage
-		$Timers/InvulTimer.start()
+		$Hit.play()
 		flash(nodes)
 
 func flash(nodes):
@@ -27,6 +27,9 @@ func set_flash_value(value: float, nodes):
 
 func trigger_death():
 	pass
+	
+func apply_gravity(delta):
+	velocity.y += 600 * delta
 	
 func setup(data):
 	if self.is_in_group('Enemies'):

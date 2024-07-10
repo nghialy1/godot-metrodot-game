@@ -9,7 +9,7 @@ func _ready():
 	health = Global.enemy_parameters['drone']['health']
 
 func _process(_delta):
-	if false:
+	if active:
 		var direction = (player.position - position).normalized()
 		velocity = direction * speed
 		move_and_slide()
@@ -19,14 +19,23 @@ func _on_player_detection_area_body_entered(_body):
 
 func _on_collision_detection_area_body_entered(body):
 	if body != self:
-		detonate.emit(global_position)
+		hit(Global.enemy_parameters['drone']['health'], get_sprites())
 		if "hit" in body:
 			body.hit(Global.enemy_parameters['drone']['damage'], body.get_sprites())
-		queue_free()
 		
 func get_sprites():
 	return [$AnimatedSprite2D]
 	
 func trigger_death():
 	detonate.emit(global_position)
-	queue_free()
+	free_drone()
+	
+func free_drone():
+	$AnimatedSprite2D.visible = false
+	$Timers/InvulTimer.stop()
+	call_deferred('disable_collisions')
+
+func disable_collisions():
+	$CollisionShape2D.disabled = true
+	$CollisionDetectionArea.monitoring = false
+	$PlayerDetectionArea.monitoring = false

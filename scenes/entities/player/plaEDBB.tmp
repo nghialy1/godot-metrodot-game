@@ -34,16 +34,16 @@ collision_mask = 29
 script = ExtResource("2_yrl14")
 speed = 150
 acceleration = 400
-friction = 900
-dash_cooldown = 2
-jump_strength = 300
-gun_jump_strength = 220
-gravity = 600
-terminal_velocity = 500
-crosshair_distance = 25
+friction = null
+dash_cooldown = null
+jump_strength = null
+gun_jump_strength = null
+gravity = null
+terminal_velocity = null
+crosshair_distance = null
 ak_cooldown = 0.2
-shotgun_cooldown = 2
-rocket_cooldown = 4
+shotgun_cooldown = null
+rocket_cooldown = null
 metadata/_edit_horizontal_guides_ = [15.0, 15.0]
 
 [node name="CollisionShape2D" parent="." index="0"]

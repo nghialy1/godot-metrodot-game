@@ -1,12 +1,17 @@
 extends Area2D
 
+signal detonate(pos: Vector2)
+
 var direction: Vector2
 var speed: int
 var damage: int
 var explosive := false
-signal detonate(pos: Vector2)
+@export var bullet_speed := 250
 
 func setup(pos, dir, type):
+	$AudioStreamPlayer2D.stream = Global.bullet_sounds[type]
+	$AudioStreamPlayer2D.play()
+	
 	position = pos
 	direction = dir.normalized()
 	
@@ -19,15 +24,22 @@ func setup(pos, dir, type):
 		$CollisionShape2D.disabled = true
 		$Sprite2D.hide()
 		$PointLight2D.hide()
-		var enemies = get_tree().get_nodes_in_group('Enemies')
+		var enemies = get_tree().get_nodes_in_group('Enemies').filter(func(enemy): return enemy.health > 0)
+		print(enemies)
 		for enemy in enemies:
+			if enemy.health <= 0:
+				continue
 			var bullet_angle = rad_to_deg(dir.angle())
 			var enemy_angle = rad_to_deg((enemy.position - pos).angle())
-			if pos.distance_to(enemy.position) < Global.gun_data[Global.guns.SHOTGUN]['range'] and abs(bullet_angle - enemy_angle) < 45:
+			
+			print(enemy, ": ",enemy.position)
+			print(bullet_angle, " shot at ", enemy_angle, " distance of ", pos.distance_to(enemy.position))
+			print("angle diff ", abs(bullet_angle - enemy_angle))
+			if pos.distance_to(enemy.position) < Global.gun_data[Global.guns.SHOTGUN]['range'] and abs(bullet_angle - enemy_angle) < 90:
 				enemy.hit(Global.gun_data[Global.guns.SHOTGUN]['damage'], enemy.get_sprites())
 		
 func _process(delta):
-	position += direction * 200 * delta
+	position += direction * bullet_speed * delta
 
 func _on_body_entered(body):
 	detonate.emit(position)
