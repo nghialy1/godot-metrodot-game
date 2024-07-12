@@ -10,6 +10,8 @@ func _ready():
 	health = Global.enemy_parameters['soldier']['health']
 	
 func _process(delta):
+	super._process(delta)
+	
 	apply_gravity(delta)
 	if health > 0:
 		velocity.x = x_direction * speed * speed_modifier
@@ -52,6 +54,7 @@ func check_cliff():
 
 func trigger_attack():
 	var dir = (player.position - position).normalized()
+	x_direction = dir.x
 	shoot.emit(position + dir * 20, dir, Global.guns.AK)
 
 func get_sprites():

@@ -25,16 +25,16 @@ func setup(pos, dir, type):
 		$Sprite2D.hide()
 		$PointLight2D.hide()
 		var enemies = get_tree().get_nodes_in_group('Enemies').filter(func(enemy): return enemy.health > 0)
-		print(enemies)
+		#print(enemies)
 		for enemy in enemies:
 			if enemy.health <= 0:
 				continue
 			var bullet_angle = rad_to_deg(dir.angle())
 			var enemy_angle = rad_to_deg((enemy.position - pos).angle())
 			
-			print(enemy, ": ",enemy.position)
-			print(bullet_angle, " shot at ", enemy_angle, " distance of ", pos.distance_to(enemy.position))
-			print("angle diff ", abs(bullet_angle - enemy_angle))
+			#print(enemy, ": ",enemy.position)
+			#print(bullet_angle, " shot at ", enemy_angle, " distance of ", pos.distance_to(enemy.position))
+			#print("angle diff ", abs(bullet_angle - enemy_angle))
 			if pos.distance_to(enemy.position) < Global.gun_data[Global.guns.SHOTGUN]['range'] and abs(bullet_angle - enemy_angle) < 90:
 				enemy.hit(Global.gun_data[Global.guns.SHOTGUN]['damage'], enemy.get_sprites())
 		

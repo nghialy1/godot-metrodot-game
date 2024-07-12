@@ -9,6 +9,7 @@
 size = Vector2(42, 94)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bam3o"]
+resource_local_to_scene = true
 shader = ExtResource("3_x06gu")
 shader_parameter/ColorParameter = Color(1, 1, 1, 1)
 shader_parameter/Progress = 0.0

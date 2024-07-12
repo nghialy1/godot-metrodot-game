@@ -76,11 +76,9 @@ layer_0/tile_data = PackedInt32Array(458773, 655360, 11, 524309, 655360, 12, 589
 [node name="DirectionalLight2D" parent="." index="3"]
 color = Color(0.16587, 0.0648785, 0.00272509, 1)
 
-[node name="TransitionGate" parent="TransitionGates" index="0" node_paths=PackedStringArray("current_return") instance=ExtResource("3_ue0uu")]
+[node name="TransitionGate" parent="TransitionGates" index="0" instance=ExtResource("3_ue0uu")]
 position = Vector2(-127, 443)
 level = "station"
-return_marker = 1
-current_return = NodePath("ReturnMarkers/right")
 
 [node name="JumpWallsTimer" type="Timer" parent="." index="5"]
 one_shot = true

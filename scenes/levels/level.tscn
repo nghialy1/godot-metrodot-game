@@ -41,3 +41,6 @@ format = 2
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
 
 [node name="TransitionGates" type="Node2D" parent="."]
+
+[node name="CutsceneCamera2D" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)

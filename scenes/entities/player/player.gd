@@ -38,6 +38,8 @@ func _ready():
 	$Timers/RocketReload.wait_time = rocket_cooldown
 
 func _process(delta):
+	super._process(delta)
+	
 	apply_gravity(delta)
 	
 	if can_move:
@@ -50,9 +52,18 @@ func animate():
 	$PlayerGraphics.update_legs(direction, is_on_floor(), ducking)
 	$PlayerGraphics.update_torso(aim_direction, ducking, current_gun)
 	
+	if $Timers/InvulTimer.time_left and flash_tween.finished and not $Timers/FlashTimer.time_left:
+		$Timers/FlashTimer.start()
+		var color = Color.DARK_GRAY
+		color.a = 0
+		flash(get_sprites(), color)
+
 func get_input():
 	# horizontal movement 
 	direction.x = Input.get_axis("left", "right")
+	
+	if Input.is_action_just_pressed("shoot"):
+		shoot_gun()
 	
 	# jump 
 	if Input.is_action_just_pressed("jump"):
@@ -84,9 +95,6 @@ func get_input():
 	# switch
 	if Input.is_action_just_pressed("switch"):
 		current_gun = Global.guns[Global.guns.keys()[(current_gun + 1) % len(Global.guns)]]
-		
-	if Input.is_action_just_pressed("shoot"):
-		shoot_gun()
 		
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -190,8 +198,11 @@ func get_cam():
 func get_sprites():
 	return [$PlayerGraphics/Legs, $PlayerGraphics/Torso]
 
-#func trigger_death():
-	#get_tree().quit()
+func toggle_cam():
+	$Camera2D.enabled = !$Camera2D.enabled
 
 func trigger_death():
-	DeathScreen.death_screen()
+	block_movement()
+	set_collision_layer_value(2, false)
+	MenuScreen.load_menu('DeathScreen')
+	

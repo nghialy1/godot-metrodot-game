@@ -211,12 +211,11 @@ flicker = 200.0
 color = Color(0.625597, 0.625597, 0.625597, 1)
 blend_mode = 1
 
-[node name="TransitionGate" parent="TransitionGates" index="0" node_paths=PackedStringArray("current_return") instance=ExtResource("5_epsbf")]
+[node name="TransitionGate" parent="TransitionGates" index="0" instance=ExtResource("5_epsbf")]
 position = Vector2(1147, -1)
-current_return = NodePath("ReturnMarkers/left")
+return_marker = 0
 
-[node name="TransitionGate2" parent="TransitionGates" index="1" node_paths=PackedStringArray("current_return") instance=ExtResource("5_epsbf")]
+[node name="TransitionGate2" parent="TransitionGates" index="1" instance=ExtResource("5_epsbf")]
 position = Vector2(51, 330)
 level = "underground"
-return_marker = 1
-current_return = NodePath("ReturnMarkers/right")
+return_marker = 0

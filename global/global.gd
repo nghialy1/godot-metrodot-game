@@ -15,6 +15,8 @@ const gun_data = {
 
 var enemy_data: Dictionary
 
+var player_data: Dictionary
+
 const bullet_sounds = {
 	guns.AK: preload("res://audio/ak_shoot.wav"),
 	guns.SHOTGUN: preload("res://audio/shotgun_shoot.wav"),

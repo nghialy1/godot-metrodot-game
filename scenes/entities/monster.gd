@@ -65,5 +65,6 @@ func setup(data):
 	super.setup(data)
 	
 	# specific entity setup
-	$AnimationPlayer.stop()
-	$Sprite2D.visible = false
+	if dead:
+		$AnimationPlayer.stop()
+		$Sprite2D.visible = false

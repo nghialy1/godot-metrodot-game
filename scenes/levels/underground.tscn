@@ -63,6 +63,8 @@ flicker = 200.0
 color = Color(0.226707, 0.226708, 0.226707, 1)
 blend_mode = 1
 
-[node name="TransitionGate" parent="TransitionGates" index="0" instance=ExtResource("3_l7wv4")]
+[node name="TransitionGate" parent="TransitionGates" index="0" node_paths=PackedStringArray("current_return") instance=ExtResource("3_l7wv4")]
 position = Vector2(53, -58)
 level = "station"
+return_marker = 1
+current_return = NodePath("ReturnMarkers/right")

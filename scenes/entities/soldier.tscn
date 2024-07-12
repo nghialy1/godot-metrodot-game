@@ -175,9 +175,10 @@ _data = {
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nnypl"]
+resource_local_to_scene = true
 shader = ExtResource("3_60gew")
 shader_parameter/ColorParameter = Color(1, 1, 1, 1)
-shader_parameter/Progress = null
+shader_parameter/Progress = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e22oi"]
 size = Vector2(18, 29)

@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dl1yluwgikdh7" path="res://graphics/guns/projectiles/explosion.png" id="5_yl5tn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4h7xd"]
+resource_local_to_scene = true
 shader = ExtResource("2_aj121")
 shader_parameter/ColorParameter = Color(1, 1, 1, 1)
 shader_parameter/Progress = null
@@ -112,6 +113,7 @@ animations = [{
 }]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6f5q6"]
+resource_local_to_scene = true
 shader = ExtResource("2_aj121")
 shader_parameter/ColorParameter = Color(1, 1, 1, 1)
 shader_parameter/Progress = null

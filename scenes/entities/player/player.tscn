@@ -72,6 +72,10 @@ one_shot = true
 [node name="RocketReload" type="Timer" parent="Timers" index="5"]
 one_shot = true
 
+[node name="FlashTimer" type="Timer" parent="Timers" index="7"]
+wait_time = 0.25
+one_shot = true
+
 [node name="Crosshair" type="Sprite2D" parent="." index="3"]
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("4_74l2k")
