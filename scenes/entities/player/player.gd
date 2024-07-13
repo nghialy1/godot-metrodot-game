@@ -53,11 +53,13 @@ func animate():
 	$PlayerGraphics.update_legs(direction, is_on_floor(), ducking)
 	$PlayerGraphics.update_torso(aim_direction, ducking, current_gun)
 	
-	if $Timers/InvulTimer.time_left and flash_tween.finished and not $Timers/FlashTimer.time_left:
-		$Timers/FlashTimer.start()
-		var color = Color.DARK_GRAY
-		color.a = 0
-		flash(get_sprites(), color)
+	if $Timers/InvulTimer.time_left and not $Timers/InvulTweenTimer.time_left:
+		$Timers/InvulTweenTimer.start()
+		
+		for sprite in get_sprites():
+			var invul_tween = create_tween()
+			invul_tween.tween_property(sprite, 'modulate:a', 0, 0.1)
+			invul_tween.tween_property(sprite, 'modulate:a', 1, 0.1)
 
 func get_input():
 	# horizontal movement 
@@ -169,10 +171,11 @@ func block_movement():
 
 func hit(damage, nodes):
 	if not $Timers/InvulTimer.time_left:
-		health -= damage
-		$Timers/InvulTimer.start()
-		$Hit.play()
 		flash(nodes)
+		health -= damage
+		$Hit.play()
+		await flash_tween.finished
+		$Timers/InvulTimer.start()
 
 func shoot_gun():
 	var pos = position + aim_direction * crosshair_distance

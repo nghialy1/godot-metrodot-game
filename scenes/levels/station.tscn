@@ -208,6 +208,7 @@ radius = 0.775
 flicker = 200.0
 
 [node name="DirectionalLight2D" parent="." index="3"]
+visible = true
 color = Color(0.625597, 0.625597, 0.625597, 1)
 blend_mode = 1
 

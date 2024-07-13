@@ -116,7 +116,7 @@ animations = [{
 resource_local_to_scene = true
 shader = ExtResource("2_aj121")
 shader_parameter/ColorParameter = Color(1, 1, 1, 1)
-shader_parameter/Progress = null
+shader_parameter/Progress = 0.0
 
 [sub_resource type="Animation" id="Animation_mbmsh"]
 length = 0.001
@@ -700,12 +700,14 @@ scale_max = 0.3
 script = ExtResource("1_f3r34")
 
 [node name="Legs" type="AnimatedSprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
 material = SubResource("ShaderMaterial_4h7xd")
 sprite_frames = SubResource("SpriteFrames_ccam4")
 animation = &"idle"
 autoplay = "idle"
 
 [node name="Torso" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
 material = SubResource("ShaderMaterial_6f5q6")
 texture = ExtResource("1_c7k64")
 hframes = 8

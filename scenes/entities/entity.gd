@@ -25,7 +25,7 @@ func hit(damage, nodes):
 		$Hit.play()
 		flash(nodes)
 
-func flash(nodes, color = "ffffff"):
+func flash(nodes, color = Color.WHITE):
 	flash_tween = create_tween()
 	flash_tween.tween_method(set_flash_value.bind(nodes, color), 0.0, 1.0, 0.1).set_trans(Tween.TRANS_QUAD)
 	flash_tween.tween_method(set_flash_value.bind(nodes, color), 1.0, 0.1, 0.1).set_trans(Tween.TRANS_QUAD)

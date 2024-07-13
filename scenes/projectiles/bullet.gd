@@ -29,10 +29,6 @@ func setup(pos, dir, type):
 		for enemy in enemies:
 			var bullet_angle = rad_to_deg(dir.angle()) 
 			var enemy_angle = rad_to_deg((enemy.position - pos).angle())
-			
-			print(bullet_angle, " shot at ", enemy_angle, " distance of ", pos.distance_to(enemy.position))
-			print(abs(bullet_angle - enemy_angle))
-			
 
 			if pos.distance_to(enemy.position) < Global.gun_data[Global.guns.SHOTGUN]['range'] and (abs(bullet_angle - enemy_angle) < 45 or abs(bullet_angle - enemy_angle) > 315):
 				enemy.hit(Global.gun_data[Global.guns.SHOTGUN]['damage'], enemy.get_sprites())
