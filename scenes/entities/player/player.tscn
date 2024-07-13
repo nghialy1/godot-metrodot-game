@@ -35,15 +35,15 @@ script = ExtResource("2_yrl14")
 speed = 150
 acceleration = 400
 friction = 900
-dash_cooldown = 2
+dash_cooldown = 1.5
 jump_strength = 300
 gun_jump_strength = 220
 gravity = 600
 terminal_velocity = 500
-crosshair_distance = 25
-ak_cooldown = 0.2
-shotgun_cooldown = 2
-rocket_cooldown = 4
+crosshair_distance = 20
+ak_cooldown = 0.75
+shotgun_cooldown = 2.0
+rocket_cooldown = 4.0
 metadata/_edit_horizontal_guides_ = [15.0, 15.0]
 
 [node name="CollisionShape2D" parent="." index="0"]
@@ -67,9 +67,11 @@ one_shot = true
 one_shot = true
 
 [node name="ShotgunReload" type="Timer" parent="Timers" index="4"]
+wait_time = 3.0
 one_shot = true
 
 [node name="RocketReload" type="Timer" parent="Timers" index="5"]
+wait_time = 6.0
 one_shot = true
 
 [node name="InvulTweenTimer" type="Timer" parent="Timers" index="7"]

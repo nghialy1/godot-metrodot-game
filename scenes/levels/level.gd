@@ -33,10 +33,20 @@ func _process(_delta):
 	if not disable_cam:
 		$CutsceneCamera2D.global_position = player.position
 
-func create_bullet(pos, dir, bullet_type):
+func create_bullet(pos, dir, bullet_type, origin):
 	var bullet = bullet_scene.instantiate()
+	
+	# bullet cant hit entites of itself
+	bullet.collision_mask = origin.collision_layer ^ bullet.collision_mask 
+	
+	# player layer is 0 when dashing 
+	if origin == player:
+		bullet.set_collision_mask_value(2, false)
+	
 	$Main/Projectiles.add_child(bullet)
 	bullet.setup(pos, dir, bullet_type)
+	
+	# shooting rocket
 	if bullet_type == Global.guns.ROCKET:
 		bullet.connect('detonate', create_explosion)
 

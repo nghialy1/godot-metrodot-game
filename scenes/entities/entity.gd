@@ -1,6 +1,6 @@
 extends CharacterBody2D
 class_name Entity
-signal shoot(pos, dir, bullet_type)
+signal shoot(pos, dir, bullet_type, origin)
 
 @onready var level = get_tree().get_current_scene()
 var flash_tween: Tween

@@ -4,7 +4,7 @@ extends Entity
 @export var speed := 200
 @export var acceleration := 700
 @export var friction := 900
-@export_range(0.1,2) var dash_cooldown := 2
+@export_range(0.1,2.0) var dash_cooldown := 2.0
 var direction := Vector2.ZERO
 var can_move := true
 var dash := false
@@ -27,11 +27,12 @@ var aim_direction := Vector2.RIGHT
 @export var crosshair_distance := 25
 const y_offset := 10
 const standing_height := 30
-@export_range(0.2, 2.0) var ak_cooldown := 0.5
-@export_range(0.2, 2.0) var shotgun_cooldown := 2
-@export_range(0.2, 2.0) var rocket_cooldown := 4
+@export_range(0.2, 10.0) var ak_cooldown := 0.75
+@export_range(0.2, 10.0) var shotgun_cooldown := 2.0
+@export_range(0.2, 10.0) var rocket_cooldown := 5.0
 
 var god_mode := false
+var rng = RandomNumberGenerator.new()
 
 func _ready():
 	$Timers/DashCooldown.wait_time = dash_cooldown
@@ -100,6 +101,15 @@ func get_input():
 	# switch
 	if Input.is_action_just_pressed("switch"):
 		current_gun = Global.guns[Global.guns.keys()[(current_gun + 1) % len(Global.guns)]]
+		
+	if Input.is_action_just_pressed("god_mode"):
+		god_mode = not god_mode
+		
+		var color_tween = create_tween()
+		
+		var start_value = $PlayerGraphics/Torso.material.get_shader_parameter('Progress')
+		var target_value = 0.0 if not god_mode else 0.35
+		color_tween.tween_method(set_flash_value.bind(get_sprites(), Color.GOLD),start_value,target_value, 0.2)
 		
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -183,10 +193,16 @@ func shoot_gun():
 	var pos = position + aim_direction * crosshair_distance
 	pos = pos if not ducking else pos + Vector2(0, y_offset)
 	if current_gun == Global.guns.AK and not $Timers/AKReload.time_left:
-		shoot.emit(pos, aim_direction, current_gun)
 		$Timers/AKReload.start()
+		
+		# shoot 3 bullets
+		for i in range(3):
+			var delay = rng.randf_range(0.1, 0.15)
+			shoot.emit(pos, aim_direction, current_gun, self)
+			await get_tree().create_timer(delay).timeout
+			pos = position + aim_direction * crosshair_distance
 	if current_gun == Global.guns.SHOTGUN and not $Timers/ShotgunReload.time_left:
-		shoot.emit(pos, aim_direction, current_gun)
+		shoot.emit(pos, aim_direction, current_gun, self)
 		$Timers/ShotgunReload.start()
 		$GPUParticles2D.position = $Crosshair.position
 		$GPUParticles2D.process_material.set('direction', aim_direction)
@@ -195,8 +211,14 @@ func shoot_gun():
 		if aim_direction.y == 1:
 			gun_jump = true
 	if current_gun == Global.guns.ROCKET and not $Timers/RocketReload.time_left:
-		shoot.emit(pos, aim_direction, current_gun)
+		# shoot 3 bullets in succession
 		$Timers/RocketReload.start()
+		
+		# shoot 2 rockets
+		for i in range(2):
+			shoot.emit(pos, aim_direction, current_gun, self)
+			await get_tree().create_timer(0.1).timeout
+			pos = position + aim_direction * crosshair_distance
 		
 func get_cam():
 	return $Camera2D

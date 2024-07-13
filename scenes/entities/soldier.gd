@@ -55,7 +55,7 @@ func check_cliff():
 func trigger_attack():
 	var dir = (player.position - position).normalized()
 	x_direction = dir.x
-	shoot.emit(position + dir * 20, dir, Global.guns.AK)
+	shoot.emit(position + dir * 20, dir, Global.guns.AK, self)
 
 func get_sprites():
 	return [$Sprite2D]

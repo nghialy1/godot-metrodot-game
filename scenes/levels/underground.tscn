@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cjgixjl1ncoo"]
+[gd_scene load_steps=7 format=3 uid="uid://cjgixjl1ncoo"]
 
 [ext_resource type="PackedScene" uid="uid://coa78sxepphhw" path="res://scenes/levels/level.tscn" id="1_d63ox"]
 [ext_resource type="PackedScene" uid="uid://cl74b3n23jnjt" path="res://scenes/entities/player/player.tscn" id="2_jgs0n"]
 [ext_resource type="PackedScene" uid="uid://bdmg0xdtb1hc7" path="res://scenes/entities/soldier.tscn" id="3_jeb8d"]
 [ext_resource type="PackedScene" uid="uid://bym8jvtve4jis" path="res://scenes/objects/transition_gate.tscn" id="3_l7wv4"]
 [ext_resource type="PackedScene" uid="uid://d0wtxdh8ayk32" path="res://scenes/objects/light.tscn" id="3_om66n"]
+[ext_resource type="PackedScene" uid="uid://0phpec5ul4dx" path="res://scenes/objects/key.tscn" id="4_6j0tk"]
 
 [node name="Underground" instance=ExtResource("1_d63ox")]
 cam_limits = Vector4i(-48, 688, -240, 400)
@@ -25,6 +26,9 @@ position = Vector2(92, -55)
 
 [node name="Soldier" parent="Main/Entities" index="1" instance=ExtResource("3_jeb8d")]
 position = Vector2(325, 339)
+
+[node name="Key" parent="Main/Objects" index="0" instance=ExtResource("4_6j0tk")]
+position = Vector2(664, 56)
 
 [node name="Light" parent="FG/FGLights" index="0" instance=ExtResource("3_om66n")]
 position = Vector2(160, -109)

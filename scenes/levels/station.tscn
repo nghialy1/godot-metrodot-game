@@ -74,53 +74,52 @@ position = Vector2(410, 58)
 [node name="Drone3" parent="Main/Entities" index="2" instance=ExtResource("5_emxti")]
 position = Vector2(181, 301)
 
-[node name="Drone4" parent="Main/Entities" index="3" instance=ExtResource("5_emxti")]
-position = Vector2(648, 126)
-
-[node name="Drone5" parent="Main/Entities" index="4" instance=ExtResource("5_emxti")]
+[node name="Drone5" parent="Main/Entities" index="3" instance=ExtResource("5_emxti")]
 position = Vector2(922, 82)
 
-[node name="Drone6" parent="Main/Entities" index="5" instance=ExtResource("5_emxti")]
-position = Vector2(1021, 37)
+[node name="Drone6" parent="Main/Entities" index="4" instance=ExtResource("5_emxti")]
+position = Vector2(827, 62)
 
-[node name="Drone7" parent="Main/Entities" index="6" instance=ExtResource("5_emxti")]
+[node name="Drone7" parent="Main/Entities" index="5" instance=ExtResource("5_emxti")]
 position = Vector2(954, 425)
 
-[node name="Drone8" parent="Main/Entities" index="7" instance=ExtResource("5_emxti")]
+[node name="Drone8" parent="Main/Entities" index="6" instance=ExtResource("5_emxti")]
 position = Vector2(1106, 458)
 
-[node name="Drone9" parent="Main/Entities" index="8" instance=ExtResource("5_emxti")]
+[node name="Drone9" parent="Main/Entities" index="7" instance=ExtResource("5_emxti")]
 position = Vector2(369, 460)
 
-[node name="Drone10" parent="Main/Entities" index="9" instance=ExtResource("5_emxti")]
+[node name="Drone10" parent="Main/Entities" index="8" instance=ExtResource("5_emxti")]
 position = Vector2(1225, 505)
 
-[node name="Soldier" parent="Main/Entities" index="10" instance=ExtResource("6_8gt12")]
+[node name="Soldier" parent="Main/Entities" index="9" instance=ExtResource("6_8gt12")]
 position = Vector2(308, 132)
 
-[node name="Soldier2" parent="Main/Entities" index="11" instance=ExtResource("6_8gt12")]
+[node name="Soldier2" parent="Main/Entities" index="10" instance=ExtResource("6_8gt12")]
 position = Vector2(854, 133)
 
-[node name="Soldier3" parent="Main/Entities" index="12" instance=ExtResource("6_8gt12")]
+[node name="Soldier3" parent="Main/Entities" index="11" instance=ExtResource("6_8gt12")]
 position = Vector2(909, 132)
 
-[node name="Soldier4" parent="Main/Entities" index="13" instance=ExtResource("6_8gt12")]
+[node name="Soldier4" parent="Main/Entities" index="12" instance=ExtResource("6_8gt12")]
 position = Vector2(949, 516)
 
-[node name="Soldier5" parent="Main/Entities" index="14" instance=ExtResource("6_8gt12")]
+[node name="Soldier5" parent="Main/Entities" index="13" instance=ExtResource("6_8gt12")]
 position = Vector2(1228, 611)
 
-[node name="Soldier6" parent="Main/Entities" index="15" instance=ExtResource("6_8gt12")]
+[node name="Soldier6" parent="Main/Entities" index="14" instance=ExtResource("6_8gt12")]
 position = Vector2(1035, 517)
 
-[node name="Soldier7" parent="Main/Entities" index="16" instance=ExtResource("6_8gt12")]
+[node name="Soldier7" parent="Main/Entities" index="15" instance=ExtResource("6_8gt12")]
 position = Vector2(54, 516)
 
-[node name="Soldier8" parent="Main/Entities" index="17" instance=ExtResource("6_8gt12")]
+[node name="Soldier8" parent="Main/Entities" index="16" instance=ExtResource("6_8gt12")]
 position = Vector2(252, 341)
 
-[node name="Player" parent="Main/Entities" index="18" instance=ExtResource("3_7ab4q")]
-position = Vector2(52, 132)
+[node name="Player" parent="Main/Entities" index="17" instance=ExtResource("3_7ab4q")]
+position = Vector2(1229, 8)
+dash_cooldown = 2.0
+rocket_cooldown = 5.0
 
 [node name="Saw" parent="Main/Objects" index="0" instance=ExtResource("5_q13g4")]
 forward = false
@@ -215,6 +214,7 @@ blend_mode = 1
 [node name="TransitionGate" parent="TransitionGates" index="0" node_paths=PackedStringArray("current_return") instance=ExtResource("5_epsbf")]
 position = Vector2(1147, -1)
 current_return = NodePath("ReturnMarkers/left")
+locked = true
 
 [node name="TransitionGate2" parent="TransitionGates" index="1" node_paths=PackedStringArray("current_return") instance=ExtResource("5_epsbf")]
 position = Vector2(51, 330)

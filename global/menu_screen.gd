@@ -30,6 +30,7 @@ func close_menu():
 	
 func _on_button_pressed():
 	CustsceneLayer.reset()
+	$EndScreen/AnimationPlayer.play_backwards("fade_to_black")
 	reset_game()
 
 func end_screen():
@@ -38,8 +39,7 @@ func end_screen():
 
 func reset_game():
 	get_tree().change_scene_to_file(ProjectSettings.get_setting('application/run/main_scene'))
-	Global.enemy_data.clear()
-	Global.player_data.clear()
+	Global.reset_game_data()
 	$'/root/BgMusic'.get_child(0).play()
 	close_menu()
 	current_screen = 'PauseScreen'

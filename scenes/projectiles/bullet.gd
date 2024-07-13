@@ -1,12 +1,12 @@
 extends Area2D
 
+# bullet can detonate if rocket
 signal detonate(pos: Vector2)
 
 var direction: Vector2
 var speed: int
 var damage: int
 var explosive := false
-@export var bullet_speed := 250
 
 func setup(pos, dir, type):
 	$AudioStreamPlayer2D.stream = Global.bullet_sounds[type]
@@ -14,7 +14,9 @@ func setup(pos, dir, type):
 	
 	position = pos
 	direction = dir.normalized()
+	rotate(dir.angle())
 	
+	# shoot bullet
 	if type in [Global.guns.AK, Global.guns.ROCKET]:
 		$Sprite2D.texture = Global.gun_data[type]['texture']
 		speed = Global.gun_data[type]['speed']
@@ -34,7 +36,7 @@ func setup(pos, dir, type):
 				enemy.hit(Global.gun_data[Global.guns.SHOTGUN]['damage'], enemy.get_sprites())
 		
 func _process(delta):
-	position += direction * bullet_speed * delta
+	position += direction * speed * delta
 
 func _on_body_entered(body):
 	detonate.emit(position)

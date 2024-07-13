@@ -37,7 +37,7 @@ func trigger_attack():
 	var option_index = rng.randi_range(0, $BulletOptions.get_child_count() - 1)
 	var selected = $BulletOptions.get_child(option_index)
 	for marker in selected.get_children():
-		shoot.emit(marker.global_position, Vector2.LEFT, Global.guns.AK)
+		shoot.emit(marker.global_position, Vector2.LEFT, Global.guns.ROCKET, self)
 
 func return_to_idle():
 	$AnimationPlayer.current_animation = 'idle'

@@ -1,22 +1,28 @@
 extends Node
 
+# persistence between scenes
+var enemy_data: Dictionary
+var player_data: Dictionary = {'items': []}
+
+func reset_game_data():
+	enemy_data.clear()
+	player_data = {'items': []}
+
+# weapon data
 enum guns {AK, SHOTGUN, ROCKET}
 const enemy_parameters = {
 	'drone': {'speed': 120, 'health': 20, 'damage': 15},
-	'soldier': {'speed': 50, 'health': 60},
-	'monster': {'health': 420}
+	'soldier': {'speed': 60, 'health': 80},
+	'monster': {'health': 820}
 }
 
 const gun_data = {
-	guns.AK: {'damage': 20, 'speed': 200, 'texture': preload("res://graphics/guns/projectiles/default.png")},
-	guns.ROCKET: {'damage': 60, 'speed': 120, 'texture': preload("res://graphics/guns/projectiles/large.png")},
-	guns.SHOTGUN: {'damage': 30, 'range': 80},
+	guns.AK: {'damage': 20, 'speed': 300, 'texture': preload("res://graphics/guns/projectiles/default.png")},
+	guns.ROCKET: {'damage': 100, 'speed': 200, 'texture': preload("res://graphics/guns/projectiles/large.png")},
+	guns.SHOTGUN: {'damage': 80, 'range': 80},
 }
 
-var enemy_data: Dictionary
-
-var player_data: Dictionary
-
+# game sounds and music
 const bullet_sounds = {
 	guns.AK: preload("res://audio/ak_shoot.wav"),
 	guns.SHOTGUN: preload("res://audio/shotgun_shoot.wav"),
