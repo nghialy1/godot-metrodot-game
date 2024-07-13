@@ -16,6 +16,7 @@ func _process(_delta):
 		toggle_pause()
 	
 func load_menu(screen: String):
+	print("change: ", screen)
 	if screen in screens:
 		current_screen = screen
 		toggle_pause()

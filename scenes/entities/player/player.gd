@@ -40,12 +40,13 @@ func _ready():
 func _process(delta):
 	super._process(delta)
 	
-	apply_gravity(delta)
-	
 	if can_move:
 		get_input()
-	apply_movement(delta)
 	animate()
+
+func _physics_process(delta):
+	apply_gravity(delta)
+	apply_movement(delta)
 
 func animate():
 	$Crosshair.update(aim_direction, crosshair_distance, ducking)
