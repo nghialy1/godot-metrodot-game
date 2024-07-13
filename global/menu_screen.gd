@@ -32,6 +32,10 @@ func _on_button_pressed():
 	CustsceneLayer.reset()
 	reset_game()
 
+func end_screen():
+	load_menu('EndScreen')
+	$EndScreen/AnimationPlayer.play("fade_to_black")
+
 func reset_game():
 	get_tree().change_scene_to_file(ProjectSettings.get_setting('application/run/main_scene'))
 	Global.enemy_data.clear()

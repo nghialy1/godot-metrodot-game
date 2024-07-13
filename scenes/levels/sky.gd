@@ -10,7 +10,6 @@ func _ready():
 	if boss.has_signal('died'):
 		boss.connect('died', on_boss_died)
 	
-
 func _process(delta):
 	super._process(delta)
 	
@@ -20,6 +19,7 @@ func _process(delta):
 		
 # play game end cutscene
 func on_boss_died():
+	player.god_mode = true
 	$'/root/BgMusic'.get_child(0).stop()
 	player.block_movement()
 	await boss_animation.animation_finished
@@ -35,6 +35,6 @@ func on_boss_died():
 	player.speed = player.speed / 2
 	player.direction.x = 1
 	await get_tree().create_timer(4).timeout
-	player.health = 0
+	MenuScreen.end_screen()
 	
 	

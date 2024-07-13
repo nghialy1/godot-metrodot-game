@@ -31,6 +31,8 @@ const standing_height := 30
 @export_range(0.2, 2.0) var shotgun_cooldown := 2
 @export_range(0.2, 2.0) var rocket_cooldown := 4
 
+var god_mode := false
+
 func _ready():
 	$Timers/DashCooldown.wait_time = dash_cooldown
 	$Timers/AKReload.wait_time = ak_cooldown
@@ -170,7 +172,7 @@ func block_movement():
 	direction = Vector2(0,0)
 
 func hit(damage, nodes):
-	if not $Timers/InvulTimer.time_left:
+	if not $Timers/InvulTimer.time_left and not god_mode:
 		flash(nodes)
 		health -= damage
 		$Hit.play()

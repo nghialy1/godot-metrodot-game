@@ -1,15 +1,73 @@
-[gd_scene load_steps=3 format=3 uid="uid://8rpws3tl4cl5"]
+[gd_scene load_steps=5 format=3 uid="uid://8rpws3tl4cl5"]
 
 [ext_resource type="Script" path="res://global/menu_screen.gd" id="1_exvxi"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_an1qq"]
 font_size = 70
 
+[sub_resource type="Animation" id="Animation_dm57e"]
+resource_name = "fade_to_black"
+length = 7.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer/Label:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(4, 6.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.992157)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("VBoxContainer/Buttons:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(6.1, 7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("VBoxContainer:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(4),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fieo1"]
+_data = {
+"fade_to_black": SubResource("Animation_dm57e")
+}
+
 [node name="MenuScreen" type="CanvasLayer"]
 process_mode = 3
 script = ExtResource("1_exvxi")
 
 [node name="DeathScreen" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -102,6 +160,78 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "QUIT"
 
+[node name="EndScreen" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="EndScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EndScreen"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -134.5
+offset_top = -83.0
+offset_right = 134.5
+offset_bottom = 83.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="EndScreen/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "YOU ESCAPED"
+label_settings = SubResource("LabelSettings_an1qq")
+horizontal_alignment = 1
+
+[node name="Buttons" type="Control" parent="EndScreen/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="EndScreen/VBoxContainer/Buttons"]
+layout_mode = 2
+offset_left = 195.0
+offset_top = 4.0
+offset_right = 270.0
+offset_bottom = 35.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "RESTART"
+
+[node name="Button2" type="Button" parent="EndScreen/VBoxContainer/Buttons"]
+layout_mode = 2
+offset_left = 209.0
+offset_top = 39.0
+offset_right = 256.0
+offset_bottom = 70.0
+size_flags_horizontal = 4
+text = "QUIT"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="EndScreen"]
+libraries = {
+"": SubResource("AnimationLibrary_fieo1")
+}
+
 [connection signal="pressed" from="DeathScreen/VBoxContainer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="PauseScreen/VBoxContainer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="PauseScreen/VBoxContainer/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="EndScreen/VBoxContainer/Buttons/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="EndScreen/VBoxContainer/Buttons/Button2" to="." method="_on_button_2_pressed"]
