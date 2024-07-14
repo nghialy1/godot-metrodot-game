@@ -1,133 +1,95 @@
-[gd_scene load_steps=19 format=3 uid="uid://ca7pvsigib48a"]
+[gd_scene load_steps=6 format=3 uid="uid://ca7pvsigib48a"]
 
-[ext_resource type="Texture2D" uid="uid://korhbgw06ji0" path="res://icon.svg" id="1_bu25j"]
+[ext_resource type="Texture2D" uid="uid://dyjrah64pnxdu" path="res://graphics/objects/lock animation.png" id="1_8pvb1"]
+[ext_resource type="AudioStream" uid="uid://bats73ilk80ww" path="res://audio/locked.mp3" id="3_m5uwa"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_xuwcr"]
-atlas = ExtResource("1_bu25j")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_k33tb"]
-atlas = ExtResource("1_bu25j")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mod6w"]
-atlas = ExtResource("1_bu25j")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_iph7m"]
-atlas = ExtResource("1_bu25j")
-region = Rect2(96, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_o85yu"]
-atlas = ExtResource("1_bu25j")
-region = Rect2(96, 32, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_x41wk"]
-atlas = ExtResource("1_bu25j")
-region = Rect2(96, 64, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tcqoe"]
-atlas = ExtResource("1_bu25j")
-region = Rect2(96, 96, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dv6p7"]
-atlas = ExtResource("1_bu25j")
-region = Rect2(64, 96, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4ilcg"]
-atlas = ExtResource("1_bu25j")
-region = Rect2(32, 96, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fdl7p"]
-atlas = ExtResource("1_bu25j")
-region = Rect2(0, 96, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5gs6a"]
-atlas = ExtResource("1_bu25j")
-region = Rect2(0, 64, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wcv66"]
-atlas = ExtResource("1_bu25j")
-region = Rect2(0, 32, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2uaeo"]
-atlas = ExtResource("1_bu25j")
-region = Rect2(32, 32, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_t84g6"]
-atlas = ExtResource("1_bu25j")
-region = Rect2(64, 32, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_on4bp"]
-atlas = ExtResource("1_bu25j")
-region = Rect2(64, 64, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_axxm7"]
-atlas = ExtResource("1_bu25j")
-region = Rect2(32, 64, 32, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_vpfk4"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xuwcr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_k33tb")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mod6w")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_iph7m")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_o85yu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_x41wk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tcqoe")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dv6p7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4ilcg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fdl7p")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5gs6a")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wcv66")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2uaeo")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_t84g6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_on4bp")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_axxm7")
-}],
-"loop": false,
-"name": &"locked",
-"speed": 12.0
+[sub_resource type="Animation" id="Animation_barfd"]
+resource_name = "locked"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 7, 7, 7, 7, 7, 7]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.9),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
 }]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3, 1.7, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.3, 1.7, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 5), Vector2(0, 0), Vector2(0, 0), Vector2(0, -5)]
+}
+
+[sub_resource type="Animation" id="Animation_hwbr0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sepqb"]
+_data = {
+"RESET": SubResource("Animation_hwbr0"),
+"locked": SubResource("Animation_barfd")
+}
 
 [node name="Lock" type="Node2D"]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.2, 0.2)
-sprite_frames = SubResource("SpriteFrames_vpfk4")
-animation = &"locked"
-autoplay = "locked"
-frame = 15
-frame_progress = 1.0
+[node name="Sprite2D" type="Sprite2D" parent="."]
+light_mask = 2
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_8pvb1")
+hframes = 8
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_m5uwa")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_sepqb")
+}

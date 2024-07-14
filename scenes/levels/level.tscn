@@ -26,6 +26,10 @@ format = 2
 
 [node name="Entities" type="Node2D" parent="Main"]
 
+[node name="Players" type="Node2D" parent="Main/Entities"]
+
+[node name="Enemies" type="Node2D" parent="Main/Entities"]
+
 [node name="Objects" type="Node2D" parent="Main"]
 
 [node name="Projectiles" type="Node2D" parent="Main"]
@@ -39,7 +43,6 @@ format = 2
 [node name="FGLights" type="Node2D" parent="FG"]
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
-visible = false
 
 [node name="TransitionGates" type="Node2D" parent="."]
 

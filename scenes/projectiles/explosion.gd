@@ -1,7 +1,7 @@
 extends AnimatedSprite2D
 
-func _ready():
+func _ready() -> void:
 	$AudioStreamPlayer.play()
 
-func _on_animation_finished():
+func _on_animation_finished() -> void:
 	queue_free()

@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://0phpec5ul4dx"]
+
+[ext_resource type="Script" path="res://scenes/objects/key.gd" id="1_lvxsq"]
+[ext_resource type="Texture2D" uid="uid://bn7qfkh4vw6c" path="res://graphics/objects/key.png" id="2_nlf0f"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_342s2"]
+size = Vector2(13, 13)
+
+[node name="Key" type="Node2D"]
+script = ExtResource("1_lvxsq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_nlf0f")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_342s2")
+
+[node name="HoverTimer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

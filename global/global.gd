@@ -4,20 +4,20 @@ extends Node
 var enemy_data: Dictionary
 var player_data: Dictionary = {'items': []}
 
-func reset_game_data():
+func reset_game_data() -> void:
 	enemy_data.clear()
 	player_data = {'items': []}
 
 # weapon data
 enum guns {AK, SHOTGUN, ROCKET}
 const enemy_parameters = {
-	'drone': {'speed': 120, 'health': 20, 'damage': 15},
-	'soldier': {'speed': 60, 'health': 80},
-	'monster': {'health': 820}
+	'drone': {'speed': 110, 'health': 20, 'damage': 30},
+	'soldier': {'speed': 70, 'health': 80},
+	'monster': {'health': 1020}
 }
 
 const gun_data = {
-	guns.AK: {'damage': 20, 'speed': 300, 'texture': preload("res://graphics/guns/projectiles/default.png")},
+	guns.AK: {'damage': 20, 'speed': 270, 'texture': preload("res://graphics/guns/projectiles/default.png")},
 	guns.ROCKET: {'damage': 100, 'speed': 200, 'texture': preload("res://graphics/guns/projectiles/large.png")},
 	guns.SHOTGUN: {'damage': 80, 'range': 80},
 }

@@ -32,26 +32,26 @@ const standing_height := 30
 @export_range(0.2, 10.0) var rocket_cooldown := 5.0
 
 var god_mode := false
-var rng = RandomNumberGenerator.new()
+var rng := RandomNumberGenerator.new()
 
-func _ready():
+func _ready() -> void:
 	$Timers/DashCooldown.wait_time = dash_cooldown
 	$Timers/AKReload.wait_time = ak_cooldown
 	$Timers/ShotgunReload.wait_time = shotgun_cooldown
 	$Timers/RocketReload.wait_time = rocket_cooldown
 
-func _process(delta):
+func _process(delta: float) -> void:
 	super._process(delta)
 	
 	if can_move:
 		get_input()
 	animate()
 
-func _physics_process(delta):
+func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
 	apply_movement(delta)
 
-func animate():
+func animate() -> void:
 	$Crosshair.update(aim_direction, crosshair_distance, ducking)
 	$PlayerGraphics.update_legs(direction, is_on_floor(), ducking)
 	$PlayerGraphics.update_torso(aim_direction, ducking, current_gun)
@@ -59,12 +59,12 @@ func animate():
 	if $Timers/InvulTimer.time_left and not $Timers/InvulTweenTimer.time_left:
 		$Timers/InvulTweenTimer.start()
 		
-		for sprite in get_sprites():
-			var invul_tween = create_tween()
+		for sprite: Node2D in get_sprites():
+			var invul_tween: Tween = create_tween()
 			invul_tween.tween_property(sprite, 'modulate:a', 0, 0.1)
 			invul_tween.tween_property(sprite, 'modulate:a', 1, 0.1)
 
-func get_input():
+func get_input() -> void:
 	# horizontal movement 
 	direction.x = Input.get_axis("left", "right")
 	
@@ -91,12 +91,37 @@ func get_input():
 	ducking = Input.is_action_pressed("duck") and is_on_floor()
 	
 	# aim
-	var aim_input_gamepad = Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
-	var aim_input_mouse = get_local_mouse_position().normalized()
-	var aim_input = aim_input_gamepad if gamepad_active else aim_input_mouse
+	var aim_input_gamepad := Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
+	var aim_input_mouse := get_local_mouse_position().normalized()
+	var aim_input := aim_input_gamepad if gamepad_active else aim_input_mouse
 	
 	if aim_input.length() > 0.5:
-		aim_direction = Vector2(round(aim_input.x), round(aim_input.y))
+		var aim_y : int
+		var aim_x:int
+		
+		var test := Vector2(round(aim_input.x), round(aim_input.y))
+		
+		if test.x == 0:
+			if aim_input.x > 0.3:
+				aim_x = 1
+			elif aim_input.x < -0.3:
+				aim_x = -1
+			else:
+				aim_x = 0
+			aim_y = test.y
+		elif test.y == 0:
+			if aim_input.y > 0.3:
+				aim_y = 1
+			elif aim_input.y < -0.3:
+				aim_y = -1
+			else:
+				aim_y = 0
+			aim_x = test.x
+		else:
+			aim_x = test.x
+			aim_y = test.y
+		
+		aim_direction = Vector2(aim_x, aim_y)
 		
 	# switch
 	if Input.is_action_just_pressed("switch"):
@@ -105,19 +130,19 @@ func get_input():
 	if Input.is_action_just_pressed("god_mode"):
 		god_mode = not god_mode
 		
-		var color_tween = create_tween()
+		var color_tween := create_tween()
 		
-		var start_value = $PlayerGraphics/Torso.material.get_shader_parameter('Progress')
-		var target_value = 0.0 if not god_mode else 0.35
+		var start_value: float = $PlayerGraphics/Torso.material.get_shader_parameter('Progress')
+		var target_value := 0.0 if not god_mode else 0.35
 		color_tween.tween_method(set_flash_value.bind(get_sprites(), Color.GOLD),start_value,target_value, 0.2)
 		
-func _input(event):
+func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		gamepad_active = false
 	if Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down"):
 		gamepad_active = true
 	
-func apply_movement(delta):
+func apply_movement(delta: float) -> void:
 	if direction.x:
 		velocity.x = move_toward(velocity.x, direction.x * speed, acceleration * delta)
 
@@ -147,7 +172,7 @@ func apply_movement(delta):
 		gun_jump = false
 		faster_fall = false
 	
-	var on_floor = is_on_floor()
+	var on_floor := is_on_floor()
 	move_and_slide()
 	if on_floor and not is_on_floor() and velocity.y >= 0:
 		$Timers/Coyote.start()
@@ -159,29 +184,29 @@ func apply_movement(delta):
 		$Dash.play()
 		dash = false
 		$PlayerGraphics.dash_particles(direction)
-		var dash_tween = create_tween()
+		var dash_tween := create_tween()
 		dash_tween.tween_property(self, 'velocity:x', direction.x * 600, 0.3)
 		dash_tween.connect("finished", on_dash_finish)
 		gravity_multiplier = 0
 	
-func apply_gravity(delta):
+func apply_gravity(delta: float) -> void:
 	velocity.y += gravity * delta
 	velocity.y = velocity.y / 2 if faster_fall and velocity.y < 0 else velocity.y
 	velocity.y = velocity.y * gravity_multiplier
 	velocity.y = min(velocity.y, terminal_velocity)
 
-func on_dash_finish():
+func on_dash_finish() -> void:
 	set_collision_layer_value(2, true)
 	set_collision_mask_value(3, true)
 	velocity.x = move_toward(velocity.x, 0, 500)
 	gravity_multiplier = 1
 
-func block_movement():
+func block_movement() -> void:
 	can_move = false
 	velocity = Vector2(0,0)
 	direction = Vector2(0,0)
 
-func hit(damage, nodes):
+func hit(damage: int, nodes: Array) -> void:
 	if not $Timers/InvulTimer.time_left and not god_mode:
 		flash(nodes)
 		health -= damage
@@ -189,47 +214,63 @@ func hit(damage, nodes):
 		await flash_tween.finished
 		$Timers/InvulTimer.start()
 
-func shoot_gun():
-	var pos = position + aim_direction * crosshair_distance
+func shoot_particles() -> void:
+	$ShootParticles.position = $Crosshair.position + aim_direction
+	$ShootParticles.process_material.set('direction', aim_direction)
+	$ShootParticles.restart()
+
+func shoot_gun() -> void:
+	var pos := position + aim_direction * crosshair_distance
 	pos = pos if not ducking else pos + Vector2(0, y_offset)
+
 	if current_gun == Global.guns.AK and not $Timers/AKReload.time_left:
 		$Timers/AKReload.start()
 		
+		var num := 10 if god_mode else 3
+		
 		# shoot 3 bullets
-		for i in range(3):
-			var delay = rng.randf_range(0.1, 0.15)
+		for i in range(num):
+			var delay := rng.randf_range(0.1, 0.15)
 			shoot.emit(pos, aim_direction, current_gun, self)
 			await get_tree().create_timer(delay).timeout
 			pos = position + aim_direction * crosshair_distance
+			pos = pos if not ducking else pos + Vector2(0, y_offset)
+			shoot_particles()
 	if current_gun == Global.guns.SHOTGUN and not $Timers/ShotgunReload.time_left:
 		shoot.emit(pos, aim_direction, current_gun, self)
 		$Timers/ShotgunReload.start()
-		$GPUParticles2D.position = $Crosshair.position
-		$GPUParticles2D.process_material.set('direction', aim_direction)
-		$GPUParticles2D.emitting = true
+		$ShotgunParticles.position = $Crosshair.position + aim_direction * 10
+		$ShotgunParticles.process_material.set('direction', aim_direction)
+		$ShotgunParticles.emitting = true
 		
 		if aim_direction.y == 1:
 			gun_jump = true
+		shoot_particles()
 	if current_gun == Global.guns.ROCKET and not $Timers/RocketReload.time_left:
 		# shoot 3 bullets in succession
 		$Timers/RocketReload.start()
 		
+		var num := 6 if god_mode else 2
+		
 		# shoot 2 rockets
-		for i in range(2):
+		for i in range(num):
 			shoot.emit(pos, aim_direction, current_gun, self)
 			await get_tree().create_timer(0.1).timeout
 			pos = position + aim_direction * crosshair_distance
+			pos = pos if not ducking else pos + Vector2(0, y_offset)
+			shoot_particles()
+			
 		
-func get_cam():
+func get_cam() -> Camera2D:
 	return $Camera2D
 	
-func get_sprites():
+func get_sprites() -> Array:
 	return [$PlayerGraphics/Legs, $PlayerGraphics/Torso]
 
-func toggle_cam():
+func toggle_cam() -> void:
 	$Camera2D.enabled = !$Camera2D.enabled
 
-func trigger_death():
+func trigger_death() -> void:
 	block_movement()
 	set_collision_layer_value(2, false)
 	MenuScreen.load_menu('DeathScreen')

@@ -692,9 +692,9 @@ emission_box_extents = Vector3(1, 16, 1)
 spread = 10.0
 initial_velocity_min = 110.0
 initial_velocity_max = 160.0
-gravity = Vector3(0, 98, 0)
+gravity = Vector3(0, 5, 0)
 scale_min = 0.05
-scale_max = 0.3
+scale_max = 0.1
 
 [node name="PlayerGraphics" type="Node2D"]
 script = ExtResource("1_f3r34")
@@ -719,7 +719,7 @@ libraries = {
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_nnkjt")
 anim_player = NodePath("../AnimationPlayer")
-parameters/AK/blend_position = Vector2(0.450853, -0.577093)
+parameters/AK/blend_position = Vector2(0.14919, 0.702523)
 parameters/ROCKET/blend_position = Vector2(0, 0)
 parameters/SHOTGUN/blend_position = Vector2(0, 0)
 script = ExtResource("3_spcel")
@@ -727,8 +727,8 @@ script = ExtResource("3_spcel")
 [node name="DashParticles" type="GPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_nbvmg")
 emitting = false
+amount = 20
 process_material = SubResource("ParticleProcessMaterial_hoyi1")
 texture = ExtResource("5_yl5tn")
 lifetime = 0.6
 one_shot = true
-explosiveness = 0.6
