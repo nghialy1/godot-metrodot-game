@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bdmg0xdtb1hc7" path="res://scenes/entities/soldier.tscn" id="3_jeb8d"]
 [ext_resource type="PackedScene" uid="uid://bym8jvtve4jis" path="res://scenes/objects/transition_gate.tscn" id="3_l7wv4"]
 [ext_resource type="PackedScene" uid="uid://d0wtxdh8ayk32" path="res://scenes/objects/light.tscn" id="3_om66n"]
-[ext_resource type="PackedScene" uid="uid://0phpec5ul4dx" path="res://scenes/objects/key.tscn" id="4_6j0tk"]
+[ext_resource type="PackedScene" uid="uid://f6x4utsqs8uk" path="res://scenes/objects/key.tscn" id="4_6j0tk"]
 [ext_resource type="PackedScene" uid="uid://fy1npfb2ufiv" path="res://scenes/entities/drone.tscn" id="4_bjp3y"]
 
 [node name="Underground" instance=ExtResource("1_d63ox")]
@@ -100,3 +100,4 @@ position = Vector2(53, -58)
 level = "station"
 return_marker = 1
 current_return = NodePath("ReturnMarkers/right")
+locked = false

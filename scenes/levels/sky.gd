@@ -29,7 +29,7 @@ func _process(delta: float) -> void:
 
 func on_phase_two() -> void:
 	var phase_two_tween := create_tween()
-	phase_two_tween.tween_property(cam, 'zoom', cam.zoom / 2, 3)
+	phase_two_tween.tween_property(cam, 'zoom', Vector2(1.75,1.75), 3)
 	await phase_two_tween.finished
 
 # play game end cutscene
@@ -45,7 +45,6 @@ func on_boss_died() -> void:
 	await boss_animation.animation_finished
 	
 	# player escapes
-	
 	$CutsceneCamera2D.zoom = cam.zoom
 	$CutsceneCamera2D.limit_left = cam.limit_left
 	$CutsceneCamera2D.limit_right = cam.limit_right

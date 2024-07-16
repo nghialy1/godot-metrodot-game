@@ -68,7 +68,6 @@ layer_0/tile_data = PackedInt32Array(589824, 131073, 0, 589825, 458753, 0, 58982
 [node name="Player" parent="Main/Entities/Players" index="0" instance=ExtResource("3_7ab4q")]
 position = Vector2(112, 130)
 dash_cooldown = 2.0
-rocket_cooldown = 5.0
 
 [node name="Drone" parent="Main/Entities/Enemies" index="0" instance=ExtResource("5_emxti")]
 position = Vector2(524, 86)
@@ -220,3 +219,4 @@ position = Vector2(51, 330)
 level = "underground"
 return_marker = 1
 current_return = NodePath("ReturnMarkers/right")
+locked = false

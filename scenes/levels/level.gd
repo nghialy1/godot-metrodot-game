@@ -115,7 +115,6 @@ func _exit_tree() -> void:
 	Global.player_data[get_tree().current_scene.name] = [closest, player.velocity, player.health]
 	Global.player_data['health'] = player.health
 	Global.player_data['current_gun'] = player.current_gun
-	print(Global.player_data)
 	
 	# save transition gate data
 	Global.transition_gate_data[get_tree().current_scene.name] = current_gate_data

@@ -7,7 +7,7 @@ var flash_tween: Tween
 var dead := false
 var invulnerable := false
 
-var health := 200:
+var health := 250:
 	set(value):
 		if not invulnerable:
 			health = value

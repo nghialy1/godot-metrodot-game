@@ -77,6 +77,6 @@ script = ExtResource("2_j1jmp")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_bf3cp")
-volume_db = -5.0
+volume_db = -28.0
 
 [connection signal="animation_finished" from="." to="." method="_on_animation_finished"]

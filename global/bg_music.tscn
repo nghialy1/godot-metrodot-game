@@ -11,11 +11,12 @@ script = ExtResource("1_iuh5k")
 
 [node name="MainMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("1_f6qom")
-volume_db = -8.0
+volume_db = -30.0
 
 [node name="BossMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_3pcbn")
+volume_db = -20.0
 
 [node name="DeathSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_qn5n8")
-volume_db = 15.0
+volume_db = 10.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bo06bm6t6waba"]
+[gd_scene load_steps=6 format=3 uid="uid://853e4ggxmji2"]
 
 [ext_resource type="Script" path="res://scenes/projectiles/homing_bullet.gd" id="1_jki24"]
 [ext_resource type="Texture2D" uid="uid://dl1yluwgikdh7" path="res://graphics/guns/projectiles/explosion.png" id="1_k67j5"]
@@ -44,7 +44,7 @@ hframes = 9
 frame = 1
 
 [node name="TrackTimer" type="Timer" parent="."]
-wait_time = 0.75
+wait_time = 0.5
 one_shot = true
 autostart = true
 

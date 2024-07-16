@@ -76,14 +76,14 @@ terminal_velocity = 500
 crosshair_distance = 20
 ak_cooldown = 0.9
 shotgun_cooldown = 2.0
-rocket_cooldown = 4.0
+rocket_cooldown = 5.0
 metadata/_edit_horizontal_guides_ = [15.0, 15.0]
 
 [node name="CollisionShape2D" parent="." index="0"]
 shape = SubResource("CapsuleShape2D_ol06y")
 
 [node name="Camera2D" type="Camera2D" parent="." index="1"]
-zoom = Vector2(4, 4)
+zoom = Vector2(3, 3)
 
 [node name="Coyote" type="Timer" parent="Timers" index="0"]
 wait_time = 0.15
@@ -141,8 +141,9 @@ explosiveness = 0.5
 
 [node name="Dash" type="AudioStreamPlayer2D" parent="." index="9"]
 stream = ExtResource("8_r2wj8")
+volume_db = -15.0
 
 [node name="Run" type="AudioStreamPlayer2D" parent="." index="10"]
 stream = ExtResource("9_86irk")
-volume_db = -5.0
+volume_db = -20.0
 pitch_scale = 2.0

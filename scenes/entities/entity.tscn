@@ -15,3 +15,4 @@ one_shot = true
 
 [node name="Hit" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_mubdv")
+volume_db = -18.0

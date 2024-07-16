@@ -7,7 +7,7 @@ var speed : float = Global.special_bullet_data['homing_bullet']['speed']
 var damage := Global.special_bullet_data['homing_bullet']['damage']
 var direction := Vector2.DOWN
 var velocity := Vector2.ZERO
-var acceleration := 175.0
+var acceleration := 250.0
 var origin : CharacterBody2D
 
 func setup(target: CharacterBody2D, pos: Vector2, start_dir: Vector2, bullet_origin: CharacterBody2D) -> void:

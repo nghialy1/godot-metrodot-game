@@ -6,7 +6,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xhmor"]
 radius = 1.0
-height = 12.0
+height = 8.0
 
 [node name="Bullet" type="Area2D"]
 collision_layer = 16
@@ -14,7 +14,6 @@ collision_mask = 7
 script = ExtResource("1_e71bw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(1.5, 0.75)
 texture = ExtResource("1_xdf1h")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -22,13 +21,14 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_xhmor")
 
 [node name="KillTimer" type="Timer" parent="."]
-wait_time = 4.0
+wait_time = 5.0
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 texture = ExtResource("3_datd8")
 texture_scale = 0.05
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+volume_db = -13.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="KillTimer" to="." method="_on_kill_timer_timeout"]

@@ -23,8 +23,7 @@ func toggle_pause() -> void:
 	get_tree().paused = not get_tree().paused
 	if current_screen != 'DeathScreen':
 		BgMusic.toggle_pause()
-	else:
-		screens.get(current_screen).visible = not screens.get(current_screen).visible
+	screens.get(current_screen).visible = not screens.get(current_screen).visible
 
 func close_menu() -> void:
 	screens.get(current_screen).visible = false
@@ -47,7 +46,6 @@ func end_screen() -> void:
 func reset_game() -> void:
 	get_tree().change_scene_to_file(ProjectSettings.get_setting('application/run/main_scene'))
 	Global.reset_game_data()
-	BgMusic.play_music('MainMusic')
 	close_menu()
 	current_screen = 'PauseScreen'
 
