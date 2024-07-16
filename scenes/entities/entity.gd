@@ -5,14 +5,16 @@ signal shoot(pos: Vector2, dir: Vector2, bullet_type: int, origin: Entity)
 @onready var level := get_tree().get_current_scene()
 var flash_tween: Tween
 var dead := false
+var invulnerable := false
 
 var health := 200:
 	set(value):
-		health = value
-		if is_in_group('Player'):
-			get_tree().get_first_node_in_group('HealthCircle').update(value)
-		if health <= 0:
-			trigger_death()
+		if not invulnerable:
+			health = value
+			if is_in_group('Player'):
+				get_tree().get_first_node_in_group('HealthCircle').update(value)
+			if health <= 0:
+				trigger_death()
 
 func _process(_delta: float) -> void:
 	# fell to death

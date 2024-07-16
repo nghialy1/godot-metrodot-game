@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://bo06bm6t6waba"]
+
+[ext_resource type="Script" path="res://scenes/projectiles/homing_bullet.gd" id="1_jki24"]
+[ext_resource type="Texture2D" uid="uid://dl1yluwgikdh7" path="res://graphics/guns/projectiles/explosion.png" id="1_k67j5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_j1g2w"]
+radius = 3.16228
+
+[node name="HomingBullet" type="Area2D"]
+collision_layer = 16
+collision_mask = 7
+script = ExtResource("1_jki24")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_k67j5")
+hframes = 9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_j1g2w")
+
+[node name="TrackTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

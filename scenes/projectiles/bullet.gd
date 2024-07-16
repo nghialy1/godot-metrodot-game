@@ -3,15 +3,17 @@ extends Area2D
 # bullet can detonate if rocket
 signal detonate(pos: Vector2)
 
+var origin : CharacterBody2D
 var direction: Vector2
 var speed: int
 var damage: int
 var explosive := false
 
-func setup(pos: Vector2, dir: Vector2, type: int) -> void:
+func setup(pos: Vector2, dir: Vector2, type: int, bullet_origin: CharacterBody2D) -> void:
 	$AudioStreamPlayer2D.stream = Global.bullet_sounds[type]
 	$AudioStreamPlayer2D.play()
 	
+	origin = bullet_origin
 	position = pos
 	direction = dir.normalized()
 	rotate(dir.angle())
@@ -40,8 +42,17 @@ func _process(delta: float) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	detonate.emit(position)
+	
+	# hit body 
 	if 'hit' in body:
 		body.hit(damage, body.get_sprites())
+	
+	# hit other entities that are close
+	for entity in get_tree().get_nodes_in_group('Entity'):
+		if entity != origin and entity != body and position.distance_to(entity.position) < 25:
+			if 'hit' in entity:
+				entity.hit(damage, entity.get_sprites())
+	
 	queue_free()
 
 func _on_kill_timer_timeout() -> void:

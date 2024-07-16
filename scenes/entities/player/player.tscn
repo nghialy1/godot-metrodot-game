@@ -14,11 +14,12 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ol06y"]
 radius = 4.0
 
-[sub_resource type="Gradient" id="Gradient_p4nh6"]
-colors = PackedColorArray(1, 1, 1, 0.231373, 1, 1, 1, 0)
+[sub_resource type="Curve" id="Curve_cyqhi"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.24186, 0.538461), 0.0, 0.0, 0, 0, Vector2(0.506977, 0.164835), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_nn1nn"]
-gradient = SubResource("Gradient_p4nh6")
+[sub_resource type="CurveTexture" id="CurveTexture_uakgh"]
+curve = SubResource("Curve_cyqhi")
 
 [sub_resource type="Curve" id="Curve_ay43a"]
 min_value = 30.0
@@ -26,7 +27,7 @@ max_value = 600.0
 _data = [Vector2(0, 600), 0.0, 0.0, 0, 0, Vector2(0.181395, 30), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_7do7q"]
+[sub_resource type="CurveTexture" id="CurveTexture_b1j16"]
 curve = SubResource("Curve_ay43a")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g4pvv"]
@@ -35,13 +36,13 @@ emission_shape = 1
 emission_sphere_radius = 1.0
 spread = 12.0
 initial_velocity_min = 100.0
-initial_velocity_max = 600.0
-velocity_limit_curve = SubResource("CurveTexture_7do7q")
+initial_velocity_max = 400.0
+velocity_limit_curve = SubResource("CurveTexture_b1j16")
 gravity = Vector3(0, 0, 0)
 scale_min = 0.4
 scale_max = 0.6
-color = Color(1, 1, 1, 0.12549)
-color_ramp = SubResource("GradientTexture1D_nn1nn")
+color = Color(1, 1, 1, 0.0509804)
+alpha_curve = SubResource("CurveTexture_uakgh")
 turbulence_noise_scale = 1.0
 collision_mode = 2
 
@@ -53,14 +54,14 @@ particles_anim_loop = false
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wty1r"]
 particle_flag_disable_z = true
-spread = 40.0
-initial_velocity_min = 200.0
+spread = 20.0
+initial_velocity_min = 250.0
 initial_velocity_max = 280.0
 gravity = Vector3(0, 0, 0)
 anim_speed_min = 0.4
 anim_speed_max = 1.99
 
-[node name="Player" groups=["Player"] instance=ExtResource("1_3xfb3")]
+[node name="Player" groups=["Entity", "Player"] instance=ExtResource("1_3xfb3")]
 collision_layer = 2
 collision_mask = 29
 script = ExtResource("2_yrl14")
@@ -73,7 +74,7 @@ gun_jump_strength = 220
 gravity = 600
 terminal_velocity = 500
 crosshair_distance = 20
-ak_cooldown = 0.75
+ak_cooldown = 0.9
 shotgun_cooldown = 2.0
 rocket_cooldown = 4.0
 metadata/_edit_horizontal_guides_ = [15.0, 15.0]
@@ -103,7 +104,7 @@ wait_time = 3.0
 one_shot = true
 
 [node name="RocketReload" type="Timer" parent="Timers" index="5"]
-wait_time = 6.0
+wait_time = 4.0
 one_shot = true
 
 [node name="InvulTweenTimer" type="Timer" parent="Timers" index="7"]
@@ -118,12 +119,11 @@ script = ExtResource("5_qqb83")
 [node name="PlayerGraphics" parent="." index="4" instance=ExtResource("5_rn2wi")]
 position = Vector2(0, -7.5)
 
-[node name="ShootParticles" type="GPUParticles2D" parent="." index="5"]
+[node name="SmokeParticles" type="GPUParticles2D" parent="." index="5"]
 emitting = false
 amount = 15
 process_material = SubResource("ParticleProcessMaterial_g4pvv")
 texture = ExtResource("7_xlc4c")
-lifetime = 0.5
 one_shot = true
 explosiveness = 1.0
 randomness = 1.0

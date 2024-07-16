@@ -1,10 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://cckhopvdpp7do"]
+[gd_scene load_steps=5 format=3 uid="uid://cckhopvdpp7do"]
 
 [ext_resource type="AudioStream" uid="uid://c7hmrbkx1yg1h" path="res://audio/music.mp3" id="1_f6qom"]
+[ext_resource type="Script" path="res://global/bg_music.gd" id="1_iuh5k"]
+[ext_resource type="AudioStream" uid="uid://b8d1o1mp4oawe" path="res://audio/boss_music_edit.mp3" id="3_3pcbn"]
+[ext_resource type="AudioStream" uid="uid://ds7tdrtuxaqhd" path="res://audio/death.mp3" id="4_qn5n8"]
 
 [node name="BGMusic" type="Node"]
+process_mode = 3
+script = ExtResource("1_iuh5k")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="MainMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("1_f6qom")
-volume_db = -18.0
-autoplay = true
+volume_db = -8.0
+
+[node name="BossMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_3pcbn")
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_qn5n8")
+volume_db = 15.0

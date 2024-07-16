@@ -1,43 +1,82 @@
 extends Entity
 
 signal died()
+signal entered_phase_two()
+signal shoot_homing(pos: Vector2, target: CharacterBody2D, origin: CharacterBody2D)
 
 @onready var player: CharacterBody2D = get_tree().get_first_node_in_group('Player')
 @onready var player_camera: Camera2D = player.get_cam()
-@onready var cam_size := player_camera.get_viewport_rect().size.x / player_camera.zoom.x
-@export var limits: Vector2i
+@onready var cam_size_x := player_camera.get_viewport_rect().size.x / player_camera.zoom.x
+@onready var cam_size_y := player_camera.get_viewport_rect().size.y / player_camera.zoom.y
+@export var limits_x: Vector2i
+@export var limits_y: Vector2i
 
+var off_screen_offset := 55
+
+var special_pos_x : float
+var direction :=  Vector2.LEFT
+var x_range := Vector2(-50,50)
+var x_offset: float
 var y_range := Vector2(-50,50)
 var y_offset: float
 var rng := RandomNumberGenerator.new()
+var phase_two := false
+var can_move := false
+var phase_two_animation := false
+var special_move := false
+
 
 signal detonate(pos: Vector2)
 
 func _ready() -> void:
 	health = Global.enemy_parameters['monster']['health']
+	$CollisionShape2D.disabled  = true
+	
+	if 'zone_entered' in level:
+		level.connect('zone_entered', on_entered)
 
-func _process(_delta: float) -> void:
-	var x := player.position.x + cam_size / 2 - 20
-	x = max(limits.x, min(limits.y, x))
-	var y := player.position.y + y_offset
+func _process(delta: float) -> void:
+	# camera size
+	cam_size_x = player_camera.get_viewport_rect().size.x / player_camera.zoom.x
+	cam_size_y = player_camera.get_viewport_rect().size.y / player_camera.zoom.y
+	
+	if not phase_two and health <= Global.enemy_parameters['monster']['health'] / 2.0:
+		start_phase_two()
+	
+	# Calculate monster position
+	var x : float
+	var y : float
+	
+	if not can_move:
+		y_offset = 0
+	
+	if phase_two and not phase_two_animation:
+		set_flash_value(0.6, get_sprites(), Color.DARK_RED)
+		if special_move:
+			x = special_pos_x + x_offset
+		else:
+			x = move_toward(position.x, player.position.x + x_offset, 5)
 
+		y = player.position.y - cam_size_y / 2 + 30
+		y = max(limits_y.x, min(limits_y.y, y)) - off_screen_offset
+	else:
+		x = player.position.x + cam_size_x / 2 - 25
+		y = player.position.y + y_offset
+		x = max(limits_x.x, min(limits_x.y, x)) + off_screen_offset
+		
 	position = Vector2(x,y)
 
-func _on_attack_timer_timeout() -> void:
-	$AnimationPlayer.current_animation = 'attack'
-	$Timers/AttackTimer.wait_time = rng.randf_range(0.5,2.0)
-	$Timers/AttackTimer.start()
-
-func _on_move_timer_timeout() -> void:
-	var tween := create_tween()
-	tween.tween_property(self, 'y_offset', rng.randf_range(y_range.x, y_range.y), 0.6)
-	tween.tween_callback($Timers/MoveTimer.start)
 
 func trigger_attack() -> void:
 	var option_index := rng.randi_range(0, $BulletOptions.get_child_count() - 1)
 	var selected := $BulletOptions.get_child(option_index)
 	for marker in selected.get_children():
-		shoot.emit(marker.global_position, Vector2.LEFT, Global.guns.ROCKET, self)
+		shoot.emit(marker.global_position, direction, Global.guns.ROCKET, self)
+		
+	# if phase two also shoot two homing bullets
+	if phase_two and not phase_two_animation and not special_move:
+		shoot_homing.emit($HomingBulletOptions/Marker2D.global_position, player, Vector2.LEFT, self)
+		shoot_homing.emit($HomingBulletOptions/Marker2D2.global_position, player, Vector2.RIGHT, self)
 
 func return_to_idle() -> void:
 	$AnimationPlayer.current_animation = 'idle'
@@ -52,14 +91,57 @@ func explode() -> void:
 	detonate.emit(Vector2(rand_x, rand_y))
 	
 func trigger_death() -> void:
-	$Timers/MoveTimer.stop()
-	$Timers/AttackTimer.stop()
+	for timer in $Timers.get_children():
+		timer.stop()
+	
 	$AnimationPlayer.current_animation = 'death'
 	call_deferred("disable_collisions")
 	died.emit()
 	
 func disable_collisions() -> void:
 	$CollisionShape2D.disabled = true
+
+func start_phase_two() -> void:
+	# phase two
+	phase_two = true
+	phase_two_animation = true
+	entered_phase_two.emit()
+	invulnerable = true
+	can_move = false
+	$Timers/MoveTimer.wait_time = 0.3
+	$Timers/AttackTimer.wait_time = 0.3
+	
+	# change boundary as camera zooms out
+	var limit_tween := create_tween()
+	var target_cam_size := Vector2(player_camera.get_viewport_rect().size.x / 2.0, player_camera.get_viewport_rect().size.y / 2.0)
+	limit_tween.tween_property(self, 'limits_x:x', (target_cam_size.x/2 - 20) - player_camera.limit_left, 3)
+
+	# player phase two animation
+	var exit_tween := create_tween()
+	exit_tween.tween_property(self, 'off_screen_offset', 100, 3)
+	await exit_tween.finished
+	
+	# orient boss to sky
+	rotate(-PI/2)
+	direction = Vector2.DOWN
+
+
+	# wait for boss to move above player
+	invulnerable = false
+	phase_two_animation = false
+	await get_tree().create_timer(1.5).timeout
+	
+	# re-enter from above
+	var enter_tween := create_tween()
+	enter_tween.tween_property(self, 'off_screen_offset', 0, 1.5)
+	await enter_tween.finished
+	
+	# scream
+	$AnimationPlayer.play("scream")
+	await $AnimationPlayer.animation_finished
+	
+	$Timers/SpecialTimer.start()
+	can_move = true
 
 func setup(data: Array) -> void:
 	super.setup(data)
@@ -68,3 +150,66 @@ func setup(data: Array) -> void:
 	if dead:
 		$AnimationPlayer.stop()
 		$Sprite2D.visible = false
+
+func on_entered() -> void:
+	player.block_movement() 
+	$Sprite2D.visible = true
+	$AnimationPlayer.play("entry")
+	
+	var entry_tween := create_tween()
+	entry_tween.tween_property(self, 'off_screen_offset', 0, 3)
+	await $AnimationPlayer.animation_finished
+	
+	# start battle
+	$CollisionShape2D.disabled = false
+	player.can_move = true
+	can_move = true
+	$AnimationPlayer.play("attack")
+
+func _on_attack_timer_timeout() -> void:
+	if can_move:
+		$AnimationPlayer.current_animation = 'attack'
+		$Timers/AttackTimer.wait_time = rng.randf_range(0.5,2.0)
+	$Timers/AttackTimer.start()
+
+func _on_move_timer_timeout() -> void:
+	if not special_move:
+		var tween := create_tween()
+		if phase_two:
+			tween.tween_property(self, 'x_offset', rng.randf_range(x_range.x, x_range.y), 0.6)
+			tween.tween_callback($Timers/MoveTimer.start)
+		else:
+			tween.tween_property(self, 'y_offset', rng.randf_range(y_range.x, y_range.y), 0.6)
+			tween.tween_callback($Timers/MoveTimer.start)
+
+func _on_special_timer_timeout() -> void:
+	if phase_two:
+		# scream
+		can_move = false
+		$AnimationPlayer.play("scream")
+		await $AnimationPlayer.animation_finished
+		
+		# attack
+		special_pos_x = player.position.x
+		var binary := rng.randi() % 2
+		var dir := -1 if binary else 1
+		var special_tween1 := create_tween()
+		special_tween1.tween_property(self, 'x_offset', dir * -300, 1)
+		special_tween1.chain()
+		await special_tween1.finished
+		special_move = true
+		var special_tween2 := create_tween()
+		special_tween2.tween_property(self, 'x_offset', dir * 300, 3)
+		await special_tween2.finished
+		
+		# random time until next special
+		$Timers/SpecialTimer.wait_time = rng.randi_range(6, 10)
+		$Timers/SpecialTimer.start()
+		x_offset = 0
+		can_move = true
+		special_move = false
+
+func _on_special_attack_timer_timeout() -> void:
+	if special_move:
+		trigger_attack()
+	$Timers/SpecialAttackTimer.start()

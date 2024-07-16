@@ -183,7 +183,7 @@ shader_parameter/Progress = 0.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e22oi"]
 size = Vector2(18, 29)
 
-[node name="Soldier" groups=["Enemies"] instance=ExtResource("1_dcju1")]
+[node name="Soldier" groups=["Enemies", "Entity"] instance=ExtResource("1_dcju1")]
 collision_layer = 4
 collision_mask = 19
 script = ExtResource("2_njvdv")

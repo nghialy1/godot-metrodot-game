@@ -22,7 +22,7 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_xhmor")
 
 [node name="KillTimer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 4.0
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 texture = ExtResource("3_datd8")

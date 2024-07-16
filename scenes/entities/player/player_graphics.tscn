@@ -1,4 +1,4 @@
-[gd_scene load_steps=80 format=3 uid="uid://ca4nser64t3oa"]
+[gd_scene load_steps=83 format=3 uid="uid://ca4nser64t3oa"]
 
 [ext_resource type="Texture2D" uid="uid://dh4cvrwqfclfg" path="res://graphics/entities/player.png" id="1_c7k64"]
 [ext_resource type="Script" path="res://scenes/entities/player/player_graphics.gd" id="1_f3r34"]
@@ -668,6 +668,19 @@ advance_expression = "selected_gun == options.ROCKET"
 advance_mode = 2
 advance_expression = "selected_gun == options.AK"
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8njgk"]
+advance_mode = 2
+advance_expression = "selected_gun == options.ROCKET"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hsbht"]
+advance_mode = 2
+advance_expression = "selected_gun == options.AK"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_c8rd0"]
+advance_mode = 2
+advance_expression = "selected_gun == options.SHOTGUN
+"
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_nnkjt"]
 states/AK/node = SubResource("AnimationNodeBlendSpace2D_be2pm")
 states/AK/position = Vector2(391, 100)
@@ -676,7 +689,7 @@ states/ROCKET/node = SubResource("AnimationNodeBlendSpace2D_xjd4r")
 states/ROCKET/position = Vector2(505, 216)
 states/SHOTGUN/node = SubResource("AnimationNodeBlendSpace2D_m4plx")
 states/SHOTGUN/position = Vector2(640, 100)
-transitions = ["Start", "AK", SubResource("AnimationNodeStateMachineTransition_20t6q"), "AK", "SHOTGUN", SubResource("AnimationNodeStateMachineTransition_uajnq"), "SHOTGUN", "ROCKET", SubResource("AnimationNodeStateMachineTransition_fji6v"), "ROCKET", "AK", SubResource("AnimationNodeStateMachineTransition_p5gp7")]
+transitions = ["Start", "AK", SubResource("AnimationNodeStateMachineTransition_20t6q"), "AK", "SHOTGUN", SubResource("AnimationNodeStateMachineTransition_uajnq"), "SHOTGUN", "ROCKET", SubResource("AnimationNodeStateMachineTransition_fji6v"), "ROCKET", "AK", SubResource("AnimationNodeStateMachineTransition_p5gp7"), "AK", "ROCKET", SubResource("AnimationNodeStateMachineTransition_8njgk"), "SHOTGUN", "AK", SubResource("AnimationNodeStateMachineTransition_hsbht"), "ROCKET", "SHOTGUN", SubResource("AnimationNodeStateMachineTransition_c8rd0")]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_nbvmg"]
 blend_mode = 1
@@ -692,9 +705,9 @@ emission_box_extents = Vector3(1, 16, 1)
 spread = 10.0
 initial_velocity_min = 110.0
 initial_velocity_max = 160.0
-gravity = Vector3(0, 5, 0)
-scale_min = 0.05
-scale_max = 0.1
+gravity = Vector3(0, 0, 0)
+scale_min = 0.02
+scale_max = 0.06
 
 [node name="PlayerGraphics" type="Node2D"]
 script = ExtResource("1_f3r34")
@@ -727,8 +740,8 @@ script = ExtResource("3_spcel")
 [node name="DashParticles" type="GPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_nbvmg")
 emitting = false
-amount = 20
+amount = 40
 process_material = SubResource("ParticleProcessMaterial_hoyi1")
 texture = ExtResource("5_yl5tn")
-lifetime = 0.6
+lifetime = 0.3
 one_shot = true

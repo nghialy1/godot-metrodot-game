@@ -18,11 +18,13 @@ func load_menu(screen: String) -> void:
 	if screen in screens:
 		current_screen = screen
 		toggle_pause()
-		$'/root/BgMusic'.get_child(0).stop()
 	
 func toggle_pause() -> void:
-	screens.get(current_screen).visible = not screens.get(current_screen).visible
 	get_tree().paused = not get_tree().paused
+	if current_screen != 'DeathScreen':
+		BgMusic.toggle_pause()
+	else:
+		screens.get(current_screen).visible = not screens.get(current_screen).visible
 
 func close_menu() -> void:
 	screens.get(current_screen).visible = false
@@ -33,6 +35,11 @@ func _on_button_pressed() -> void:
 	$EndScreen/AnimationPlayer.play_backwards("fade_to_black")
 	reset_game()
 
+func death_screen() -> void:
+	BgMusic.play_music('DeathSound')
+	load_menu('DeathScreen')
+	$DeathScreen/AnimationPlayer.play("fade_to_black")
+
 func end_screen() -> void:
 	load_menu('EndScreen')
 	$EndScreen/AnimationPlayer.play("fade_to_black")
@@ -40,7 +47,7 @@ func end_screen() -> void:
 func reset_game() -> void:
 	get_tree().change_scene_to_file(ProjectSettings.get_setting('application/run/main_scene'))
 	Global.reset_game_data()
-	$'/root/BgMusic'.get_child(0).play()
+	BgMusic.play_music('MainMusic')
 	close_menu()
 	current_screen = 'PauseScreen'
 

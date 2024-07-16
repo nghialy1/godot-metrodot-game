@@ -1,0 +1,63 @@
+[gd_scene load_steps=6 format=3 uid="uid://bo06bm6t6waba"]
+
+[ext_resource type="Script" path="res://scenes/projectiles/homing_bullet.gd" id="1_jki24"]
+[ext_resource type="Texture2D" uid="uid://dl1yluwgikdh7" path="res://graphics/guns/projectiles/explosion.png" id="1_k67j5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8g683"]
+radius = 5.0
+
+[sub_resource type="Animation" id="Animation_ferd4"]
+resource_name = "flash"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.784314), Color(0, 0, 0, 0.784314), Color(1, 1, 1, 0.784314)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xxv0q"]
+_data = {
+"flash": SubResource("Animation_ferd4")
+}
+
+[node name="HomingBullet" type="Area2D"]
+collision_layer = 16
+collision_mask = 7
+script = ExtResource("1_jki24")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_8g683")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.918248, 0.918248, 0.918248, 1)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_k67j5")
+hframes = 9
+frame = 1
+
+[node name="TrackTimer" type="Timer" parent="."]
+wait_time = 0.75
+one_shot = true
+autostart = true
+
+[node name="KillTimer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_xxv0q")
+}
+autoplay = "flash"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="KillTimer" to="." method="_on_kill_timer_timeout"]

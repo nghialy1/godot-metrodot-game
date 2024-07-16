@@ -27,7 +27,7 @@ var aim_direction := Vector2.RIGHT
 @export var crosshair_distance := 25
 const y_offset := 10
 const standing_height := 30
-@export_range(0.2, 10.0) var ak_cooldown := 0.75
+@export_range(0.2, 10.0) var ak_cooldown := 0.9
 @export_range(0.2, 10.0) var shotgun_cooldown := 2.0
 @export_range(0.2, 10.0) var rocket_cooldown := 5.0
 
@@ -96,32 +96,22 @@ func get_input() -> void:
 	var aim_input := aim_input_gamepad if gamepad_active else aim_input_mouse
 	
 	if aim_input.length() > 0.5:
-		var aim_y : int
-		var aim_x:int
+		aim_direction = Vector2(round(aim_input.x), round(aim_input.y))
 		
-		var test := Vector2(round(aim_input.x), round(aim_input.y))
-		
-		if test.x == 0:
+		if aim_direction.x == 0:
 			if aim_input.x > 0.3:
-				aim_x = 1
+				aim_direction.x = 1
 			elif aim_input.x < -0.3:
-				aim_x = -1
+				aim_direction.x = -1
 			else:
-				aim_x = 0
-			aim_y = test.y
-		elif test.y == 0:
+				aim_direction.x = 0
+		elif aim_direction.y == 0:
 			if aim_input.y > 0.3:
-				aim_y = 1
+				aim_direction.y = 1
 			elif aim_input.y < -0.3:
-				aim_y = -1
+				aim_direction.y = -1
 			else:
-				aim_y = 0
-			aim_x = test.x
-		else:
-			aim_x = test.x
-			aim_y = test.y
-		
-		aim_direction = Vector2(aim_x, aim_y)
+				aim_direction.y = 0
 		
 	# switch
 	if Input.is_action_just_pressed("switch"):
@@ -205,6 +195,8 @@ func block_movement() -> void:
 	can_move = false
 	velocity = Vector2(0,0)
 	direction = Vector2(0,0)
+	aim_direction = Vector2.RIGHT
+	ducking = false
 
 func hit(damage: int, nodes: Array) -> void:
 	if not $Timers/InvulTimer.time_left and not god_mode:
@@ -215,29 +207,30 @@ func hit(damage: int, nodes: Array) -> void:
 		$Timers/InvulTimer.start()
 
 func shoot_particles() -> void:
-	$ShootParticles.position = $Crosshair.position + aim_direction
-	$ShootParticles.process_material.set('direction', aim_direction)
-	$ShootParticles.restart()
+	$SmokeParticles.position = $Crosshair.position + aim_direction
+	$SmokeParticles.process_material.set('direction', aim_direction)
+	$SmokeParticles.restart()
 
 func shoot_gun() -> void:
 	var pos := position + aim_direction * crosshair_distance
 	pos = pos if not ducking else pos + Vector2(0, y_offset)
+	var shooting_gun := current_gun
 
-	if current_gun == Global.guns.AK and not $Timers/AKReload.time_left:
+	if shooting_gun == Global.guns.AK and not $Timers/AKReload.time_left:
 		$Timers/AKReload.start()
-		
 		var num := 10 if god_mode else 3
 		
 		# shoot 3 bullets
 		for i in range(num):
 			var delay := rng.randf_range(0.1, 0.15)
-			shoot.emit(pos, aim_direction, current_gun, self)
+			shoot.emit(pos, aim_direction, shooting_gun, self)
 			await get_tree().create_timer(delay).timeout
 			pos = position + aim_direction * crosshair_distance
 			pos = pos if not ducking else pos + Vector2(0, y_offset)
 			shoot_particles()
-	if current_gun == Global.guns.SHOTGUN and not $Timers/ShotgunReload.time_left:
-		shoot.emit(pos, aim_direction, current_gun, self)
+	
+	if shooting_gun == Global.guns.SHOTGUN and not $Timers/ShotgunReload.time_left:
+		shoot.emit(pos, aim_direction, shooting_gun, self)
 		$Timers/ShotgunReload.start()
 		$ShotgunParticles.position = $Crosshair.position + aim_direction * 10
 		$ShotgunParticles.process_material.set('direction', aim_direction)
@@ -246,19 +239,19 @@ func shoot_gun() -> void:
 		if aim_direction.y == 1:
 			gun_jump = true
 		shoot_particles()
-	if current_gun == Global.guns.ROCKET and not $Timers/RocketReload.time_left:
+	if shooting_gun == Global.guns.ROCKET and not $Timers/RocketReload.time_left:
 		# shoot 3 bullets in succession
 		$Timers/RocketReload.start()
 		
 		var num := 6 if god_mode else 2
+		shoot_particles()
 		
 		# shoot 2 rockets
 		for i in range(num):
-			shoot.emit(pos, aim_direction, current_gun, self)
+			shoot.emit(pos, aim_direction, shooting_gun, self)
 			await get_tree().create_timer(0.1).timeout
 			pos = position + aim_direction * crosshair_distance
 			pos = pos if not ducking else pos + Vector2(0, y_offset)
-			shoot_particles()
 			
 		
 func get_cam() -> Camera2D:
@@ -273,5 +266,5 @@ func toggle_cam() -> void:
 func trigger_death() -> void:
 	block_movement()
 	set_collision_layer_value(2, false)
-	MenuScreen.load_menu('DeathScreen')
+	MenuScreen.death_screen()
 	

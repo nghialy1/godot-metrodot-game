@@ -25,6 +25,9 @@ func _ready() -> void:
 		levels['sky'] = "res://scenes/levels/sky.tscn"
 		levels['underground'] = "res://scenes/levels/underground.tscn"
 
+func setup(data: Array) -> void:
+	locked = data[0]
+
 func _on_body_entered(body: CharacterBody2D) -> void:
 	if not $TryTimer.time_left:
 		$TryTimer.start()
@@ -42,7 +45,7 @@ func _on_body_entered(body: CharacterBody2D) -> void:
 				lock.position.y -= 20
 				lock.position.x += 12
 				body.add_child(lock)
-				lock.get_child(2).play_backwards('locked')
+				lock.get_child(2).play('unlocked')
 				await lock.get_child(2).animation_finished
 				
 				#transition
