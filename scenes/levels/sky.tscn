@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cmjtllfeeln8d"]
+[gd_scene load_steps=15 format=3 uid="uid://cmjtllfeeln8d"]
 
 [ext_resource type="PackedScene" uid="uid://coa78sxepphhw" path="res://scenes/levels/level.tscn" id="1_h2qm2"]
 [ext_resource type="Texture2D" uid="uid://bfney67j6lle2" path="res://graphics/sky/nuvens_2.png" id="2_5743f"]
@@ -7,14 +7,31 @@
 [ext_resource type="Script" path="res://scenes/levels/sky.gd" id="2_yds85"]
 [ext_resource type="Texture2D" uid="uid://uko8rlcjr6k7" path="res://graphics/sky/nuvens_1.png" id="3_gf5yh"]
 [ext_resource type="PackedScene" uid="uid://d02kx3shyyb4e" path="res://scenes/entities/monster.tscn" id="3_iac36"]
+[ext_resource type="Shader" path="res://shaders/scroll.gdshader" id="3_igxtg"]
 [ext_resource type="PackedScene" uid="uid://bym8jvtve4jis" path="res://scenes/objects/transition_gate.tscn" id="3_ue0uu"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jvcdp"]
+shader = ExtResource("3_igxtg")
+shader_parameter/speed = 0.025
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sil2c"]
+shader = ExtResource("3_igxtg")
+shader_parameter/speed = 0.025
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m4i8c"]
+shader = ExtResource("3_igxtg")
+shader_parameter/speed = 0.05
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v2mwm"]
+shader = ExtResource("3_igxtg")
+shader_parameter/speed = 0.05
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7eibj"]
 size = Vector2(20, 266)
 
 [node name="Sky" instance=ExtResource("1_h2qm2")]
 script = ExtResource("2_yds85")
-cam_limits = Vector4i(-160, 1500, -15, 480)
+cam_limits = Vector4i(-160, 5000, -15, 480)
 metadata/_edit_vertical_guides_ = [-160.0, 1086.0, 1086.0, -159.0, -160.0, 1106.0, 494.0, -160.0]
 metadata/_edit_horizontal_guides_ = [-16.0, 480.0, -16.0, 479.0, -17.0, -15.0, -15.0, 180.0]
 
@@ -27,64 +44,43 @@ layer_0/tile_data = PackedInt32Array(983080, 524288, 5, 983081, 589824, 5, 10486
 [node name="ParallaxBackground" type="ParallaxBackground" parent="BG" index="3"]
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="BG/ParallaxBackground" index="0"]
+motion_mirroring = Vector2(1984, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="BG/ParallaxBackground/ParallaxLayer" index="0"]
-position = Vector2(1328.5, 231)
-scale = Vector2(5.99798, 1.80882)
+position = Vector2(832, 242)
+scale = Vector2(4, 1.75)
 texture = ExtResource("2_xo6pi")
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="BG/ParallaxBackground" index="1"]
+texture_repeat = 2
+position = Vector2(-1, -50)
 motion_scale = Vector2(0.9, 0.9)
+motion_mirroring = Vector2(992, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="BG/ParallaxBackground/ParallaxLayer2" index="0"]
-position = Vector2(90, 343)
+material = SubResource("ShaderMaterial_jvcdp")
+position = Vector2(90, 381)
 texture = ExtResource("2_5743f")
 
 [node name="Sprite2D2" type="Sprite2D" parent="BG/ParallaxBackground/ParallaxLayer2" index="1"]
-position = Vector2(586, 344)
-texture = ExtResource("2_5743f")
-
-[node name="Sprite2D3" type="Sprite2D" parent="BG/ParallaxBackground/ParallaxLayer2" index="2"]
-position = Vector2(1082, 343)
-texture = ExtResource("2_5743f")
-
-[node name="Sprite2D3" type="Sprite2D" parent="BG/ParallaxBackground/ParallaxLayer2/Sprite2D3" index="0"]
-position = Vector2(496, 0)
-texture = ExtResource("2_5743f")
-
-[node name="Sprite2D3" type="Sprite2D" parent="BG/ParallaxBackground/ParallaxLayer2/Sprite2D3/Sprite2D3" index="0"]
-position = Vector2(496, 0)
-texture = ExtResource("2_5743f")
-
-[node name="Sprite2D3" type="Sprite2D" parent="BG/ParallaxBackground/ParallaxLayer2/Sprite2D3/Sprite2D3/Sprite2D3" index="0"]
-position = Vector2(496, 0)
+material = SubResource("ShaderMaterial_sil2c")
+position = Vector2(586, 381)
 texture = ExtResource("2_5743f")
 
 [node name="ParallaxLayer3" type="ParallaxLayer" parent="BG/ParallaxBackground" index="2"]
 motion_scale = Vector2(0.8, 0.8)
+motion_mirroring = Vector2(992, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="BG/ParallaxBackground/ParallaxLayer3" index="0"]
-position = Vector2(90, 343)
+texture_repeat = 2
+material = SubResource("ShaderMaterial_m4i8c")
+position = Vector2(90, 400)
 texture = ExtResource("3_gf5yh")
 
 [node name="Sprite2D2" type="Sprite2D" parent="BG/ParallaxBackground/ParallaxLayer3" index="1"]
-position = Vector2(586, 345)
-texture = ExtResource("3_gf5yh")
-
-[node name="Sprite2D3" type="Sprite2D" parent="BG/ParallaxBackground/ParallaxLayer3" index="2"]
-position = Vector2(1082, 343)
-texture = ExtResource("3_gf5yh")
-
-[node name="Sprite2D3" type="Sprite2D" parent="BG/ParallaxBackground/ParallaxLayer3/Sprite2D3" index="0"]
-position = Vector2(496, 0)
-texture = ExtResource("3_gf5yh")
-
-[node name="Sprite2D3" type="Sprite2D" parent="BG/ParallaxBackground/ParallaxLayer3/Sprite2D3/Sprite2D3" index="0"]
-position = Vector2(496, 0)
-texture = ExtResource("3_gf5yh")
-
-[node name="Sprite2D3" type="Sprite2D" parent="BG/ParallaxBackground/ParallaxLayer3/Sprite2D3/Sprite2D3/Sprite2D3" index="0"]
-position = Vector2(496, 0)
+texture_repeat = 2
+material = SubResource("ShaderMaterial_v2mwm")
+position = Vector2(586, 400)
 texture = ExtResource("3_gf5yh")
 
 [node name="Main" parent="Main" index="0"]
@@ -102,9 +98,8 @@ limits_y = Vector2i(17, 100)
 layer_0/tile_data = PackedInt32Array(458773, 655360, 11, 524309, 655360, 12, 589845, 655360, 13, 458774, 720896, 11, 524310, 720896, 12, 589846, 720896, 13, 1441808, 589824, 11, 1507352, 589824, 11, 1376259, 0, 5, 1441795, 0, 6, 1376260, 65536, 5, 1441796, 65536, 6, 1376261, 131072, 5, 1441797, 131072, 6, 1376262, 65536, 5, 1441798, 65536, 6, 1376263, 131072, 5, 1441799, 131072, 6, 1376264, 65536, 5, 1441800, 65536, 6, 1376265, 131072, 5, 1441801, 131072, 6, 1376266, 65536, 5, 1441802, 65536, 6, 1376267, 131072, 5, 1441803, 131072, 6, 1376268, 65536, 5, 1441804, 65536, 6, 1376269, 131072, 5, 1441805, 131072, 6, 1376270, 196608, 5, 1441806, 196608, 6, 1376271, 262144, 5, 1441807, 262144, 6, 1376307, 327680, 3, 1310772, 393216, 2, 1376308, 393216, 3, 1310773, 458752, 2, 1376309, 458752, 3, 1310774, 524288, 2, 1376310, 524288, 3, 1376311, 589824, 3)
 
 [node name="DirectionalLight2D" parent="." index="3"]
-color = Color(0.999487, 0.910142, 0.862173, 1)
+color = Color(0.183042, 0.065367, 0.000801521, 1)
 energy = 2.0
-blend_mode = 2
 shadow_color = Color(1, 1, 1, 0)
 
 [node name="TransitionGate" parent="TransitionGates" index="0" node_paths=PackedStringArray("current_return") instance=ExtResource("3_ue0uu")]

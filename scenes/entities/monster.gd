@@ -12,7 +12,7 @@ signal shoot_homing(pos: Vector2, target: CharacterBody2D, origin: CharacterBody
 @export var limits_y: Vector2i
 
 var off_screen_offset := 55
-var attack_wait_range := Vector2(0.2, 0.8)
+var attack_wait_range := Vector2(2.0, 2.0)
 var special_pos_x : float
 var direction :=  Vector2.LEFT
 var x_range := Vector2(-50,50)
@@ -24,7 +24,7 @@ var phase_two := false
 var can_move := false
 var phase_two_animation := false
 var special_move := false
-
+var special_attack := false
 
 signal detonate(pos: Vector2)
 
@@ -48,7 +48,7 @@ func _process(_delta: float) -> void:
 	var y : float
 	
 	if phase_two and not phase_two_animation:
-		set_flash_value(0.6, get_sprites(), Color.DARK_RED)
+		set_flash_value(0.4, get_sprites(), Color.DARK_RED)
 		if special_move:
 			x = special_pos_x + x_offset
 		else:
@@ -169,37 +169,39 @@ func _on_attack_timer_timeout() -> void:
 	$Timers/AttackTimer.start()
 
 func _on_move_timer_timeout() -> void:
+	var tween := create_tween()
 	if not special_move and can_move:
-		var tween := create_tween()
 		if phase_two:
 			tween.tween_property(self, 'x_offset', rng.randf_range(x_range.x, x_range.y), 0.6)
 		else:
 			tween.tween_property(self, 'y_offset', rng.randf_range(y_range.x, y_range.y), 0.6)
-		tween.tween_callback($Timers/MoveTimer.start)
+	tween.tween_callback($Timers/MoveTimer.start)
 
 func _on_special_timer_timeout() -> void:
 	if phase_two:
 		# scream
+		special_pos_x = player.position.x
+		special_move = true
 		can_move = false
 		$Timers/MoveTimer.stop()
 		$AnimationPlayer.play("scream")
 		await $AnimationPlayer.animation_finished
 		
 		# attack
-		special_pos_x = player.position.x
 		var binary := rng.randi() % 2
 		var dir := -1 if binary else 1
 		var special_tween1 := create_tween()
-		special_tween1.tween_property(self, 'x_offset', dir * -300, 2)
+		special_tween1.tween_property(self, 'x_offset', dir * -300, 1)
 		special_tween1.chain()
 		await special_tween1.finished
-		special_move = true
+		special_attack = true
 		var special_tween2 := create_tween()
 		special_tween2.tween_property(self, 'x_offset', dir * 300, 3)
 		await special_tween2.finished
+		special_attack = false
 		
 		# random time until next special
-		$Timers/SpecialTimer.wait_time = rng.randi_range(6, 10)
+		$Timers/SpecialTimer.wait_time = rng.randi_range(8, 15)
 		$Timers/SpecialTimer.start()
 		$Timers/MoveTimer.start()
 		x_offset = 0
@@ -207,6 +209,6 @@ func _on_special_timer_timeout() -> void:
 		special_move = false
 
 func _on_special_attack_timer_timeout() -> void:
-	if special_move:
+	if special_attack:
 		trigger_attack()
 	$Timers/SpecialAttackTimer.start()

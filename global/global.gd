@@ -15,7 +15,7 @@ enum guns {AK, SHOTGUN, ROCKET}
 const enemy_parameters = {
 	'drone': {'speed': 110, 'health': 20, 'damage': 30},
 	'soldier': {'speed': 70, 'health': 80},
-	'monster': {'health': 600}
+	'monster': {'health': 5000}
 }
 
 const gun_data = {
