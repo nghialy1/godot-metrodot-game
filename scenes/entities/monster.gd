@@ -3,6 +3,9 @@ extends Entity
 signal died()
 signal entered_phase_two()
 signal shoot_homing(pos: Vector2, target: CharacterBody2D, origin: CharacterBody2D)
+signal shock_wave(pos: Vector2)
+
+var breath_particles := preload("res://particles/breath_particles_2d.tscn")
 
 @onready var player: CharacterBody2D = get_tree().get_first_node_in_group('Player')
 @onready var player_camera: Camera2D = player.get_cam()
@@ -12,7 +15,7 @@ signal shoot_homing(pos: Vector2, target: CharacterBody2D, origin: CharacterBody
 @export var limits_y: Vector2i
 
 var off_screen_offset := 55
-var attack_wait_range := Vector2(2.0, 2.0)
+var attack_wait_range := Vector2(0.8, 1.3)
 var special_pos_x : float
 var direction :=  Vector2.LEFT
 var x_range := Vector2(-50,50)
@@ -40,7 +43,8 @@ func _process(_delta: float) -> void:
 	cam_size_x = player_camera.get_viewport_rect().size.x / player_camera.zoom.x
 	cam_size_y = player_camera.get_viewport_rect().size.y / player_camera.zoom.y
 	
-	if not phase_two and health <= Global.enemy_parameters['monster']['health'] / 2.0:
+	# phase_two trigger
+	if not phase_two and health <= Global.enemy_parameters['monster']['health'] * 0.65:
 		start_phase_two()
 	
 	# Calculate monster position
@@ -63,7 +67,6 @@ func _process(_delta: float) -> void:
 		
 	position = Vector2(x,y)
 
-
 func start_phase_two() -> void:
 	# phase two
 	phase_two = true
@@ -72,10 +75,11 @@ func start_phase_two() -> void:
 	invulnerable = true
 	can_move = false
 	$Timers/MoveTimer.wait_time = 0.2
+	attack_wait_range = Vector2(0.4, 0.8)
 	
 	# change boundary as camera zooms out
 	var limit_tween := create_tween()
-	var target_cam_size := Vector2(player_camera.get_viewport_rect().size.x / 2.0, player_camera.get_viewport_rect().size.y / 2.0)
+	var target_cam_size := Vector2(player_camera.get_viewport_rect().size.x / 1.75, player_camera.get_viewport_rect().size.y / 1.75)
 	limit_tween.tween_property(self, 'limits_x:x', (target_cam_size.x/1.75 - 20) - player_camera.limit_left, 3)
 
 	# player phase two animation
@@ -104,6 +108,8 @@ func start_phase_two() -> void:
 	$Timers/SpecialTimer.start()
 	can_move = true
 
+func scream_shockwave() -> void:
+	shock_wave.emit(global_position)
 
 func on_entered() -> void:
 	player.block_movement() 
@@ -126,6 +132,11 @@ func return_to_idle() -> void:
 func get_sprites() -> Array:
 	return [$Sprite2D]
 	
+func emit_breath_particles() -> void:
+	var breath := breath_particles.instantiate()
+	breath.position.x += 15
+	add_child(breath)
+
 @warning_ignore("narrowing_conversion")
 func explode() -> void:
 	var rand_x := rng.randi_range(global_position.x - 20, global_position.x + 20)
@@ -201,7 +212,7 @@ func _on_special_timer_timeout() -> void:
 		special_attack = false
 		
 		# random time until next special
-		$Timers/SpecialTimer.wait_time = rng.randi_range(8, 15)
+		$Timers/SpecialTimer.wait_time = rng.randi_range(9, 14)
 		$Timers/SpecialTimer.start()
 		$Timers/MoveTimer.start()
 		x_offset = 0

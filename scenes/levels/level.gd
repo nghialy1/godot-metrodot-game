@@ -4,6 +4,7 @@ class_name level_template
 const explosion_scene := preload("res://scenes/projectiles/explosion.tscn")
 const bullet_scene := preload("res://scenes/projectiles/bullet.tscn")
 const homing_bullet_scene := preload("res://scenes/projectiles/homing_bullet.tscn")
+const shock_wave_scene := preload("res://global/shock_wave_layer.tscn")
 @onready var cam : Camera2D = get_tree().get_first_node_in_group('Player').get_cam()
 @onready var player := get_tree().get_first_node_in_group('Player')
 @export var cam_limits: Vector4i
@@ -28,6 +29,9 @@ func _ready() -> void:
 			
 		if entity.has_signal('detonate'):
 			entity.connect('detonate', create_explosion)
+			
+		if entity.has_signal('shock_wave'):
+			entity.connect('shock_wave', create_shock_wave)
 			
 		if scene_name in Global.enemy_data:
 			entity.setup(Global.enemy_data[scene_name][i])
@@ -89,6 +93,13 @@ func create_explosion(pos: Vector2) -> void:
 	var explosion := explosion_scene.instantiate()
 	$Main/Projectiles.add_child(explosion)
 	explosion.position = pos
+	
+func create_shock_wave(pos: Vector2) -> void:
+	var shock_wave := shock_wave_scene.instantiate()
+	var shock_material : ShaderMaterial = shock_wave.get_shock_material()
+	var center : Vector2 = shock_wave.calculate_center(cam, pos, get_viewport_rect().size)
+	shock_material.set_shader_parameter('center', center)
+	$Main/Shockwaves.add_child(shock_wave)
 
 @warning_ignore("unassigned_variable")
 func _exit_tree() -> void:

@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://by0q7rmpxo5k8"]
+
+[ext_resource type="Script" path="res://global/shock_wave_layer.gd" id="1_u5xhb"]
+[ext_resource type="Shader" path="res://scenes/levels/shockwave.gdshader" id="2_3c2ht"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hvsg5"]
+shader = ExtResource("2_3c2ht")
+shader_parameter/center = Vector2(0, 0)
+shader_parameter/force = 0.005
+shader_parameter/size = 0.0
+shader_parameter/thickness = 0.1
+
+[node name="ShockWaveLayer" type="CanvasLayer"]
+script = ExtResource("1_u5xhb")
+
+[node name="ShockWaveRect" type="ColorRect" parent="."]
+show_behind_parent = true
+material = SubResource("ShaderMaterial_hvsg5")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)

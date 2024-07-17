@@ -36,8 +36,6 @@ format = 2
 
 [node name="Particles" type="Node2D" parent="Main"]
 
-[node name="Shockwaves" type="Node2D" parent="Main"]
-
 [node name="FG" type="Node2D" parent="."]
 
 [node name="FG" type="TileMap" parent="FG"]

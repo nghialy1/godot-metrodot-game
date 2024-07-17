@@ -1,6 +1,8 @@
 extends CharacterBody2D
 class_name Entity
+
 signal shoot(pos: Vector2, dir: Vector2, bullet_type: int, origin: Entity)
+signal particles(instance: GPUParticles2D)
 
 @onready var level := get_tree().get_current_scene()
 var flash_tween: Tween

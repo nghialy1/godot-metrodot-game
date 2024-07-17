@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://dvn6aujsbw615"]
+
+[ext_resource type="Material" uid="uid://bb78ufnj2045o" path="res://particles/breath.tres" id="1_twdwu"]
+[ext_resource type="Texture2D" uid="uid://dihrof6quj8dy" path="res://graphics/objects/white.png" id="2_70uj7"]
+[ext_resource type="Script" path="res://particles/breath_particles_2d.gd" id="3_m33be"]
+
+[node name="BreathParticles2D" type="GPUParticles2D"]
+show_behind_parent = true
+emitting = false
+amount = 80
+process_material = ExtResource("1_twdwu")
+texture = ExtResource("2_70uj7")
+lifetime = 1.5
+one_shot = true
+explosiveness = 0.9
+script = ExtResource("3_m33be")

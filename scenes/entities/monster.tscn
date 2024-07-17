@@ -1,10 +1,9 @@
-[gd_scene load_steps=21 format=3 uid="uid://d02kx3shyyb4e"]
+[gd_scene load_steps=15 format=3 uid="uid://d02kx3shyyb4e"]
 
 [ext_resource type="PackedScene" uid="uid://b68vs0af4e7hi" path="res://scenes/entities/entity.tscn" id="1_4gsus"]
 [ext_resource type="Texture2D" uid="uid://qu4x05j28eh7" path="res://graphics/entities/attack.png" id="2_mbecx"]
 [ext_resource type="Script" path="res://scenes/entities/monster.gd" id="2_t8r2c"]
 [ext_resource type="Shader" uid="uid://cnay8p26e0eqq" path="res://shaders/flash.tres" id="3_x06gu"]
-[ext_resource type="Texture2D" uid="uid://dihrof6quj8dy" path="res://graphics/objects/white.png" id="5_lnw3b"]
 [ext_resource type="AudioStream" uid="uid://had34st0sg3c" path="res://audio/boss_scream.mp3" id="5_x3ifh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bcrv7"]
@@ -222,27 +221,47 @@ tracks/1/keys = {
 tracks/2/type = "method"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("BreathParticles")
+tracks/2/path = NodePath(".")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 2.6, 3.8, 4.8, 5.2),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"times": PackedFloat32Array(2.6, 3.8, 4.8, 5.04455, 5.2, 5.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "values": [{
 "args": [],
-"method": &"restart"
+"method": &"emit_breath_particles"
 }, {
 "args": [],
-"method": &"restart"
+"method": &"emit_breath_particles"
 }, {
 "args": [],
-"method": &"restart"
+"method": &"emit_breath_particles"
 }, {
 "args": [],
-"method": &"restart"
+"method": &"emit_breath_particles"
 }, {
 "args": [],
-"method": &"restart"
+"method": &"emit_breath_particles"
+}, {
+"args": [],
+"method": &"emit_breath_particles"
+}]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(4.8, 5.2),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"scream_shockwave"
+}, {
+"args": [],
+"method": &"scream_shockwave"
 }]
 }
 
@@ -290,6 +309,29 @@ tracks/1/keys = {
 "method": &"play"
 }]
 }
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.8, 1, 1.2, 1.38051),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"scream_shockwave"
+}, {
+"args": [],
+"method": &"emit_breath_particles"
+}, {
+"args": [],
+"method": &"emit_breath_particles"
+}, {
+"args": [],
+"method": &"emit_breath_particles"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7sakl"]
 _data = {
@@ -300,42 +342,6 @@ _data = {
 "idle": SubResource("Animation_bj2gj"),
 "scream": SubResource("Animation_avbys")
 }
-
-[sub_resource type="Curve" id="Curve_5lugk"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.24186, 0.538461), 0.0, 0.0, 0, 0, Vector2(0.506977, 0.164835), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 4
-
-[sub_resource type="CurveTexture" id="CurveTexture_6qwvc"]
-curve = SubResource("Curve_5lugk")
-
-[sub_resource type="Curve" id="Curve_73t8a"]
-min_value = 30.0
-max_value = 600.0
-_data = [Vector2(0, 600), 0.0, 0.0, 0, 0, Vector2(0.181395, 30), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_7do7q"]
-curve = SubResource("Curve_73t8a")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_d1rms"]
-particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 1.0
-direction = Vector3(-1, 0, 0)
-spread = 80.0
-initial_velocity_min = 150.0
-initial_velocity_max = 200.0
-velocity_limit_curve = SubResource("CurveTexture_7do7q")
-gravity = Vector3(0, 0, 0)
-scale_min = 0.4
-scale_max = 0.8
-color = Color(1, 1, 1, 0.0235294)
-alpha_curve = SubResource("CurveTexture_6qwvc")
-turbulence_enabled = true
-turbulence_noise_scale = 1.0
-turbulence_noise_speed_random = 0.1
-turbulence_influence_max = 0.2
-collision_mode = 2
 
 [node name="Monster" groups=["Enemies", "Entity"] instance=ExtResource("1_4gsus")]
 collision_layer = 4
@@ -408,18 +414,7 @@ position = Vector2(-6, 38)
 [node name="Marker2D3" type="Marker2D" parent="BulletOptions/2" index="2"]
 position = Vector2(-18, 0)
 
-[node name="BreathParticles" type="GPUParticles2D" parent="." index="6"]
-position = Vector2(13, 0)
-emitting = false
-amount = 100
-process_material = SubResource("ParticleProcessMaterial_d1rms")
-texture = ExtResource("5_lnw3b")
-lifetime = 1.2
-one_shot = true
-explosiveness = 0.8
-randomness = 1.0
-
-[node name="Scream" type="AudioStreamPlayer2D" parent="." index="8"]
+[node name="Scream" type="AudioStreamPlayer2D" parent="." index="7"]
 stream = ExtResource("5_x3ifh")
 volume_db = -5.0
 
