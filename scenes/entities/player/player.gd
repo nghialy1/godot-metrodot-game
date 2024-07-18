@@ -24,7 +24,7 @@ var gun_jump := false
 @export_group("gun")
 var current_gun := Global.guns.AK
 var aim_direction := Vector2.RIGHT
-@export var crosshair_distance := 25
+@export var crosshair_distance := 40
 const y_offset := 10
 const standing_height := 30
 @export_range(0.2, 10.0) var ak_cooldown := 0.9
@@ -96,22 +96,7 @@ func get_input() -> void:
 	var aim_input := aim_input_gamepad if gamepad_active else aim_input_mouse
 	
 	if aim_input.length() > 0.5:
-		aim_direction = Vector2(round(aim_input.x), round(aim_input.y))
-		
-		if aim_direction.x == 0:
-			if aim_input.x > 0.3:
-				aim_direction.x = 1
-			elif aim_input.x < -0.3:
-				aim_direction.x = -1
-			else:
-				aim_direction.x = 0
-		elif aim_direction.y == 0:
-			if aim_input.y > 0.3:
-				aim_direction.y = 1
-			elif aim_input.y < -0.3:
-				aim_direction.y = -1
-			else:
-				aim_direction.y = 0
+		aim_direction = Vector2(aim_input.x, aim_input.y)
 		
 	# switch
 	if Input.is_action_just_pressed("switch"):
@@ -237,7 +222,8 @@ func shoot_gun() -> void:
 		$ShotgunParticles.process_material.set('direction', aim_direction)
 		$ShotgunParticles.emitting = true
 		
-		if aim_direction.y == 1:
+		print(aim_direction.y)
+		if aim_direction.y > 0.5:
 			gun_jump = true
 		shoot_particles()
 	if shooting_gun == Global.guns.ROCKET and not $Timers/RocketReload.time_left:

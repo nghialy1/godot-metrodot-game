@@ -23,7 +23,7 @@ var x_range := Vector2(-50,50)
 var x_offset: float
 var y_range := Vector2(-50,50)
 var y_offset: float
-var tracking_speed := 120.0
+var tracking_speed := 105.0
 var track_scale := 150 # track_speed double tracking_speed every 150
 var rng := RandomNumberGenerator.new()
 var phase_two := false
