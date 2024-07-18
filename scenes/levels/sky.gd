@@ -11,6 +11,8 @@ func _ready() -> void:
 	boss.visible = false
 	BgMusic.stop_music()
 	
+	$TransitionGates/TransitionGate.locked = true
+	
 	if boss.health < Global.enemy_parameters['monster']['health']:
 		$Area2D/CollisionShape2D.position = player.position
 	

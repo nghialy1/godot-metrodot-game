@@ -14,8 +14,8 @@ func reset_game_data() -> void:
 enum guns {AK, SHOTGUN, ROCKET}
 const enemy_parameters = {
 	'drone': {'speed': 110, 'health': 20, 'damage': 30},
-	'soldier': {'speed': 70, 'health': 80},
-	'monster': {'health': 6000}
+	'soldier': {'speed': 80, 'health': 60},
+	'monster': {'health': 3500}
 }
 
 const gun_data = {

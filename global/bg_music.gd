@@ -6,7 +6,7 @@ var songs: Dictionary
 func _ready() -> void:
 	for song in get_children():
 		songs[song.name] = song
-		
+			
 	play_music(current_music)
 		
 func play_music(song_name: String) -> void:

@@ -15,7 +15,7 @@ var breath_particles := preload("res://particles/breath_particles_2d.tscn")
 @export var limits_y: Vector2i
 
 var off_screen_offset := 55
-var attack_wait_range := Vector2(0.8, 1.3)
+var attack_wait_range := Vector2(1.0, 1.4)
 var x_diff : float
 var special_pos_x : float
 var direction :=  Vector2.LEFT
@@ -23,7 +23,7 @@ var x_range := Vector2(-50,50)
 var x_offset: float
 var y_range := Vector2(-50,50)
 var y_offset: float
-var tracking_speed := 1.5
+var tracking_speed := 120.0
 var track_scale := 150 # track_speed double tracking_speed every 150
 var rng := RandomNumberGenerator.new()
 var phase_two := false
@@ -41,13 +41,13 @@ func _ready() -> void:
 	if 'zone_entered' in level:
 		level.connect('zone_entered', on_entered)
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	# camera size
 	cam_size_x = player_camera.get_viewport_rect().size.x / player_camera.zoom.x
 	cam_size_y = player_camera.get_viewport_rect().size.y / player_camera.zoom.y
 	
 	# phase_two trigger
-	if not phase_two and health <= Global.enemy_parameters['monster']['health'] * 0.60:
+	if not phase_two and health <= Global.enemy_parameters['monster']['health'] * 0.7:
 		start_phase_two()
 	
 	# Calculate monster position
@@ -62,7 +62,7 @@ func _process(_delta: float) -> void:
 		else:
 			# move faster if father away, slow down on approach
 			var weight : float = clamp(x_diff / track_scale + 1.0, 1.0, 4.0) 
-			x = move_toward(position.x, player.position.x + x_offset, weight*tracking_speed)
+			x = move_toward(position.x, player.position.x + x_offset, weight*tracking_speed*delta)
 
 		y = player.position.y - cam_size_y / 2 + 30
 		y = max(limits_y.x, min(limits_y.y, y)) - off_screen_offset
@@ -82,13 +82,13 @@ func start_phase_two() -> void:
 	invulnerable = true
 	can_move = false
 	$Timers/MoveTimer.wait_time = 0.2
-	attack_wait_range = Vector2(0.5, 0.8)
+	attack_wait_range = Vector2(0.8, 1.2)
 	BgMusic.stop_music()
 
 	# phase two animation
 	$AnimationPlayer.play("enter_phase_two")
 	var exit_tween := create_tween()
-	exit_tween.tween_property(self, 'off_screen_offset', 100, 8).set_trans(Tween.TRANS_QUAD)
+	exit_tween.tween_property(self, 'off_screen_offset', 100, 4).set_trans(Tween.TRANS_QUAD)
 	await exit_tween.finished
 	
 	# rest
