@@ -186,10 +186,11 @@ func apply_gravity(delta: float) -> void:
 	velocity.y = min(velocity.y, terminal_velocity)
 
 func on_dash_finish() -> void:
-	set_collision_layer_value(2, true)
-	set_collision_mask_value(3, true)
 	velocity.x = move_toward(velocity.x, 0, 500)
 	gravity_multiplier = 1
+	await get_tree().create_timer(0.2).timeout
+	set_collision_layer_value(2, true)
+	set_collision_mask_value(3, true)
 
 func block_movement() -> void:
 	can_move = false
@@ -264,7 +265,11 @@ func toggle_cam() -> void:
 	$Camera2D.enabled = !$Camera2D.enabled
 
 func trigger_death() -> void:
-	block_movement()
 	set_collision_layer_value(2, false)
-	MenuScreen.death_screen()
+	block_movement()
+	if get_tree().current_scene.name == 'Sky' and get_tree().current_scene.boss.health < Global.enemy_parameters['monster']['health']:
+		health = 250
+		MenuScreen.retry_screen()
+	else:
+		MenuScreen.death_screen()
 	

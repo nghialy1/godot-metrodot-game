@@ -133,7 +133,7 @@ offset_right = 46.0
 offset_bottom = 31.0
 grow_horizontal = 2
 size_flags_horizontal = 4
-text = "TRY AGAIN"
+text = "RESTART"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="DeathScreen"]
 libraries = {
@@ -207,7 +207,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.05)
+color = Color(0, 0, 0, 0)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="EndScreen"]
 layout_mode = 1
@@ -255,10 +255,88 @@ offset_left = 209.0
 offset_top = 39.0
 offset_right = 256.0
 offset_bottom = 70.0
+grow_vertical = 0
 size_flags_horizontal = 4
 text = "QUIT"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="EndScreen"]
+libraries = {
+"": SubResource("AnimationLibrary_fieo1")
+}
+
+[node name="RetryScreen" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="RetryScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RetryScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -164.0
+offset_top = -65.5
+offset_right = 164.0
+offset_bottom = 65.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="RetryScreen/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "YOU DIED"
+label_settings = SubResource("LabelSettings_an1qq")
+
+[node name="Buttons" type="Control" parent="RetryScreen/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Button" type="Button" parent="RetryScreen/VBoxContainer/Buttons"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -49.5
+offset_right = 49.5
+offset_bottom = 31.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+text = "TRY AGAIN?"
+
+[node name="Button2" type="Button" parent="RetryScreen/VBoxContainer/Buttons"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.5
+offset_top = 36.5
+offset_right = 37.5
+offset_bottom = 67.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "RESTART"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="RetryScreen"]
 libraries = {
 "": SubResource("AnimationLibrary_fieo1")
 }
@@ -268,3 +346,5 @@ libraries = {
 [connection signal="pressed" from="PauseScreen/VBoxContainer/Button2" to="." method="_on_button_2_pressed"]
 [connection signal="pressed" from="EndScreen/VBoxContainer/Buttons/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="EndScreen/VBoxContainer/Buttons/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="RetryScreen/VBoxContainer/Buttons/Button" to="." method="_on_retry_button_pressed"]
+[connection signal="pressed" from="RetryScreen/VBoxContainer/Buttons/Button2" to="." method="_on_button_pressed"]

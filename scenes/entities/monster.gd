@@ -16,12 +16,15 @@ var breath_particles := preload("res://particles/breath_particles_2d.tscn")
 
 var off_screen_offset := 55
 var attack_wait_range := Vector2(0.8, 1.3)
+var x_diff : float
 var special_pos_x : float
 var direction :=  Vector2.LEFT
 var x_range := Vector2(-50,50)
 var x_offset: float
 var y_range := Vector2(-50,50)
 var y_offset: float
+var tracking_speed := 2.0
+var tracking_weight : float
 var rng := RandomNumberGenerator.new()
 var phase_two := false
 var can_move := false
@@ -44,19 +47,21 @@ func _process(_delta: float) -> void:
 	cam_size_y = player_camera.get_viewport_rect().size.y / player_camera.zoom.y
 	
 	# phase_two trigger
-	if not phase_two and health <= Global.enemy_parameters['monster']['health'] * 0.65:
+	if not phase_two and health <= Global.enemy_parameters['monster']['health'] * 0.60:
 		start_phase_two()
 	
 	# Calculate monster position
 	var x : float
 	var y : float
 	
+	tracking_speed = 4.0 if x_diff > 150 else 1.0
+	
 	if phase_two and not phase_two_animation:
 		set_flash_value(0.4, get_sprites(), Color.DARK_RED)
 		if special_move:
 			x = special_pos_x + x_offset
 		else:
-			x = move_toward(position.x, player.position.x + x_offset, 5)
+			x = move_toward(position.x, player.position.x + x_offset, tracking_speed)
 
 		y = player.position.y - cam_size_y / 2 + 30
 		y = max(limits_y.x, min(limits_y.y, y)) - off_screen_offset
@@ -66,6 +71,8 @@ func _process(_delta: float) -> void:
 		x = max(limits_x.x, min(limits_x.y, x)) + off_screen_offset
 		
 	position = Vector2(x,y)
+	
+	x_diff = abs(position.x - player.position.x)
 
 func start_phase_two() -> void:
 	# phase two
@@ -75,7 +82,7 @@ func start_phase_two() -> void:
 	invulnerable = true
 	can_move = false
 	$Timers/MoveTimer.wait_time = 0.2
-	attack_wait_range = Vector2(0.4, 0.8)
+	attack_wait_range = Vector2(0.5, 0.8)
 	
 	# change boundary as camera zooms out
 	var limit_tween := create_tween()
@@ -174,6 +181,10 @@ func setup(data: Array) -> void:
 		$Sprite2D.visible = false
 
 func _on_attack_timer_timeout() -> void:
+	if phase_two and not x_diff < 50:
+		$Timers/AttackTimer.start()
+		pass
+	
 	if can_move:
 		$AnimationPlayer.current_animation = 'attack'
 		$Timers/AttackTimer.wait_time = rng.randf_range(attack_wait_range.x, attack_wait_range.y)
@@ -191,7 +202,7 @@ func _on_move_timer_timeout() -> void:
 func _on_special_timer_timeout() -> void:
 	if phase_two:
 		# scream
-		special_pos_x = player.position.x
+		special_pos_x = position.x
 		special_move = true
 		can_move = false
 		$Timers/MoveTimer.stop()
@@ -211,11 +222,13 @@ func _on_special_timer_timeout() -> void:
 		await special_tween2.finished
 		special_attack = false
 		
+		# rest for 1.5 second
+		await get_tree().create_timer(1.5).timeout
+		
 		# random time until next special
 		$Timers/SpecialTimer.wait_time = rng.randi_range(9, 14)
 		$Timers/SpecialTimer.start()
 		$Timers/MoveTimer.start()
-		x_offset = 0
 		can_move = true
 		special_move = false
 

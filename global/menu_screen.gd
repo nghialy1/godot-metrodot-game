@@ -21,7 +21,7 @@ func load_menu(screen: String) -> void:
 	
 func toggle_pause() -> void:
 	get_tree().paused = not get_tree().paused
-	if current_screen != 'DeathScreen':
+	if current_screen != 'DeathScreen' and current_screen != 'RetryScreen':
 		BgMusic.toggle_pause()
 	screens.get(current_screen).visible = not screens.get(current_screen).visible
 
@@ -29,15 +29,15 @@ func close_menu() -> void:
 	screens.get(current_screen).visible = false
 	get_tree().paused = false
 	
-func _on_button_pressed() -> void:
-	CustsceneLayer.reset()
-	$EndScreen/AnimationPlayer.play_backwards("fade_to_black")
-	reset_game()
-
 func death_screen() -> void:
 	BgMusic.play_music('DeathSound')
 	load_menu('DeathScreen')
 	$DeathScreen/AnimationPlayer.play("fade_to_black")
+	
+func retry_screen() -> void:
+	BgMusic.play_music('DeathSound')
+	load_menu('RetryScreen')
+	$RetryScreen/AnimationPlayer.play("fade_to_black")
 
 func end_screen() -> void:
 	load_menu('EndScreen')
@@ -48,6 +48,20 @@ func reset_game() -> void:
 	Global.reset_game_data()
 	close_menu()
 	current_screen = 'PauseScreen'
+	
+# BUTTONS
+func _on_button_pressed() -> void:
+	CustsceneLayer.reset()
+	$DeathScreen/AnimationPlayer.play_backwards("fade_to_black")
+	$EndScreen/AnimationPlayer.play_backwards("fade_to_black")
+	reset_game()
 
 func _on_button_2_pressed() -> void:
 	get_tree().quit()
+
+func _on_retry_button_pressed() -> void:
+	get_tree().reload_current_scene()
+	Global.reset_game_data()
+	close_menu()
+	$RetryScreen/AnimationPlayer.play_backwards("fade_to_black")
+	current_screen = 'PauseScreen'

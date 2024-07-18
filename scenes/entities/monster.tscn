@@ -226,12 +226,12 @@ tracks/5/keys = {
 "times": PackedFloat32Array(1.7, 4.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [1.0, 0.6]
+"values": [0.8, 0.6]
 }
 
 [sub_resource type="Animation" id="Animation_om6pr"]
 resource_name = "entry"
-length = 6.5
+length = 6.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
