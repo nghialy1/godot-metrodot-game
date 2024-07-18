@@ -78,21 +78,26 @@ func start_phase_two() -> void:
 	# phase two
 	phase_two = true
 	phase_two_animation = true
-	entered_phase_two.emit()
 	invulnerable = true
 	can_move = false
 	$Timers/MoveTimer.wait_time = 0.2
 	attack_wait_range = Vector2(0.5, 0.8)
+	BgMusic.stop_music()
+
+	# phase two animation
+	$AnimationPlayer.play("enter_phase_two")
+	var exit_tween := create_tween()
+	exit_tween.tween_property(self, 'off_screen_offset', 100, 6)
+	await exit_tween.finished
+	
+	# rest
+	await get_tree().create_timer(4).timeout
 	
 	# change boundary as camera zooms out
+	entered_phase_two.emit()
 	var limit_tween := create_tween()
 	var target_cam_size := Vector2(player_camera.get_viewport_rect().size.x / 1.75, player_camera.get_viewport_rect().size.y / 1.75)
 	limit_tween.tween_property(self, 'limits_x:x', (target_cam_size.x/1.75 - 20) - player_camera.limit_left, 3)
-
-	# player phase two animation
-	var exit_tween := create_tween()
-	exit_tween.tween_property(self, 'off_screen_offset', 100, 3)
-	await exit_tween.finished
 	
 	# orient boss to sky
 	rotate(-PI/2)
@@ -223,7 +228,7 @@ func _on_special_timer_timeout() -> void:
 		special_attack = false
 		
 		# rest for 1.5 second
-		await get_tree().create_timer(1.5).timeout
+		await get_tree().create_timer(1).timeout
 		
 		# random time until next special
 		$Timers/SpecialTimer.wait_time = rng.randi_range(9, 14)

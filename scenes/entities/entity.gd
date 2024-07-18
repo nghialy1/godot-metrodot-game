@@ -11,12 +11,11 @@ var invulnerable := false
 
 var health := 250:
 	set(value):
-		if not invulnerable:
-			health = value
-			if is_in_group('Player'):
-				get_tree().get_first_node_in_group('HealthCircle').update(value)
-			if health <= 0:
-				trigger_death()
+		health = value
+		if is_in_group('Player'):
+			get_tree().get_first_node_in_group('HealthCircle').update(value)
+		if health <= 0:
+			trigger_death()
 
 func _process(_delta: float) -> void:
 	# fell to death
@@ -24,7 +23,7 @@ func _process(_delta: float) -> void:
 		hit(health, [])
 
 func hit(damage: int, nodes: Array) -> void:
-	if health > 0:
+	if health > 0 and not invulnerable:
 		health -= damage
 		$Hit.play()
 		flash(nodes)

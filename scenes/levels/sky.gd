@@ -28,6 +28,7 @@ func _process(delta: float) -> void:
 		player.jump = true
 
 func on_phase_two() -> void:
+	BgMusic.play_music('BossMusicPhaseTwo')
 	var phase_two_tween := create_tween()
 	phase_two_tween.tween_property(cam, 'zoom', Vector2(1.75,1.75), 3)
 	await phase_two_tween.finished
