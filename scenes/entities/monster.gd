@@ -23,8 +23,8 @@ var x_range := Vector2(-50,50)
 var x_offset: float
 var y_range := Vector2(-50,50)
 var y_offset: float
-var tracking_speed := 2.0
-var tracking_weight : float
+var tracking_speed := 1.5
+var track_scale := 150 # track_speed double tracking_speed every 150
 var rng := RandomNumberGenerator.new()
 var phase_two := false
 var can_move := false
@@ -54,14 +54,15 @@ func _process(_delta: float) -> void:
 	var x : float
 	var y : float
 	
-	tracking_speed = 4.0 if x_diff > 150 else 1.0
 	
 	if phase_two and not phase_two_animation:
 		set_flash_value(0.4, get_sprites(), Color.DARK_RED)
 		if special_move:
 			x = special_pos_x + x_offset
 		else:
-			x = move_toward(position.x, player.position.x + x_offset, tracking_speed)
+			# move faster if father away, slow down on approach
+			var weight = clamp(x_diff / track_scale + 1.0, 1.0, 4.0) 
+			x = move_toward(position.x, player.position.x + x_offset, weight*tracking_speed)
 
 		y = player.position.y - cam_size_y / 2 + 30
 		y = max(limits_y.x, min(limits_y.y, y)) - off_screen_offset

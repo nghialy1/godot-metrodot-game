@@ -235,6 +235,105 @@ tracks/5/keys = {
 "values": [0.8, 0.6]
 }
 
+[sub_resource type="Animation" id="Animation_qdyg7"]
+resource_name = "enter_phase_two"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1.3, 1.4, 1.5, 1.8, 1.9, 2, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [2, 1, 0, 4, 0, 1, 2, 1, 2, 1, 2, 1, 2]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Scream")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(2.2, 2.4, 2.6, 2.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"emit_breath_particles"
+}, {
+"args": [],
+"method": &"emit_breath_particles"
+}, {
+"args": [],
+"method": &"emit_breath_particles"
+}, {
+"args": [],
+"method": &"emit_breath_particles"
+}]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(2.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"scream_shockwave"
+}]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1, 2.1, 2.2, 2.39785, 2.7, 2.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"explode"
+}, {
+"args": [],
+"method": &"explode"
+}, {
+"args": [],
+"method": &"explode"
+}, {
+"args": [],
+"method": &"explode"
+}, {
+"args": [],
+"method": &"explode"
+}, {
+"args": [],
+"method": &"explode"
+}, {
+"args": [],
+"method": &"explode"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_om6pr"]
 resource_name = "entry"
 length = 6.3
@@ -402,105 +501,6 @@ tracks/3/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_qdyg7"]
-resource_name = "enter_phase_two"
-length = 3.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(1.3, 1.4, 1.5, 1.8, 1.9, 2, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [2, 1, 0, 4, 0, 1, 2, 1, 2, 1, 2, 1, 2]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Scream")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(2.2),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [0.0],
-"method": &"play"
-}]
-}
-tracks/2/type = "method"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(2.2, 2.4, 2.6, 2.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"values": [{
-"args": [],
-"method": &"emit_breath_particles"
-}, {
-"args": [],
-"method": &"emit_breath_particles"
-}, {
-"args": [],
-"method": &"emit_breath_particles"
-}, {
-"args": [],
-"method": &"emit_breath_particles"
-}]
-}
-tracks/3/type = "method"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(2.2),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"scream_shockwave"
-}]
-}
-tracks/4/type = "method"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath(".")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 1, 2.1, 2.2, 2.39785, 2.7, 2.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"values": [{
-"args": [],
-"method": &"explode"
-}, {
-"args": [],
-"method": &"explode"
-}, {
-"args": [],
-"method": &"explode"
-}, {
-"args": [],
-"method": &"explode"
-}, {
-"args": [],
-"method": &"explode"
-}, {
-"args": [],
-"method": &"explode"
-}, {
-"args": [],
-"method": &"explode"
-}]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7sakl"]
 _data = {
 "RESET": SubResource("Animation_es7kp"),
@@ -540,7 +540,6 @@ one_shot = true
 autostart = true
 
 [node name="Sprite2D" type="Sprite2D" parent="." index="2"]
-modulate = Color(1, 1, 1, 0.607289)
 material = SubResource("ShaderMaterial_bam3o")
 texture = ExtResource("2_mbecx")
 hframes = 5
@@ -587,7 +586,7 @@ position = Vector2(-18, 0)
 [node name="Scream" type="AudioStreamPlayer2D" parent="." index="7"]
 stream = ExtResource("5_x3ifh")
 volume_db = -5.0
-pitch_scale = 0.62963
+pitch_scale = 0.8
 
 [connection signal="timeout" from="Timers/AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="Timers/MoveTimer" to="." method="_on_move_timer_timeout"]
