@@ -4,6 +4,7 @@
 [ext_resource type="Shader" path="res://scenes/levels/shockwave.gdshader" id="2_3c2ht"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hvsg5"]
+resource_local_to_scene = true
 shader = ExtResource("2_3c2ht")
 shader_parameter/center = Vector2(0, 0)
 shader_parameter/force = 0.005

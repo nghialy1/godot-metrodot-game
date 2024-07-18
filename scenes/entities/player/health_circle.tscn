@@ -12,7 +12,7 @@ shader_parameter/radius = 0.3
 shader_parameter/width = 0.03
 shader_parameter/color = Color(0.787542, 4.9334e-06, 5.77569e-07, 1)
 shader_parameter/alpha = 1.0
-shader_parameter/progress = 1.0
+shader_parameter/progress = 0.0
 
 [node name="HealthCircle" type="Sprite2D" groups=["HealthCircle"]]
 light_mask = 2

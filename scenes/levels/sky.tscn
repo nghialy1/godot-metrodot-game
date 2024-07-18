@@ -1,22 +1,17 @@
-[gd_scene load_steps=17 format=3 uid="uid://cmjtllfeeln8d"]
+[gd_scene load_steps=16 format=3 uid="uid://cmjtllfeeln8d"]
 
 [ext_resource type="PackedScene" uid="uid://coa78sxepphhw" path="res://scenes/levels/level.tscn" id="1_h2qm2"]
 [ext_resource type="Texture2D" uid="uid://bfney67j6lle2" path="res://graphics/sky/nuvens_2.png" id="2_5743f"]
 [ext_resource type="PackedScene" uid="uid://cl74b3n23jnjt" path="res://scenes/entities/player/player.tscn" id="2_oye4j"]
-[ext_resource type="Texture2D" uid="uid://cummhqty1c7c8" path="res://graphics/sky/nuvens_3.png" id="2_xo6pi"]
 [ext_resource type="Script" path="res://scenes/levels/sky.gd" id="2_yds85"]
-[ext_resource type="Shader" path="res://scenes/levels/shockwave.gdshader" id="3_6bxs0"]
 [ext_resource type="Texture2D" uid="uid://uko8rlcjr6k7" path="res://graphics/sky/nuvens_1.png" id="3_gf5yh"]
 [ext_resource type="PackedScene" uid="uid://d02kx3shyyb4e" path="res://scenes/entities/monster.tscn" id="3_iac36"]
 [ext_resource type="Shader" path="res://shaders/scroll.gdshader" id="3_igxtg"]
 [ext_resource type="PackedScene" uid="uid://bym8jvtve4jis" path="res://scenes/objects/transition_gate.tscn" id="3_ue0uu"]
+[ext_resource type="Shader" path="res://scenes/levels/sky.gdshader" id="4_uhvwh"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_l15er"]
-shader = ExtResource("3_6bxs0")
-shader_parameter/center = null
-shader_parameter/force = 1.0
-shader_parameter/size = null
-shader_parameter/thickness = null
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kkkk3"]
+shader = ExtResource("4_uhvwh")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jvcdp"]
 shader = ExtResource("3_igxtg")
@@ -50,13 +45,14 @@ layer_0/tile_data = PackedInt32Array(1245244, 655360, 11, 1310780, 655360, 12, 1
 [node name="ParallaxBackground" type="ParallaxBackground" parent="BG" index="3"]
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="BG/ParallaxBackground" index="0"]
-motion_mirroring = Vector2(1984, 0)
+motion_mirroring = Vector2(992, 0)
 
-[node name="Sprite2D" type="Sprite2D" parent="BG/ParallaxBackground/ParallaxLayer" index="0"]
-material = SubResource("ShaderMaterial_l15er")
-position = Vector2(832, 232)
-scale = Vector2(4, 1.82353)
-texture = ExtResource("2_xo6pi")
+[node name="ColorRect" type="ColorRect" parent="BG/ParallaxBackground/ParallaxLayer" index="0"]
+material = SubResource("ShaderMaterial_kkkk3")
+offset_left = -160.0
+offset_top = -439.0
+offset_right = 832.0
+offset_bottom = 637.0
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="BG/ParallaxBackground" index="1"]
 texture_repeat = 2
@@ -100,7 +96,7 @@ limits_x = Vector2i(240, 1500)
 limits_y = Vector2i(17, 100)
 
 [node name="FG" parent="FG" index="0"]
-layer_0/tile_data = PackedInt32Array(1441808, 589824, 11, 1376259, 0, 5, 1441795, 0, 6, 1376260, 65536, 5, 1441796, 65536, 6, 1376261, 131072, 5, 1441797, 131072, 6, 1376262, 65536, 5, 1441798, 65536, 6, 1376263, 131072, 5, 1441799, 131072, 6, 1376264, 65536, 5, 1441800, 65536, 6, 1376265, 131072, 5, 1441801, 131072, 6, 1376266, 65536, 5, 1441802, 65536, 6, 1376267, 131072, 5, 1441803, 131072, 6, 1376268, 65536, 5, 1441804, 65536, 6, 1376269, 131072, 5, 1441805, 131072, 6, 1376270, 196608, 5, 1441806, 196608, 6, 1376271, 262144, 5, 1441807, 262144, 6, 1376307, 327680, 3, 1310772, 393216, 2, 1376308, 393216, 3, 1310773, 458752, 2, 1376309, 458752, 3, 1310774, 524288, 2, 1376310, 524288, 3, 1376311, 589824, 3, 1376280, 589824, 11)
+layer_0/tile_data = PackedInt32Array(1441808, 589824, 11, 1376259, 0, 5, 1441795, 0, 6, 1376260, 65536, 5, 1441796, 65536, 6, 1376261, 131072, 5, 1441797, 131072, 6, 1376262, 65536, 5, 1441798, 65536, 6, 1376263, 131072, 5, 1441799, 131072, 6, 1376264, 65536, 5, 1441800, 65536, 6, 1376265, 131072, 5, 1441801, 131072, 6, 1376266, 65536, 5, 1441802, 65536, 6, 1376267, 131072, 5, 1441803, 131072, 6, 1376268, 65536, 5, 1441804, 65536, 6, 1376269, 131072, 5, 1441805, 131072, 6, 1376270, 196608, 5, 1441806, 196608, 6, 1376271, 262144, 5, 1441807, 262144, 6, 1376280, 589824, 11, 1376307, 327680, 3, 1310772, 393216, 2, 1376308, 393216, 3, 1310773, 458752, 2, 1376309, 458752, 3, 1310774, 524288, 2, 1376310, 524288, 3, 1376311, 589824, 3)
 
 [node name="DirectionalLight2D" parent="." index="3"]
 color = Color(0.183042, 0.065367, 0.000801521, 1)
@@ -122,7 +118,7 @@ collision_layer = 32
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
-position = Vector2(23, 305)
+position = Vector2(103, 266)
 shape = SubResource("RectangleShape2D_7eibj")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
