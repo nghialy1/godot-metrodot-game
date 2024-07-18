@@ -61,7 +61,7 @@ func _process(_delta: float) -> void:
 			x = special_pos_x + x_offset
 		else:
 			# move faster if father away, slow down on approach
-			var weight = clamp(x_diff / track_scale + 1.0, 1.0, 4.0) 
+			var weight : float = clamp(x_diff / track_scale + 1.0, 1.0, 4.0) 
 			x = move_toward(position.x, player.position.x + x_offset, weight*tracking_speed)
 
 		y = player.position.y - cam_size_y / 2 + 30
@@ -88,11 +88,11 @@ func start_phase_two() -> void:
 	# phase two animation
 	$AnimationPlayer.play("enter_phase_two")
 	var exit_tween := create_tween()
-	exit_tween.tween_property(self, 'off_screen_offset', 100, 6)
+	exit_tween.tween_property(self, 'off_screen_offset', 100, 8).set_trans(Tween.TRANS_QUAD)
 	await exit_tween.finished
 	
 	# rest
-	await get_tree().create_timer(4).timeout
+	await get_tree().create_timer(3).timeout
 	
 	# change boundary as camera zooms out
 	entered_phase_two.emit()
@@ -107,7 +107,7 @@ func start_phase_two() -> void:
 	# wait for boss to move above player
 	invulnerable = false
 	phase_two_animation = false
-	await get_tree().create_timer(1.5).timeout
+	await get_tree().create_timer(2.0).timeout
 	
 	# re-enter from above
 	var enter_tween := create_tween()

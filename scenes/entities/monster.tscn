@@ -7,7 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://had34st0sg3c" path="res://audio/boss_scream.mp3" id="5_x3ifh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bcrv7"]
-size = Vector2(42, 94)
+size = Vector2(21, 94)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bam3o"]
 resource_local_to_scene = true
@@ -245,10 +245,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(1.3, 1.4, 1.5, 1.8, 1.9, 2, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 1, 1.1, 1.2, 1.9, 2, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [2, 1, 0, 4, 0, 1, 2, 1, 2, 1, 2, 1, 2]
+"values": [2, 1, 0, 2, 1, 0, 0, 1, 2, 1, 2, 1, 2, 1, 2]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -370,7 +370,7 @@ tracks/2/path = NodePath(".")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(2.6, 3.8, 4.8, 5.04455, 5.2, 5.4),
+"times": PackedFloat32Array(2.6, 3.8, 4.8, 5, 5.2, 5.4),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "values": [{
 "args": [],
@@ -520,6 +520,7 @@ limits_x = Vector2i(0, 0)
 limits_y = Vector2i(0, 0)
 
 [node name="CollisionShape2D" parent="." index="0"]
+position = Vector2(10.5, 0)
 shape = SubResource("RectangleShape2D_bcrv7")
 
 [node name="AttackTimer" type="Timer" parent="Timers" index="0"]
