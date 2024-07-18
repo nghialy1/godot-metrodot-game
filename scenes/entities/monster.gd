@@ -47,13 +47,12 @@ func _process(delta: float) -> void:
 	cam_size_y = player_camera.get_viewport_rect().size.y / player_camera.zoom.y
 	
 	# phase_two trigger
-	if not phase_two and health <= Global.enemy_parameters['monster']['health'] * 0.7:
+	if not phase_two and health <= Global.enemy_parameters['monster']['health'] * 0.6:
 		start_phase_two()
 	
 	# Calculate monster position
 	var x : float
 	var y : float
-	
 	
 	if phase_two and not phase_two_animation:
 		set_flash_value(0.4, get_sprites(), Color.DARK_RED)
@@ -91,10 +90,11 @@ func start_phase_two() -> void:
 	exit_tween.tween_property(self, 'off_screen_offset', 100, 4).set_trans(Tween.TRANS_QUAD)
 	await exit_tween.finished
 	
-	# rest
-	await get_tree().create_timer(3).timeout
+	# boss death fakeout 
+	await get_tree().create_timer(4).timeout
 	
-	# change boundary as camera zooms out
+	# change x boundary for boss as camera zooms out
+	# 1.75 is from sky level camera zoom out when signal on emit
 	entered_phase_two.emit()
 	var limit_tween := create_tween()
 	var target_cam_size := Vector2(player_camera.get_viewport_rect().size.x / 1.75, player_camera.get_viewport_rect().size.y / 1.75)

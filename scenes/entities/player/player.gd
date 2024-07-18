@@ -222,7 +222,6 @@ func shoot_gun() -> void:
 		$ShotgunParticles.process_material.set('direction', aim_direction)
 		$ShotgunParticles.emitting = true
 		
-		print(aim_direction.y)
 		if aim_direction.y > 0.5:
 			gun_jump = true
 		shoot_particles()
