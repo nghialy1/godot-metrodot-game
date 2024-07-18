@@ -22,6 +22,7 @@ TransitionLayer="*res://global/transition_layer.tscn"
 BgMusic="*res://global/bg_music.tscn"
 CustsceneLayer="*res://global/custscene_layer.tscn"
 MenuScreen="*res://global/menu_screen.tscn"
+ControlsHint="*res://global/controls_hint.tscn"
 
 [debug]
 

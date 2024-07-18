@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://c8rloxepy3t2l"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+visible = false
+
+[node name="TextEdit" type="TextEdit" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -226.0
+offset_right = 330.0
+grow_vertical = 0
+mouse_filter = 2
+text = "Click - shoot
+Middle mouse button - switch guns
+Ctrl - crouch
+Space - jump
+Shift - Dash/Dodge (Invincibility frames!)
+
+Aim down + shoot shotgun - gun jump
+Have fun! (or try to)"

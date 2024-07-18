@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://tolhbwobinx8"]
+[gd_scene load_steps=11 format=3 uid="uid://tolhbwobinx8"]
 
 [ext_resource type="PackedScene" uid="uid://coa78sxepphhw" path="res://scenes/levels/level.tscn" id="1_nj735"]
 [ext_resource type="TileSet" uid="uid://c1s3xfgccd2py" path="res://scenes/levels/level.tres" id="2_1kl32"]
@@ -14,6 +14,9 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 804, 434, 0, 0, 0, 0, 873, 435, 0, 0, 0, 0, 876, 489, 0, 0, 0, 0, 803, 489, 0, 0, 0, 0, 804, 434)
 }
 point_count = 5
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xcar2"]
+size = Vector2(301, 160)
 
 [node name="Station" instance=ExtResource("1_nj735")]
 cam_limits = Vector4i(-32, 1296, -128, 640)
@@ -70,54 +73,51 @@ position = Vector2(112, 130)
 dash_cooldown = 2.0
 
 [node name="Drone" parent="Main/Entities/Enemies" index="0" instance=ExtResource("5_emxti")]
-position = Vector2(524, 86)
+position = Vector2(631, 184)
 
-[node name="Drone2" parent="Main/Entities/Enemies" index="1" instance=ExtResource("5_emxti")]
-position = Vector2(410, 58)
-
-[node name="Drone3" parent="Main/Entities/Enemies" index="2" instance=ExtResource("5_emxti")]
+[node name="Drone3" parent="Main/Entities/Enemies" index="1" instance=ExtResource("5_emxti")]
 position = Vector2(251, 284)
 
-[node name="Drone5" parent="Main/Entities/Enemies" index="3" instance=ExtResource("5_emxti")]
+[node name="Drone5" parent="Main/Entities/Enemies" index="2" instance=ExtResource("5_emxti")]
 position = Vector2(922, 82)
 
-[node name="Drone6" parent="Main/Entities/Enemies" index="4" instance=ExtResource("5_emxti")]
+[node name="Drone6" parent="Main/Entities/Enemies" index="3" instance=ExtResource("5_emxti")]
 position = Vector2(827, 62)
 
-[node name="Drone7" parent="Main/Entities/Enemies" index="5" instance=ExtResource("5_emxti")]
+[node name="Drone7" parent="Main/Entities/Enemies" index="4" instance=ExtResource("5_emxti")]
 position = Vector2(1136, 422)
 
-[node name="Drone8" parent="Main/Entities/Enemies" index="6" instance=ExtResource("5_emxti")]
+[node name="Drone8" parent="Main/Entities/Enemies" index="5" instance=ExtResource("5_emxti")]
 position = Vector2(916, 468)
 
-[node name="Drone9" parent="Main/Entities/Enemies" index="7" instance=ExtResource("5_emxti")]
+[node name="Drone9" parent="Main/Entities/Enemies" index="6" instance=ExtResource("5_emxti")]
 position = Vector2(317, 432)
 
-[node name="Drone10" parent="Main/Entities/Enemies" index="8" instance=ExtResource("5_emxti")]
+[node name="Drone10" parent="Main/Entities/Enemies" index="7" instance=ExtResource("5_emxti")]
 position = Vector2(1225, 505)
 
-[node name="Soldier" parent="Main/Entities/Enemies" index="9" instance=ExtResource("6_8gt12")]
-position = Vector2(308, 132)
+[node name="Soldier" parent="Main/Entities/Enemies" index="8" instance=ExtResource("6_8gt12")]
+position = Vector2(541, 132)
 
-[node name="Soldier2" parent="Main/Entities/Enemies" index="10" instance=ExtResource("6_8gt12")]
+[node name="Soldier2" parent="Main/Entities/Enemies" index="9" instance=ExtResource("6_8gt12")]
 position = Vector2(854, 133)
 
-[node name="Soldier3" parent="Main/Entities/Enemies" index="11" instance=ExtResource("6_8gt12")]
+[node name="Soldier3" parent="Main/Entities/Enemies" index="10" instance=ExtResource("6_8gt12")]
 position = Vector2(1186, 4)
 
-[node name="Soldier4" parent="Main/Entities/Enemies" index="12" instance=ExtResource("6_8gt12")]
+[node name="Soldier4" parent="Main/Entities/Enemies" index="11" instance=ExtResource("6_8gt12")]
 position = Vector2(1112, 516)
 
-[node name="Soldier5" parent="Main/Entities/Enemies" index="13" instance=ExtResource("6_8gt12")]
+[node name="Soldier5" parent="Main/Entities/Enemies" index="12" instance=ExtResource("6_8gt12")]
 position = Vector2(1243, 369)
 
-[node name="Soldier6" parent="Main/Entities/Enemies" index="14" instance=ExtResource("6_8gt12")]
+[node name="Soldier6" parent="Main/Entities/Enemies" index="13" instance=ExtResource("6_8gt12")]
 position = Vector2(1035, 517)
 
-[node name="Soldier7" parent="Main/Entities/Enemies" index="15" instance=ExtResource("6_8gt12")]
+[node name="Soldier7" parent="Main/Entities/Enemies" index="14" instance=ExtResource("6_8gt12")]
 position = Vector2(54, 516)
 
-[node name="Soldier8" parent="Main/Entities/Enemies" index="16" instance=ExtResource("6_8gt12")]
+[node name="Soldier8" parent="Main/Entities/Enemies" index="15" instance=ExtResource("6_8gt12")]
 position = Vector2(252, 341)
 
 [node name="Saw" parent="Main/Objects" index="0" instance=ExtResource("5_q13g4")]
@@ -220,3 +220,14 @@ level = "underground"
 return_marker = 1
 current_return = NodePath("ReturnMarkers/right")
 locked = false
+
+[node name="Area2D" type="Area2D" parent="." index="6"]
+collision_layer = 32
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2(140.5, 70)
+shape = SubResource("RectangleShape2D_xcar2")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

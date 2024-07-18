@@ -129,3 +129,11 @@ func _exit_tree() -> void:
 	
 	# save transition gate data
 	Global.transition_gate_data[get_tree().current_scene.name] = current_gate_data
+
+
+func _on_area_2d_body_entered(_body: CharacterBody2D) -> void:
+	ControlsHint.visible = true
+
+
+func _on_area_2d_body_exited(_body: CharacterBody2D) -> void:
+	ControlsHint.visible = false
