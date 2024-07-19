@@ -20,7 +20,7 @@ const enemy_parameters = {
 
 const gun_data = {
 	guns.AK: {'damage': 20, 'speed': 270, 'texture': preload("res://graphics/guns/projectiles/default.png")},
-	guns.ROCKET: {'damage': 100, 'speed': 200, 'texture': preload("res://graphics/guns/projectiles/large.png")},
+	guns.ROCKET: {'damage': 150, 'speed': 200, 'texture': preload("res://graphics/guns/projectiles/large.png")},
 	guns.SHOTGUN: {'damage': 250, 'range': 70},
 	'monster_bullets': {'damage': 30, 'speed': 200, 'texture': preload("res://graphics/guns/projectiles/large.png")}
 }

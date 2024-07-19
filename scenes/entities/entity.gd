@@ -24,6 +24,7 @@ func _process(_delta: float) -> void:
 
 func hit(damage: int, nodes: Array) -> void:
 	if health > 0 and not invulnerable:
+		DamageNumbers.display_number(damage, global_position, true if damage >= 100 else false)
 		health -= damage
 		$Hit.play()
 		flash(nodes)
