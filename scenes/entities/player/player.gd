@@ -47,6 +47,9 @@ func _process(delta: float) -> void:
 	
 	if can_move:
 		get_input()
+	else:
+		get_aim() # player can still aim when input is blocked
+		
 	animate()
 
 func _physics_process(delta: float) -> void:
@@ -93,12 +96,7 @@ func get_input() -> void:
 	ducking = Input.is_action_pressed("duck") and is_on_floor()
 	
 	# aim
-	var aim_input_gamepad := Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
-	aim_input_mouse = get_local_mouse_position()
-	var aim_input := aim_input_gamepad if gamepad_active else aim_input_mouse.normalized()
-	
-	if aim_input.length() > 0.5:
-		aim_direction = Vector2(aim_input.x, aim_input.y)
+	get_aim()
 		
 	# switch
 	if Input.is_action_just_pressed("switch"):
@@ -113,6 +111,15 @@ func get_input() -> void:
 		var target_value := 0.0 if not god_mode else 0.35
 		color_tween.tween_method(set_flash_value.bind(get_sprites(), Color.GOLD),start_value,target_value, 0.2)
 		
+func get_aim() -> void:
+	# aim
+	var aim_input_gamepad := Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
+	aim_input_mouse = get_local_mouse_position()
+	var aim_input := aim_input_gamepad if gamepad_active else aim_input_mouse.normalized()
+	
+	if aim_input.length() > 0.5:
+		aim_direction = Vector2(aim_input.x, aim_input.y)
+
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		gamepad_active = false

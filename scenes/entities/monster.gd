@@ -18,12 +18,13 @@ var off_screen_offset := 55
 var attack_wait_range := Vector2(0.9, 1.3)
 var x_diff : float
 var special_pos_x : float
+var special_x_offset : float = 0.0
 var direction :=  Vector2.LEFT
 var x_range := Vector2(-50,50)
 var x_offset: float
 var y_range := Vector2(-50,50)
 var y_offset: float
-var tracking_speed := 105.0
+var tracking_speed := 120.0
 var track_scale := 150 # track_speed double tracking_speed every 150
 var rng := RandomNumberGenerator.new()
 var phase_two := false
@@ -57,21 +58,19 @@ func _process(delta: float) -> void:
 	if phase_two and not phase_two_animation:
 		set_flash_value(0.4, get_sprites(), Color.DARK_RED)
 		if special_move:
-			x = special_pos_x + x_offset
+			x = special_pos_x + special_x_offset
 		else:
 			# move faster if father away, slow down on approach
 			var weight : float = clamp(x_diff / track_scale + 1.0, 1.0, 4.0) 
 			x = move_toward(position.x, player.position.x + x_offset, weight*tracking_speed*delta)
-
+		
 		y = player.position.y - cam_size_y / 2 + 30
 		y = max(limits_y.x, min(limits_y.y, y)) - off_screen_offset
 	else:
 		x = player.position.x + cam_size_x / 2 - 25
 		y = player.position.y + y_offset
 		x = max(limits_x.x, min(limits_x.y, x)) + off_screen_offset
-		
-	position = Vector2(x,y)
-	
+	position = Vector2(x,y) 
 	x_diff = abs(position.x - player.position.x)
 
 func start_phase_two() -> void:
@@ -157,11 +156,11 @@ func explode() -> void:
 	detonate.emit(Vector2(rand_x, rand_y))
 	
 func trigger_death() -> void:
+	call_deferred("disable_collisions")
 	for timer in $Timers.get_children():
 		timer.stop()
 	
 	$AnimationPlayer.current_animation = 'death'
-	call_deferred("disable_collisions")
 	died.emit()
 	
 func disable_collisions() -> void:
@@ -208,10 +207,10 @@ func _on_move_timer_timeout() -> void:
 func _on_special_timer_timeout() -> void:
 	if phase_two:
 		# scream
-		special_pos_x = position.x
-		special_move = true
 		can_move = false
-		$Timers/MoveTimer.stop()
+		special_pos_x = position.x
+		special_x_offset = 0.0
+		special_move = true
 		$AnimationPlayer.play("scream")
 		await $AnimationPlayer.animation_finished
 		
@@ -219,22 +218,22 @@ func _on_special_timer_timeout() -> void:
 		var binary := rng.randi() % 2
 		var dir := -1 if binary else 1
 		var special_tween1 := create_tween()
-		special_tween1.tween_property(self, 'x_offset', dir * -300, 1)
+		special_tween1.tween_property(self, 'special_x_offset', dir * -300, 1)
 		special_tween1.chain()
 		await special_tween1.finished
 		special_attack = true
 		var special_tween2 := create_tween()
-		special_tween2.tween_property(self, 'x_offset', dir * 300, 3)
+		special_tween2.tween_property(self, 'special_x_offset', dir * 300, 3)
 		await special_tween2.finished
 		special_attack = false
 		
 		# rest for 1.5 second
-		await get_tree().create_timer(1).timeout
+		return_to_idle()
+		await get_tree().create_timer(1.5).timeout
 		
 		# random time until next special
 		$Timers/SpecialTimer.wait_time = rng.randi_range(8, 13)
 		$Timers/SpecialTimer.start()
-		$Timers/MoveTimer.start()
 		can_move = true
 		special_move = false
 
