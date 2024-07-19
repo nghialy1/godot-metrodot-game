@@ -242,11 +242,10 @@ func shoot_gun() -> void:
 			await get_tree().create_timer(0.1).timeout
 			pos = position + aim_direction * crosshair_distance
 			#pos = pos if not ducking else pos + Vector2(0, y_offset)
-			
-		
+
 func get_cam() -> Camera2D:
 	return $Camera2D
-	
+
 func get_sprites() -> Array:
 	return [$PlayerGraphics/Legs, $PlayerGraphics/Torso]
 

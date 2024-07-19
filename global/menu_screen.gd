@@ -53,6 +53,7 @@ func reset_game() -> void:
 	get_tree().change_scene_to_file(ProjectSettings.get_setting('application/run/main_scene'))
 	Global.reset_game_data()
 	close_menu()
+	BgMusic.play_music('MainMusic')
 	current_screen = 'PauseScreen'
 	
 # BUTTONS
