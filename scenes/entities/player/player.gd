@@ -188,11 +188,11 @@ func block_movement() -> void:
 
 func hit(damage: int, nodes: Array) -> void:
 	if not $Timers/InvulTimer.time_left and not god_mode:
+		$Timers/InvulTimer.start()
 		flash(nodes)
 		health -= damage
 		$Hit.play()
 		await flash_tween.finished
-		$Timers/InvulTimer.start()
 
 func shoot_particles() -> void:
 	$SmokeParticles.position = $Crosshair.position + aim_direction
