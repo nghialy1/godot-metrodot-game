@@ -15,7 +15,7 @@ var breath_particles := preload("res://particles/breath_particles_2d.tscn")
 @export var limits_y: Vector2i
 
 var off_screen_offset := 55
-var attack_wait_range := Vector2(1.0, 1.4)
+var attack_wait_range := Vector2(0.9, 1.3)
 var x_diff : float
 var special_pos_x : float
 var direction :=  Vector2.LEFT
@@ -81,7 +81,7 @@ func start_phase_two() -> void:
 	invulnerable = true
 	can_move = false
 	$Timers/MoveTimer.wait_time = 0.2
-	attack_wait_range = Vector2(0.8, 1.2)
+	attack_wait_range = Vector2(0.6, 1.0)
 	BgMusic.stop_music()
 
 	# phase two animation
@@ -232,7 +232,7 @@ func _on_special_timer_timeout() -> void:
 		await get_tree().create_timer(1).timeout
 		
 		# random time until next special
-		$Timers/SpecialTimer.wait_time = rng.randi_range(9, 14)
+		$Timers/SpecialTimer.wait_time = rng.randi_range(8, 13)
 		$Timers/SpecialTimer.start()
 		$Timers/MoveTimer.start()
 		can_move = true

@@ -22,6 +22,8 @@ func _process(delta: float) -> void:
 	
 	if $TrackTimer.time_left:
 		direction = position.direction_to(homing_target.position).normalized()
+		direction.x = clamp(direction.x, -0.5, 0.5) 
+		
 		velocity = velocity.move_toward(direction*speed, 1200*delta)
 	speed += acceleration * delta
 	
