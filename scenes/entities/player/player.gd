@@ -194,8 +194,8 @@ func hit(damage: int, nodes: Array) -> void:
 		$Hit.play()
 		await flash_tween.finished
 
-func shoot_particles() -> void:
-	$SmokeParticles.position = $Crosshair.position + aim_direction
+func shoot_particles(pos : Vector2) -> void:
+	$SmokeParticles.global_position = pos
 	$SmokeParticles.process_material.set('direction', aim_direction)
 	$SmokeParticles.restart()
 
@@ -217,7 +217,7 @@ func shoot_gun() -> void:
 			pos = position + aim_direction * crosshair_distance
 			#pos = pos if not ducking else pos + Vector2(0, y_offset)
 			
-			shoot_particles()
+			shoot_particles(pos)
 	
 	if shooting_gun == Global.guns.SHOTGUN and not $Timers/ShotgunReload.time_left:
 		shoot.emit(pos, aim_direction, shooting_gun, self)
@@ -228,13 +228,13 @@ func shoot_gun() -> void:
 		
 		if aim_direction.y > 0.5:
 			gun_jump = true
-		shoot_particles()
+		shoot_particles(pos)
 	if shooting_gun == Global.guns.ROCKET and not $Timers/RocketReload.time_left:
 		# shoot 3 bullets in succession
 		$Timers/RocketReload.start()
 		
 		var num := 6 if god_mode else 2
-		shoot_particles()
+		shoot_particles(pos)
 		
 		# shoot 2 rockets
 		for i in range(num):
