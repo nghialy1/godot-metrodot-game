@@ -205,7 +205,6 @@ func shoot_gun() -> void:
 	var shooting_gun := current_gun
 	
 	$Crosshair.play('shoot')
-
 	if shooting_gun == Global.guns.AK and not $Timers/AKReload.time_left:
 		$Timers/AKReload.start()
 		var num := 10 if god_mode else 3
@@ -223,7 +222,7 @@ func shoot_gun() -> void:
 	if shooting_gun == Global.guns.SHOTGUN and not $Timers/ShotgunReload.time_left:
 		shoot.emit(pos, aim_direction, shooting_gun, self)
 		$Timers/ShotgunReload.start()
-		$ShotgunParticles.position = $Crosshair.position + aim_direction * 10
+		$ShotgunParticles.global_position = pos
 		$ShotgunParticles.process_material.set('direction', aim_direction)
 		$ShotgunParticles.emitting = true
 		

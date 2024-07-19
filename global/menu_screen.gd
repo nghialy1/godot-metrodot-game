@@ -20,12 +20,18 @@ func load_menu(screen: String) -> void:
 		toggle_pause()
 	
 func toggle_pause() -> void:
+	if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
+		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		
 	get_tree().paused = not get_tree().paused
 	if current_screen != 'DeathScreen' and current_screen != 'RetryScreen':
 		BgMusic.toggle_pause()
 	screens.get(current_screen).visible = not screens.get(current_screen).visible
 
 func close_menu() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	screens.get(current_screen).visible = false
 	get_tree().paused = false
 	
