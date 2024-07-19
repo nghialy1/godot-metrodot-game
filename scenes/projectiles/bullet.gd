@@ -24,6 +24,10 @@ func setup(pos: Vector2, dir: Vector2, type: int, bullet_origin: CharacterBody2D
 		speed = Global.gun_data[type]['speed']
 		damage = Global.gun_data[type]['damage']
 		explosive = type == Global.guns.ROCKET
+		
+		if bullet_origin.name == 'Monster':
+			speed = Global.gun_data['monster_bullets']['speed']
+			damage = Global.gun_data['monster_bullets']['damage']
 	else:
 		$CollisionShape2D.disabled = true
 		$Sprite2D.hide()

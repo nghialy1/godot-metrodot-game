@@ -47,7 +47,7 @@ func _process(delta: float) -> void:
 	cam_size_y = player_camera.get_viewport_rect().size.y / player_camera.zoom.y
 	
 	# phase_two trigger
-	if not phase_two and health <= Global.enemy_parameters['monster']['health'] * 0.7:
+	if not phase_two and health <= Global.enemy_parameters['monster']['health'] * 0.65:
 		start_phase_two()
 	
 	# Calculate monster position

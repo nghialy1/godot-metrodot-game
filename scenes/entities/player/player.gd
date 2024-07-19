@@ -24,7 +24,8 @@ var gun_jump := false
 @export_group("gun")
 var current_gun := Global.guns.AK
 var aim_direction := Vector2.RIGHT
-@export var crosshair_distance := 40
+var aim_input_mouse := Vector2.RIGHT
+@export var crosshair_distance := 25
 const y_offset := 10
 const standing_height := 30
 @export_range(0.2, 10.0) var ak_cooldown := 0.9
@@ -35,6 +36,7 @@ var god_mode := false
 var rng := RandomNumberGenerator.new()
 
 func _ready() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	$Timers/DashCooldown.wait_time = dash_cooldown
 	$Timers/AKReload.wait_time = ak_cooldown
 	$Timers/ShotgunReload.wait_time = shotgun_cooldown
@@ -52,7 +54,7 @@ func _physics_process(delta: float) -> void:
 	apply_movement(delta)
 
 func animate() -> void:
-	$Crosshair.update(aim_direction, crosshair_distance, ducking)
+	$Crosshair.update(aim_direction, crosshair_distance, ducking, aim_input_mouse)
 	$PlayerGraphics.update_legs(direction, is_on_floor(), ducking)
 	$PlayerGraphics.update_torso(aim_direction, ducking, current_gun)
 	
@@ -92,8 +94,8 @@ func get_input() -> void:
 	
 	# aim
 	var aim_input_gamepad := Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
-	var aim_input_mouse := get_local_mouse_position().normalized()
-	var aim_input := aim_input_gamepad if gamepad_active else aim_input_mouse
+	aim_input_mouse = get_local_mouse_position()
+	var aim_input := aim_input_gamepad if gamepad_active else aim_input_mouse.normalized()
 	
 	if aim_input.length() > 0.5:
 		aim_direction = Vector2(aim_input.x, aim_input.y)
@@ -199,8 +201,10 @@ func shoot_particles() -> void:
 
 func shoot_gun() -> void:
 	var pos := position + aim_direction * crosshair_distance
-	pos = pos if not ducking else pos + Vector2(0, y_offset)
+	#pos = pos if not ducking else pos + Vector2(0, y_offset)
 	var shooting_gun := current_gun
+	
+	$Crosshair.play('shoot')
 
 	if shooting_gun == Global.guns.AK and not $Timers/AKReload.time_left:
 		$Timers/AKReload.start()
@@ -212,7 +216,8 @@ func shoot_gun() -> void:
 			shoot.emit(pos, aim_direction, shooting_gun, self)
 			await get_tree().create_timer(delay).timeout
 			pos = position + aim_direction * crosshair_distance
-			pos = pos if not ducking else pos + Vector2(0, y_offset)
+			#pos = pos if not ducking else pos + Vector2(0, y_offset)
+			
 			shoot_particles()
 	
 	if shooting_gun == Global.guns.SHOTGUN and not $Timers/ShotgunReload.time_left:
@@ -222,7 +227,6 @@ func shoot_gun() -> void:
 		$ShotgunParticles.process_material.set('direction', aim_direction)
 		$ShotgunParticles.emitting = true
 		
-		print(aim_direction.y)
 		if aim_direction.y > 0.5:
 			gun_jump = true
 		shoot_particles()
@@ -238,7 +242,7 @@ func shoot_gun() -> void:
 			shoot.emit(pos, aim_direction, shooting_gun, self)
 			await get_tree().create_timer(0.1).timeout
 			pos = position + aim_direction * crosshair_distance
-			pos = pos if not ducking else pos + Vector2(0, y_offset)
+			#pos = pos if not ducking else pos + Vector2(0, y_offset)
 			
 		
 func get_cam() -> Camera2D:

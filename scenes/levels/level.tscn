@@ -26,9 +26,9 @@ format = 2
 
 [node name="Entities" type="Node2D" parent="Main"]
 
-[node name="Players" type="Node2D" parent="Main/Entities"]
-
 [node name="Enemies" type="Node2D" parent="Main/Entities"]
+
+[node name="Players" type="Node2D" parent="Main/Entities"]
 
 [node name="Objects" type="Node2D" parent="Main"]
 

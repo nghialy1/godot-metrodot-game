@@ -15,17 +15,18 @@ enum guns {AK, SHOTGUN, ROCKET}
 const enemy_parameters = {
 	'drone': {'speed': 110, 'health': 20, 'damage': 30},
 	'soldier': {'speed': 80, 'health': 60},
-	'monster': {'health': 2500}
+	'monster': {'health': 3500}
 }
 
 const gun_data = {
 	guns.AK: {'damage': 20, 'speed': 270, 'texture': preload("res://graphics/guns/projectiles/default.png")},
 	guns.ROCKET: {'damage': 100, 'speed': 200, 'texture': preload("res://graphics/guns/projectiles/large.png")},
-	guns.SHOTGUN: {'damage': 250, 'range': 70}
+	guns.SHOTGUN: {'damage': 250, 'range': 70},
+	'monster_bullets': {'damage': 30, 'speed': 200, 'texture': preload("res://graphics/guns/projectiles/large.png")}
 }
 
 const special_bullet_data = {
-	'homing_bullet': {'damage': 100, 'speed': 100}
+	'homing_bullet': {'damage': 30, 'speed': 100}
 }
 
 # game sounds and music
