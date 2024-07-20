@@ -10,6 +10,7 @@ func _ready() -> void:
 	super._ready()
 	boss.visible = false
 	BgMusic.stop_music()
+	BgMusic.get_wind_sound().play()
 	
 	$TransitionGates/TransitionGate.locked = true
 	
@@ -66,7 +67,7 @@ func on_boss_died() -> void:
 	# end game
 	MenuScreen.end_screen()
 
-func _on_area_2d_body_entered(_body: CharacterBody2D) -> void:
+func _on_area_2d_body_entered_sky(_body: CharacterBody2D) -> void:
 	$TransitionGates/TransitionGate.locked = true
 	zone_entered.emit()
 	$Area2D.set_deferred('monitoring', false)
@@ -75,4 +76,4 @@ func _on_area_2d_body_entered(_body: CharacterBody2D) -> void:
 		
 func _exit_tree() -> void:
 	super._exit_tree()
-	BgMusic.play_music('MainMusic')
+	BgMusic.get_wind_sound().stop()

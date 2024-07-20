@@ -15,14 +15,14 @@ var breath_particles := preload("res://particles/breath_particles_2d.tscn")
 @export var limits_y: Vector2i
 
 var off_screen_offset := 55
-var attack_wait_range := Vector2(0.9, 1.3)
+var attack_wait_range := Vector2(1.0, 1.3)
 var x_diff : float
 var special_pos_x : float
 var special_x_offset : float = 0.0
 var direction :=  Vector2.LEFT
 var x_range := Vector2(-50,50)
 var x_offset: float
-var y_range := Vector2(-50,50)
+var y_range := Vector2(-50,25)
 var y_offset: float
 var tracking_speed := 120.0
 var track_scale := 150 # track_speed double tracking_speed every 150
@@ -48,7 +48,7 @@ func _process(delta: float) -> void:
 	cam_size_y = player_camera.get_viewport_rect().size.y / player_camera.zoom.y
 	
 	# phase_two trigger
-	if not phase_two and health <= Global.enemy_parameters['monster']['health'] * 0.65:
+	if not phase_two and health <= Global.enemy_parameters['monster']['health'] * 0.7:
 		start_phase_two()
 	
 	# Calculate monster position
@@ -68,7 +68,7 @@ func _process(delta: float) -> void:
 		y = max(limits_y.x, min(limits_y.y, y)) - off_screen_offset
 	else:
 		x = player.position.x + cam_size_x / 2 - 25
-		y = player.position.y + y_offset
+		y = clamp(player.position.y + y_offset, player.get_cam().limit_top, player.get_cam().limit_bottom - 50.0)
 		x = max(limits_x.x, min(limits_x.y, x)) + off_screen_offset
 	position = Vector2(x,y) 
 	x_diff = abs(position.x - player.position.x)

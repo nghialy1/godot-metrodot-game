@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bxdm4035ud7lu"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+visible = false
+
+[node name="TextEdit" type="TextEdit" parent="."]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -330.0
+offset_top = -113.0
+offset_bottom = -39.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
+text = "Click middle mouse button - switch guns
+Aim down + shoot shotgun - gun jump"

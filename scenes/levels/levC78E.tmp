@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=3 uid="uid://coa78sxepphhw"]
+
+[ext_resource type="Script" path="res://scenes/levels/level.gd" id="1_y6dqg"]
+[ext_resource type="TileSet" uid="uid://c1s3xfgccd2py" path="res://scenes/levels/level.tres" id="2_drlu5"]
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_y6dqg")
+
+[node name="BG" type="Node2D" parent="."]
+
+[node name="BG" type="TileMap" parent="BG"]
+tile_set = ExtResource("2_drlu5")
+format = 2
+
+[node name="BGDeco" type="TileMap" parent="BG"]
+tile_set = ExtResource("2_drlu5")
+format = 2
+
+[node name="BGLights" type="Node2D" parent="BG"]
+
+[node name="Main" type="Node2D" parent="."]
+
+[node name="Main" type="TileMap" parent="Main"]
+tile_set = ExtResource("2_drlu5")
+format = 2
+
+[node name="Entities" type="Node2D" parent="Main"]
+
+[node name="Enemies" type="Node2D" parent="Main/Entities"]
+
+[node name="Players" type="Node2D" parent="Main/Entities"]
+
+[node name="Objects" type="Node2D" parent="Main"]
+
+[node name="Projectiles" type="Node2D" parent="Main"]
+
+[node name="Particles" type="Node2D" parent="Main"]
+
+[node name="Shockwaves" type="Node2D" parent="Main"]
+
+[node name="FG" type="Node2D" parent="."]
+
+[node name="FG" type="TileMap" parent="FG"]
+tile_set = ExtResource("2_drlu5")
+format = 2
+
+[node name="FGLights" type="Node2D" parent="FG"]
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+
+[node name="TransitionGates" type="Node2D" parent="."]
+
+[node name="CutsceneCamera2D" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)

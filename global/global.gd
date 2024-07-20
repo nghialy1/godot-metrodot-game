@@ -22,11 +22,11 @@ const gun_data = {
 	guns.AK: {'damage': 20, 'speed': 270, 'texture': preload("res://graphics/guns/projectiles/default.png")},
 	guns.ROCKET: {'damage': 150, 'speed': 200, 'texture': preload("res://graphics/guns/projectiles/large.png")},
 	guns.SHOTGUN: {'damage': 250, 'range': 70},
-	'monster_bullets': {'damage': 30, 'speed': 200, 'texture': preload("res://graphics/guns/projectiles/large.png")}
+	'monster_bullets': {'damage': 20, 'speed': 200, 'texture': preload("res://graphics/guns/projectiles/large.png")}
 }
 
 const special_bullet_data = {
-	'homing_bullet': {'damage': 30, 'speed': 100}
+	'homing_bullet': {'damage': 20, 'speed': 100}
 }
 
 # game sounds and music

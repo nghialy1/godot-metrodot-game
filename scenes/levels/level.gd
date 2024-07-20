@@ -11,6 +11,10 @@ const shock_wave_scene := preload("res://global/shock_wave_layer.tscn")
 var disable_cam := false
 
 func _ready() -> void:
+	# tidy up
+	ControlsHint.visible = false
+	GunJumpHint.visible = false
+	
 	cam.limit_left = cam_limits.x
 	cam.limit_right = cam_limits.y
 	cam.limit_top = cam_limits.z
@@ -130,10 +134,52 @@ func _exit_tree() -> void:
 	# save transition gate data
 	Global.transition_gate_data[get_tree().current_scene.name] = current_gate_data
 
-
+## TEMPORARY IMPLEMENTATION
+## STATION LEVEL
 func _on_area_2d_body_entered(_body: CharacterBody2D) -> void:
+	await get_tree().create_timer(0.75).timeout
+	var hint_box := ControlsHint.get_child(0)
+	hint_box.modulate.a = 0.0
+	var fade_tween := create_tween()
+	fade_tween.tween_property(hint_box, 'modulate:a', 1.0, 1.0)
 	ControlsHint.visible = true
 
-
 func _on_area_2d_body_exited(_body: CharacterBody2D) -> void:
+	var hint_box := ControlsHint.get_child(0)
+	hint_box.modulate.a = 1.0
+	var fade_tween := create_tween()
+	fade_tween.tween_property(hint_box, 'modulate:a', 0.0, 0.5)
+	await fade_tween.finished
 	ControlsHint.visible = false
+
+## UNDERGROUND LEVEL
+
+var timer : SceneTreeTimer
+var show_hint := false
+
+func gun_jump_hint() -> void:
+	var hint_box := GunJumpHint.get_child(0)
+	hint_box.modulate.a = 0.0
+	var fade_tween := create_tween()
+	fade_tween.tween_property(hint_box, 'modulate:a', 1.0, 1.0)
+	GunJumpHint.visible = true
+
+func _on_area_2d_body_entered_corner(_body: CharacterBody2D) -> void:
+	if show_hint:
+		gun_jump_hint()
+	else:
+		timer = get_tree().create_timer(5.0)
+		await timer.timeout
+		
+		if timer and not show_hint:
+			show_hint = true
+			gun_jump_hint()
+
+func _on_area_2d_body_exited_corner(_body: CharacterBody2D) -> void:
+	timer = null
+	var hint_box := GunJumpHint.get_child(0)
+	hint_box.modulate.a = 1.0
+	var fade_tween := create_tween()
+	fade_tween.tween_property(hint_box, 'modulate:a', 0.0, 0.5)
+	await fade_tween.finished
+	GunJumpHint.visible = false
